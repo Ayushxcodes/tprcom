@@ -187,7 +187,7 @@ export function Sectors() {
         </div>
       </div>
 
-      {/* DETAILED INTERACTIVE SECTOR MODAL */}
+      {/* DETAILED INTERACTIVE SECTOR POP-OUT MODAL */}
       <div
         className={`sector-modal-backdrop ${selectedSector ? 'open' : ''}`}
         onClick={() => setSelectedSector(null)}
@@ -205,25 +205,32 @@ export function Sectors() {
               &times;
             </button>
 
-            <div className="sector-modal-hero">
+            {/* LEFT PHOTO COLUMN */}
+            <div className="sector-modal-photo-col">
               <img src={selectedSector.image} alt={selectedSector.title} />
+              <div className="photo-icon-overlay">
+                <Icon name={selectedSector.icon} style={{ width: '24px', height: '24px' }} />
+              </div>
             </div>
 
+            {/* RIGHT DETAIL BODY */}
             <div className="sector-modal-body">
-              <p className="badge">Sector Intelligence — {selectedSector.title}</p>
-              <h2>{selectedSector.title}</h2>
-              <p style={{ marginTop: '14px', fontSize: '16.5px', lineHeight: 1.65, color: 'var(--text-secondary)' }}>
-                {selectedSector.detailedCopy}
-              </p>
+              <div>
+                <p className="badge">Sector Intelligence — {selectedSector.title}</p>
+                <h2>{selectedSector.title}</h2>
+                <p style={{ marginTop: '12px', fontSize: '15px', lineHeight: 1.6, color: 'var(--text-secondary)' }}>
+                  {selectedSector.detailedCopy}
+                </p>
 
-              {/* KEY METRICS */}
-              <div className="sector-modal-metrics-grid">
-                {selectedSector.keyMetrics.map((m, i) => (
-                  <div className="modal-metric-box" key={i}>
-                    <div className="val">{m.val}</div>
-                    <div className="lbl">{m.lbl}</div>
-                  </div>
-                ))}
+                {/* KEY METRICS */}
+                <div className="sector-modal-metrics-grid">
+                  {selectedSector.keyMetrics.map((m, i) => (
+                    <div className="modal-metric-box" key={i}>
+                      <div className="val">{m.val}</div>
+                      <div className="lbl">{m.lbl}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* CASE STUDY HIGHLIGHT */}

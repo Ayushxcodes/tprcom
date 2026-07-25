@@ -60,6 +60,11 @@ const approachSteps: StepItem[] = [
 export function Approach() {
   const [activeStep, setActiveStep] = useState<StepItem | null>(null);
 
+  const handleCardClick = (e: React.MouseEvent, step: StepItem) => {
+    e.stopPropagation();
+    setActiveStep(prev => (prev?.id === step.id ? null : step));
+  };
+
   return (
     <section id="approach">
       <div className="wrap">
@@ -69,7 +74,7 @@ export function Approach() {
             <h2>Four disciplines. One continuous orbital workflow.</h2>
           </div>
           <p className="sub">
-            Communications work revolves around a central core — click any orbiting card below to halt the orbit and view its full strategic playbook.
+            Communications work revolves around a central core — tap any card below to reveal its strategic execution playbook.
           </p>
         </div>
 
@@ -85,39 +90,72 @@ export function Approach() {
               <p>Continuous PR Discipline</p>
             </div>
 
-            {/* ROTATING ORBITAL FULL PHOTO CARDS */}
+            {/* ROTATING ORBITAL CARDS */}
             <div className={`orbital-satellites-track ${activeStep ? 'paused' : ''}`}>
-              {approachSteps.map((step, idx) => (
-                <div
-                  className={`orbiting-card-node pos-${idx}`}
-                  key={step.id}
-                  onClick={() => setActiveStep(step)}
-                  title={`Click to view ${step.title}`}
-                >
-                  <div className="orbiting-card-counter-rotate">
-                    <div className="orbiting-card-photo">
-                      <img src={step.image} alt={step.title} />
-                    </div>
+              {approachSteps.map((step, idx) => {
+                const isActive = activeStep?.id === step.id;
+                return (
+                  <div
+                    className={`orbiting-card-node pos-${idx} ${isActive ? 'mobile-active-dark' : ''}`}
+                    key={step.id}
+                    onClick={(e) => handleCardClick(e, step)}
+                    title={`Click to view ${step.title}`}
+                  >
+                    <div className="orbiting-card-counter-rotate">
+                      {/* BACKGROUND PHOTO (HIDDEN WHEN ACTIVE IN MOBILE) */}
+                      {!isActive && (
+                        <div className="orbiting-card-photo">
+                          <img src={step.image} alt={step.title} />
+                        </div>
+                      )}
 
-                    <div className="orbiting-card-header">
-                      <div className="orbiting-card-icon">
-                        <Icon name={step.icon} style={{ width: '20px', height: '20px' }} />
+                      <div className="orbiting-card-header">
+                        <div className="orbiting-card-icon">
+                          <Icon name={step.icon} style={{ width: '20px', height: '20px' }} />
+                        </div>
+                        <span className="orbiting-card-num">{step.stepNum}</span>
                       </div>
-                      <span className="orbiting-card-num">{step.stepNum}</span>
-                    </div>
 
-                    <div className="orbiting-card-body">
-                      <span className="orbiting-card-lbl">STEP {step.stepNum}</span>
-                      <h3>{step.title}</h3>
+                      <div className="orbiting-card-body">
+                        <span className="orbiting-card-lbl">STEP {step.stepNum}</span>
+                        <h3>{step.title}</h3>
+
+                        {/* INLINE TEXT REPLACING IMAGE WHEN ACTIVE */}
+                        {isActive && (
+                          <div className="mobile-card-inline-details">
+                            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
+                              {step.description}
+                            </p>
+                            <div style={{ display: 'grid', gap: '4px', marginTop: '6px' }}>
+                              {step.deliverables.map((del, dIdx) => (
+                                <div key={dIdx} style={{
+                                  fontFamily: 'var(--mono)',
+                                  fontSize: '10.5px',
+                                  color: 'var(--orange)',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '6px'
+                                }}>
+                                  <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--orange)' }}></span>
+                                  {del}
+                                </div>
+                              ))}
+                            </div>
+                            <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'rgba(255,255,255,0.5)', marginTop: '8px' }}>
+                              ▲ Tap to close
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            {/* POP-UP DETAIL CARD WHEN CLICKED */}
+            {/* DESKTOP CENTER POP-UP DETAIL CARD */}
             {activeStep && (
-              <div className={`approach-popup-card ${activeStep ? 'active' : ''}`}>
+              <div className="approach-popup-card active">
                 <button
                   className="approach-popup-close-btn"
                   onClick={() => setActiveStep(null)}
