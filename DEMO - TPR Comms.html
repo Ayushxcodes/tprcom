@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TPR Communication — Strategic Public Relations &amp; Corporate Communications</title>
+<meta name="description" content="TPR Communication is a strategic PR and corporate communications agency helping ambitious brands earn trust, command attention, and protect their reputation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1F3A;
+    --navy-2:#12325C;
+    --navy-3:#1B4180;
+    --blue:#2F6FED;
+    --blue-light:#E8F0FE;
+    --blue-mid:#5C8FF2;
+    --orange:#FF6A2B;
+    --orange-dark:#DB4B10;
+    --orange-light:#FFE6DA;
+    --grey-900:#1E2430;
+    --grey-600:#5C6472;
+    --grey-300:#C7CEDA;
+    --grey-200:#E4E8EF;
+    --grey-100:#F5F7FA;
+    --white:#ffffff;
+
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+
+    --max: 1180px;
+    --pad: clamp(24px, 5vw, 72px);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--white);
+    color:var(--grey-900);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--orange); color:var(--white); }
+
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  :focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:3px;
+  }
+
+  .wrap{ max-width:var(--max); margin:0 auto; padding-left:var(--pad); padding-right:var(--pad); }
+
+  .kicker{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--orange-dark);
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .kicker::before{
+    content:'';
+    width:28px;
+    height:1px;
+    background:var(--orange);
+    display:inline-block;
+  }
+
+  h1,h2,h3,h4{
+    font-family:var(--serif);
+    color:var(--navy);
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- ICON SPRITE ---------- */
+  .icon{ width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* ---------- DUOTONE PHOTO TREATMENT ---------- */
+  .duotone{ position:relative; overflow:hidden; background:var(--navy); }
+  .duotone img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:grayscale(1) contrast(1.15) brightness(0.95);
+  }
+  .duotone::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(135deg, rgba(11,31,58,0.82), rgba(255,106,43,0.42));
+    mix-blend-mode:color;
+  }
+  .duotone::before{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(11,31,58,0) 40%, rgba(11,31,58,0.75) 100%);
+    z-index:2;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    background:rgba(255,255,255,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s ease, box-shadow .3s ease, background .3s ease;
+  }
+  header.scrolled{
+    border-bottom-color:var(--grey-200);
+    box-shadow:0 6px 24px -18px rgba(11,31,58,0.35);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:82px;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .logo svg{ width:38px; height:38px; flex-shrink:0; }
+  .logo-text{
+    font-family:var(--serif);
+    line-height:1.05;
+  }
+  .logo-text .top{
+    font-size:19px;
+    font-weight:600;
+    color:var(--navy);
+    letter-spacing:0.01em;
+  }
+  .logo-text .bottom{
+    font-family:var(--mono);
+    font-size:9.5px;
+    letter-spacing:0.24em;
+    color:var(--orange-dark);
+    text-transform:uppercase;
+  }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:40px;
+  }
+  .nav-links a{
+    font-size:13.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    font-weight:500;
+    color:var(--grey-900);
+    position:relative;
+    padding-bottom:4px;
+  }
+  .nav-links a::after{
+    content:'';
+    position:absolute;
+    left:0; right:100%;
+    bottom:0;
+    height:1.5px;
+    background:var(--orange);
+    transition:right .3s ease;
+  }
+  .nav-links a:hover::after{ right:0; }
+  .nav-cta{
+    background:var(--blue);
+    color:var(--white) !important;
+    padding:11px 22px;
+    font-size:12.5px !important;
+    border-radius:3px;
+  }
+  .nav-cta::after{ display:none; }
+  .nav-cta:hover{ background:var(--orange); }
+  .menu-btn{
+    display:none;
+    background:none; border:none;
+    flex-direction:column;
+    gap:5px;
+    padding:8px;
+  }
+  .menu-btn span{ width:24px; height:1.5px; background:var(--navy); display:block; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding-top:220px;
+    padding-bottom:120px;
+    color:var(--white);
+    overflow:hidden;
+  }
+  .hero-bg{ position:absolute; inset:0; z-index:-1; }
+  .hero-bg img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.1) brightness(0.75); }
+  .hero-bg::after{
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 900px 600px at 88% 6%, rgba(255,106,43,0.30), transparent 60%),
+      linear-gradient(115deg, rgba(11,31,58,0.96) 30%, rgba(18,50,92,0.82) 100%);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.15fr 0.6fr;
+    gap:40px;
+    align-items:start;
+    position:relative;
+  }
+  .hero .kicker{ color:var(--orange); }
+  .hero .kicker::before{ background:var(--orange); }
+  .hero h1{
+    font-size:clamp(40px, 5.6vw, 78px);
+    line-height:1.04;
+    margin-top:22px;
+    max-width:15ch;
+    color:var(--white);
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--orange);
+  }
+  .hero p.lede{
+    margin-top:26px;
+    max-width:46ch;
+    font-size:17px;
+    color:rgba(255,255,255,0.78);
+  }
+  .hero-actions{
+    display:flex;
+    gap:18px;
+    margin-top:38px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:15px 28px;
+    font-size:13px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    font-weight:600;
+    border-radius:3px;
+    transition:transform .25s ease, background .25s ease, color .25s ease, border-color .25s ease;
+  }
+  .btn-primary{
+    background:var(--orange);
+    color:var(--white);
+  }
+  .btn-primary:hover{ background:var(--orange-dark); transform:translateY(-2px); }
+  .btn-ghost{
+    border:1px solid rgba(255,255,255,0.55);
+    color:var(--white);
+  }
+  .btn-ghost:hover{ border-color:var(--orange); color:var(--orange); transform:translateY(-2px); }
+  .btn-ghost-dark{
+    border:1px solid var(--grey-300);
+    color:var(--navy);
+  }
+  .btn-ghost-dark:hover{ border-color:var(--blue); color:var(--blue); transform:translateY(-2px); }
+
+  .signal-wrap{
+    display:flex;
+    justify-content:center;
+    padding-top:6px;
+  }
+  .signal{ width:min(280px, 95%); height:auto; }
+  .signal .ring{ animation:pulse 3.4s ease-in-out infinite; transform-origin:center; }
+  .signal .ring:nth-child(2){ animation-delay:.4s; }
+  .signal .ring:nth-child(3){ animation-delay:.8s; }
+  .signal .ring:nth-child(4){ animation-delay:1.2s; }
+  @keyframes pulse{
+    0%,100%{ opacity:0.25; }
+    50%{ opacity:0.9; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .signal .ring{ animation:none; opacity:.6; }
+    .reveal{ transition:none; opacity:1; transform:none; }
+    .marquee-track{ animation:none !important; }
+  }
+
+  /* ---------- MARQUEE STRIP ---------- */
+  .marquee{
+    background:var(--navy);
+    color:var(--white);
+    overflow:hidden;
+    white-space:nowrap;
+    border-top:1px solid var(--orange);
+    border-bottom:1px solid var(--orange);
+  }
+  .marquee-track{
+    display:inline-flex;
+    animation:scroll-left 38s linear infinite;
+    padding:15px 0;
+  }
+  .marquee-track span{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    padding:0 28px;
+    display:inline-flex;
+    align-items:center;
+    gap:28px;
+  }
+  .marquee-track span::after{
+    content:'◆';
+    color:var(--orange);
+    font-size:8px;
+  }
+  @keyframes scroll-left{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:120px 0; position:relative; }
+  .section-head{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    margin-bottom:64px;
+    align-items:end;
+  }
+  .section-head h2{
+    font-size:clamp(30px,3.6vw,46px);
+    line-height:1.12;
+    margin-top:14px;
+  }
+  .section-head .sub{
+    color:var(--grey-600);
+    font-size:15.5px;
+    max-width:42ch;
+    align-self:end;
+  }
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philosophy{ background:var(--grey-100); border-top:1px solid var(--grey-200); border-bottom:1px solid var(--grey-200); }
+  .phil-grid{
+    display:grid;
+    grid-template-columns:0.8fr 1.2fr;
+    gap:60px;
+    align-items:center;
+  }
+  .phil-photo{ aspect-ratio:4/5; border-radius:6px; }
+  .phil-photo img{ position:relative; z-index:0; }
+  .phil-quote{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(24px,2.6vw,32px);
+    line-height:1.4;
+    color:var(--navy);
+  }
+  .phil-body p{
+    color:var(--grey-600);
+    font-size:16px;
+    margin-bottom:18px;
+    max-width:56ch;
+  }
+  .phil-body p:last-child{ margin-bottom:0; }
+  .phil-text{ margin-top:26px; }
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--grey-200);
+    border:1px solid var(--grey-200);
+  }
+  .service-card{
+    background:var(--white);
+    padding:34px 28px;
+    transition:background .3s ease, transform .3s ease;
+  }
+  .service-card:hover{ background:var(--blue-light); }
+  .service-icon{
+    width:46px; height:46px;
+    border-radius:10px;
+    background:var(--blue-light);
+    color:var(--blue);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px;
+  }
+  .service-card:hover .service-icon{ background:var(--orange); color:var(--white); }
+  .service-num{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--orange-dark);
+    letter-spacing:0.08em;
+  }
+  .service-card h3{
+    font-size:18px;
+    margin-top:14px;
+    margin-bottom:10px;
+    font-weight:600;
+  }
+  .service-card p{
+    font-size:14px;
+    color:var(--grey-600);
+    line-height:1.6;
+  }
+
+  /* ---------- WORK / IMPACT GALLERY ---------- */
+  .work{ background:var(--white); }
+  .work-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:20px;
+  }
+  .work-tile{
+    position:relative;
+    aspect-ratio:3/4;
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .work-tile .duotone{ position:absolute; inset:0; }
+  .work-info{
+    position:absolute; left:0; right:0; bottom:0;
+    z-index:3;
+    padding:24px 20px;
+  }
+  .work-info .tag{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--orange);
+  }
+  .work-info h3{
+    color:var(--white);
+    font-size:19px;
+    margin-top:8px;
+    font-weight:500;
+  }
+
+  /* ---------- SECTORS ---------- */
+  .sectors{ background:var(--navy); color:var(--white); }
+  .sectors .kicker{ color:var(--orange); }
+  .sectors .kicker::before{ background:var(--orange); }
+  .sectors .section-head h2{ color:var(--white); }
+  .sectors .section-head .sub{ color:rgba(255,255,255,0.62); }
+  .sector-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:rgba(255,255,255,0.12);
+  }
+  .sector-card{
+    background:var(--navy);
+    padding:30px 26px;
+    transition:background .3s ease;
+  }
+  .sector-card:hover{ background:var(--navy-2); }
+  .sector-icon{ color:var(--orange); margin-bottom:14px; }
+  .sector-card h3{
+    color:var(--white);
+    font-size:16px;
+    font-weight:500;
+    margin-bottom:8px;
+    line-height:1.3;
+  }
+  .sector-card p{
+    font-size:13px;
+    color:rgba(255,255,255,0.55);
+  }
+
+  /* ---------- APPROACH ---------- */
+  .approach-list{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:0;
+    position:relative;
+    border-top:1px solid var(--grey-200);
+  }
+  .approach-list::before{
+    content:'';
+    position:absolute;
+    top:-1px; left:0; right:0;
+    height:2px;
+    background:linear-gradient(90deg, var(--blue), var(--orange));
+  }
+  .approach-item{
+    padding:36px 28px 0 0;
+    border-right:1px solid var(--grey-200);
+    position:relative;
+  }
+  .approach-item:last-child{ border-right:none; padding-right:0; }
+  .approach-icon{
+    width:52px; height:52px;
+    border-radius:50%;
+    background:var(--navy);
+    color:var(--orange);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:14px;
+  }
+  .approach-item .num{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--blue);
+    letter-spacing:0.1em;
+  }
+  .approach-item h3{
+    font-size:19px;
+    margin:10px 0 10px;
+  }
+  .approach-item p{
+    font-size:14px;
+    color:var(--grey-600);
+    max-width:30ch;
+  }
+
+  /* ---------- MANIFESTO ---------- */
+  .manifesto{
+    position:relative;
+    color:var(--white);
+    text-align:center;
+    padding:130px 0;
+    overflow:hidden;
+  }
+  .manifesto-bg{ position:absolute; inset:0; z-index:-1; }
+  .manifesto-bg img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.1) brightness(0.55); }
+  .manifesto-bg::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(120deg, rgba(11,31,58,0.92), rgba(255,106,43,0.35));
+  }
+  .manifesto blockquote{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(26px, 4vw, 48px);
+    line-height:1.32;
+    max-width:900px;
+    margin:0 auto;
+  }
+  .manifesto .rule{
+    width:48px;
+    height:2px;
+    background:var(--orange);
+    margin:32px auto 0;
+  }
+
+  /* ---------- STAT BANNER ---------- */
+  .stat-banner{ background:var(--blue-light); border-top:1px solid var(--grey-200); border-bottom:1px solid var(--grey-200); padding:70px 0; }
+  .stat-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:30px;
+    text-align:center;
+  }
+  .stat-item .num{
+    font-family:var(--serif);
+    font-size:clamp(34px,4vw,52px);
+    color:var(--orange-dark);
+    font-weight:600;
+    line-height:1;
+  }
+  .stat-item .label{
+    margin-top:10px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--navy);
+  }
+
+  /* ---------- LEADERSHIP ---------- */
+  .leadership{ background:var(--grey-100); }
+  .leadership-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:26px;
+  }
+  .lead-card{
+    text-align:left;
+    background:var(--white);
+    border:1px solid var(--grey-200);
+    border-radius:8px;
+    padding:26px 24px 24px;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .lead-card:hover{ transform:translateY(-4px); box-shadow:0 18px 34px -20px rgba(11,31,58,0.35); }
+  .avatar{
+    width:64px; height:64px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px;
+    color:var(--white);
+    font-family:var(--serif);
+    font-size:20px;
+    font-weight:600;
+  }
+  .avatar.g1{ background:linear-gradient(135deg, var(--blue), var(--navy)); }
+  .avatar.g2{ background:linear-gradient(135deg, var(--orange), var(--orange-dark)); }
+  .avatar.g3{ background:linear-gradient(135deg, var(--navy), var(--orange-dark)); }
+  .avatar.g4{ background:linear-gradient(135deg, var(--blue-mid), var(--blue)); }
+  .lead-card h3{ font-size:17px; margin-bottom:4px; font-weight:600; }
+  .lead-card p{ font-size:12.5px; color:var(--grey-600); font-family:var(--mono); letter-spacing:0.04em; text-transform:uppercase; }
+
+  /* ---------- CONTACT ---------- */
+  .contact{ background:var(--white); border-top:1px solid var(--grey-200); }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:70px;
+  }
+  .contact-info h2{
+    font-size:clamp(30px,3.4vw,44px);
+    margin-top:14px;
+    line-height:1.14;
+  }
+  .contact-info p.lede{
+    color:var(--grey-600);
+    margin-top:20px;
+    max-width:40ch;
+  }
+  .contact-detail{
+    margin-top:40px;
+    border-top:1px solid var(--grey-200);
+    padding-top:22px;
+  }
+  .contact-detail + .contact-detail{ margin-top:0; }
+  .contact-detail .label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--orange-dark);
+    margin-bottom:8px;
+  }
+  .contact-detail .value{ font-size:16px; color:var(--navy); }
+  .contact-detail .value a:hover{ color:var(--blue); }
+
+  .social-row{ display:flex; gap:16px; margin-top:36px; }
+  .social-row a{
+    width:38px; height:38px;
+    border:1px solid var(--grey-300);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    transition:all .25s ease;
+    color:var(--navy);
+  }
+  .social-row a:hover{ background:var(--blue); border-color:var(--blue); color:var(--white); }
+  .social-row svg{ width:15px; height:15px; }
+
+  form{ display:grid; gap:22px; background:var(--grey-100); padding:36px; border-radius:10px; border:1px solid var(--grey-200); }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .field{ display:flex; flex-direction:column; gap:8px; }
+  .field label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--grey-600);
+  }
+  .field input, .field textarea{
+    background:var(--white);
+    border:1px solid var(--grey-300);
+    border-radius:5px;
+    padding:11px 12px;
+    font-family:var(--sans);
+    font-size:15px;
+    color:var(--navy);
+    transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  .field input:focus, .field textarea:focus{
+    border-color:var(--blue);
+    outline:none;
+    box-shadow:0 0 0 3px var(--blue-light);
+  }
+  .field textarea{ resize:vertical; min-height:100px; }
+  .submit-row{ display:flex; align-items:center; gap:20px; margin-top:6px; flex-wrap:wrap; }
+  .form-note{
+    font-size:13px;
+    color:var(--grey-600);
+    opacity:0;
+    transition:opacity .3s ease;
+  }
+  .form-note.show{ opacity:1; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--navy);
+    color:rgba(255,255,255,0.75);
+    padding:64px 0 30px;
+    border-top:3px solid var(--orange);
+  }
+  .footer-top{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr 1fr;
+    gap:40px;
+    padding-bottom:48px;
+    border-bottom:1px solid rgba(255,255,255,0.14);
+  }
+  .footer-brand .logo-text .top{ color:var(--white); }
+  .footer-brand p{
+    margin-top:16px;
+    font-size:13.5px;
+    max-width:32ch;
+    color:rgba(255,255,255,0.55);
+  }
+  .footer-col .label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:18px;
+  }
+  .footer-col ul li{ margin-bottom:11px; font-size:14px; }
+  .footer-col ul li a:hover{ color:var(--orange); }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:26px;
+    font-size:12.5px;
+    color:rgba(255,255,255,0.45);
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 980px){
+    .nav-links{ display:none; }
+    .menu-btn{ display:flex; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .signal-wrap{ display:none; }
+    .phil-grid, .contact-grid{ grid-template-columns:1fr; gap:36px; }
+    .phil-photo{ order:-1; aspect-ratio:16/9; }
+    .services-grid{ grid-template-columns:repeat(2,1fr); }
+    .work-grid{ grid-template-columns:repeat(2,1fr); }
+    .sector-grid{ grid-template-columns:repeat(2,1fr); }
+    .approach-list{ grid-template-columns:repeat(2,1fr); }
+    .approach-item{ border-right:none; border-bottom:1px solid var(--grey-200); padding:28px 0; }
+    .leadership-grid{ grid-template-columns:repeat(2,1fr); }
+    .stat-grid{ grid-template-columns:repeat(2,1fr); }
+    .footer-top{ grid-template-columns:1fr 1fr; }
+    .section-head{ grid-template-columns:1fr; }
+    .form-row{ grid-template-columns:1fr; }
+  }
+  @media (max-width: 560px){
+    section{ padding:80px 0; }
+    .services-grid, .work-grid, .sector-grid, .leadership-grid, .footer-top, .stat-grid{ grid-template-columns:1fr; }
+    .approach-list{ grid-template-columns:1fr; }
+    .hero{ padding-top:150px; }
+    form{ padding:24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ICON SPRITE -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M3 10v4a1 1 0 0 0 1 1h2l7 4V5L6 9H4a1 1 0 0 0-1 1z"/><path d="M17 9a4 4 0 0 1 0 6"/><path d="M20 6a8 8 0 0 1 0 12"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M12 8v5"/><circle cx="12" cy="16.2" r="0.7" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-newspaper" viewBox="0 0 24 24"><rect x="3" y="5" width="14" height="14" rx="1"/><path d="M17 8h4v9a2 2 0 0 1-2 2h-2"/><path d="M6 9h8M6 12h8M6 15h5"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v10H8l-4 4V5z"/><path d="M8 9h8M8 12h5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M7 16l4-5 3 3 5-7"/></symbol>
+  <symbol id="i-landmark" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-7M15 21v-7"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3-6 7-6s7 2.7 7 6"/><circle cx="17.5" cy="9" r="2.3"/><path d="M15.6 14.2c2.7.4 5 2.1 5.4 5.8"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/><path d="M14 6l3 3"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24"><path d="M4 10h16M4 10l8-5 8 5M5 10v9M9 10v9M15 10v9M19 10v9M3 21h18"/></symbol>
+  <symbol id="i-crane" viewBox="0 0 24 24"><path d="M4 21V9l10-5v4M14 8h6v13M8 21V13h6"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9z"/><path d="M6 13h3l1.5-3L12 16l1.5-3H18"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4C10 4 4 10 4 18c0 0 8 2 12-2s4-8 4-12z"/><path d="M8 18c3-3 6-6 10-10"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-4 10 4-10 4-10-4z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></symbol>
+  <symbol id="i-ear" viewBox="0 0 24 24"><path d="M8 6a5 5 0 0 1 8 4c0 2-1.5 3-1.5 5a2.5 2.5 0 0 1-5 0"/><path d="M8 6a6 6 0 0 0-2 4.5c0 2 1 3 1 5"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 6-6 2 2-6 6-2z"/></symbol>
+  <symbol id="i-broadcast" viewBox="0 0 24 24"><path d="M12 3v4M8 6l2 2M16 6l-2 2M5 12a7 7 0 0 1 14 0"/><circle cx="12" cy="17" r="2"/><path d="M9 20a4 4 0 0 1 6 0"/></symbol>
+</svg>
+
+<header id="site-header">
+  <nav class="wrap">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="27" fill="#0B1F3A"/>
+        <path d="M30 30 L30 8 A22 22 0 0 1 47 39 Z" fill="#2F6FED" opacity="0.85"/>
+        <path d="M30 30 L47 39 A22 22 0 0 1 15 45 Z" fill="#FF6A2B" opacity="0.9"/>
+        <text x="30" y="35" text-anchor="middle" font-family="Fraunces, serif" font-size="15" fill="#ffffff" font-weight="600">TPR</text>
+      </svg>
+      <span class="logo-text">
+        <span class="top">TPR Communication</span><br>
+        <span class="bottom">Strategic PR &amp; Corp. Comms</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#sectors">Sectors</a>
+      <a href="#approach">Approach</a>
+      <a href="#leadership">About</a>
+      <a href="#contact" class="nav-cta">Contact Us</a>
+    </div>
+    <button class="menu-btn" aria-label="Open menu" id="menuBtn">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://picsum.photos/seed/tpr-hero-2026/1800/1100" alt="" role="presentation">
+    </div>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">TPR Communication — Est. Gurugram</p>
+        <h1>In the business of being <em>believed.</em></h1>
+        <p class="lede">TPR Communication is a corporate public relations and strategic communications agency. We help ambitious brands earn trust, command attention, and hold their ground when the story matters most.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Start a Conversation</a>
+          <a href="#services" class="btn btn-ghost">View Our Services</a>
+        </div>
+      </div>
+      <div class="signal-wrap">
+        <svg class="signal" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sigGrad" x1="0" y1="240" x2="240" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#FF6A2B"/>
+              <stop offset="1" stop-color="#2F6FED"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring" cx="46" cy="194" r="46" stroke="url(#sigGrad)" stroke-width="1.4"/>
+          <circle class="ring" cx="46" cy="194" r="86" stroke="url(#sigGrad)" stroke-width="1.2" opacity="0.75"/>
+          <circle class="ring" cx="46" cy="194" r="126" stroke="url(#sigGrad)" stroke-width="1" opacity="0.5"/>
+          <circle class="ring" cx="46" cy="194" r="166" stroke="url(#sigGrad)" stroke-width="0.8" opacity="0.3"/>
+          <circle cx="46" cy="194" r="9" fill="#FF6A2B"/>
+          <circle cx="118" cy="122" r="4" fill="#ffffff"/>
+          <circle cx="168" cy="86" r="3" fill="#ffffff" opacity="0.8"/>
+          <circle cx="204" cy="46" r="5" fill="#2F6FED"/>
+          <text x="46" y="199" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8" fill="#0B1F3A" font-weight="600">TPR</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>Corporate Communication</span><span>Reputation Management</span><span>Media Relations</span><span>Crisis Communication</span><span>Investor Relations</span><span>Public Affairs</span>
+      <span>Corporate Communication</span><span>Reputation Management</span><span>Media Relations</span><span>Crisis Communication</span><span>Investor Relations</span><span>Public Affairs</span>
+    </div>
+  </div>
+
+  <!-- PHILOSOPHY -->
+  <section class="philosophy">
+    <div class="wrap phil-grid">
+      <div class="phil-photo duotone reveal">
+        <img src="https://picsum.photos/seed/tpr-phil-2026/900/1100" alt="" role="presentation">
+      </div>
+      <div class="reveal">
+        <p class="kicker">Our Philosophy</p>
+        <p class="phil-quote">&ldquo;Reputation is not declared by a brand. It is decided, sentence by sentence, by everyone else.&rdquo;</p>
+        <div class="phil-body phil-text">
+          <p>Every organisation communicates whether it intends to or not — through what it says, what it withholds, and what it does under pressure. At TPR Communication, we treat that as the whole discipline of public relations: shaping how a brand is understood, not just how it is announced.</p>
+          <p>We work as counsel first and executors second — sitting close enough to strategy to know what's actually at stake, and close enough to the newsroom, the timeline, and the comment section to know how it will land. The work spans boardrooms and briefings, filings and feeds, but the standard stays the same: say the true thing, say it clearly, and say it before someone else says it for you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="kicker">What We Do</p>
+          <h2>Communications counsel across every stage of a brand's public life.</h2>
+        </div>
+        <p class="sub">From first mention to market moment, our services are built to work together — or stand alone when that's what the brief calls for.</p>
+      </div>
+      <div class="services-grid reveal">
+        <div class="service-card">
+          <div class="service-icon"><svg class="icon"><use href="#i-megaphone"/></svg></div>
+          <p class="service-num">01</p>
+          <h3>Corporate &amp; Brand Communication</h3>
+          <p>Positioning, messaging architecture, and narrative frameworks that give a brand a consistent point of view across every audience.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg class="icon"><use href="#i-shield"/></svg></div>
+          <p class="service-num">02</p>
+          <h3>Reputation &amp; Crisis Management</h3>
+          <p>Preparedness, response protocols, and steady counsel when the story turns — built before the crisis, not during it.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg class="icon"><use href="#i-newspaper"/></svg></div>
+          <p class="service-num">03</p>
+          <h3>Media Relations</h3>
+          <p>Editorial-grade storytelling backed by real newsroom relationships, securing coverage that earns attention rather than renting it.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg class="icon"><use href="#i-chat"/></svg></div>
+          <p class="service-num">04</p>
+          <h3>Digital &amp; Social Communication</h3>
+          <p>Always-on brand voice, community response, and platform-native content that extends PR into the feed.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg class="icon"><use href="#i-chart"/></svg></div>
+          <p class="service-num">05</p>
+          <h3>Investor Relations</h3>
+          <p>Clear, compliant, market-ready communication for listed and pre-IPO companies engaging analysts and shareholders.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg class="icon"><use href="#i-landmark"/></svg></div>
+          <p class="service-num">06</p>
+          <h3>Public Affairs &amp; Government Relations</h3>
+          <p>Policy-literate counsel for organisations operating at the intersection of business and public institutions.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg class="icon"><use href="#i-users"/></svg></div>
+          <p class="service-num">07</p>
+          <h3>Internal Communication</h3>
+          <p>Making sure the story a company tells the world matches the one it tells its own people — because that's where trust starts.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg class="icon"><use href="#i-pen"/></svg></div>
+          <p class="service-num">08</p>
+          <h3>Content &amp; Narrative Strategy</h3>
+          <p>Long-form and thought-leadership content that builds authority in the rooms and feeds that matter most to a brand.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK / IMPACT GALLERY -->
+  <section id="work" class="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="kicker">Where It Lands</p>
+          <h2>The rooms and industries our counsel travels through.</h2>
+        </div>
+        <p class="sub">A glimpse of the terrain — boardrooms, newsrooms, public platforms, and policy tables — where our clients' stories get told.</p>
+      </div>
+      <div class="work-grid reveal">
+        <div class="work-tile">
+          <div class="duotone"><img src="https://picsum.photos/seed/tpr-work-boardroom/700/900" alt="" role="presentation"></div>
+          <div class="work-info">
+            <p class="tag">Boardroom</p>
+            <h3>Corporate Strategy</h3>
+          </div>
+        </div>
+        <div class="work-tile">
+          <div class="duotone"><img src="https://picsum.photos/seed/tpr-work-newsroom/700/900" alt="" role="presentation"></div>
+          <div class="work-info">
+            <p class="tag">Newsroom</p>
+            <h3>Media &amp; Press</h3>
+          </div>
+        </div>
+        <div class="work-tile">
+          <div class="duotone"><img src="https://picsum.photos/seed/tpr-work-publicsq/700/900" alt="" role="presentation"></div>
+          <div class="work-info">
+            <p class="tag">Public Square</p>
+            <h3>Platforms &amp; Feeds</h3>
+          </div>
+        </div>
+        <div class="work-tile">
+          <div class="duotone"><img src="https://picsum.photos/seed/tpr-work-policy/700/900" alt="" role="presentation"></div>
+          <div class="work-info">
+            <p class="tag">Policy Table</p>
+            <h3>Government &amp; Public Affairs</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTORS -->
+  <section id="sectors" class="sectors">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="kicker">Sectors We Serve</p>
+          <h2>Depth over breadth — in the industries where trust is hardest won.</h2>
+        </div>
+        <p class="sub">Communication doesn't travel the same way in every industry. Our teams build sector fluency so the counsel we give is specific, not generic.</p>
+      </div>
+      <div class="sector-grid reveal">
+        <div class="sector-card"><svg class="icon sector-icon"><use href="#i-bank"/></svg><h3>BFSI &amp; Capital Markets</h3><p>Trust-led communication for regulated, high-scrutiny audiences.</p></div>
+        <div class="sector-card"><svg class="icon sector-icon"><use href="#i-crane"/></svg><h3>Real Estate &amp; Infrastructure</h3><p>Credibility built on delivery, not just design.</p></div>
+        <div class="sector-card"><svg class="icon sector-icon"><use href="#i-heart"/></svg><h3>Healthcare &amp; Pharmaceuticals</h3><p>Precision communication where accuracy is non-negotiable.</p></div>
+        <div class="sector-card"><svg class="icon sector-icon"><use href="#i-chip"/></svg><h3>Technology &amp; Startups</h3><p>Category-defining narratives for fast-moving companies.</p></div>
+        <div class="sector-card"><svg class="icon sector-icon"><use href="#i-leaf"/></svg><h3>Energy &amp; Sustainability</h3><p>Public-interest communication for the energy transition.</p></div>
+        <div class="sector-card"><svg class="icon sector-icon"><use href="#i-landmark"/></svg><h3>Government &amp; Public Sector</h3><p>Institutional communication built on clarity and public trust.</p></div>
+        <div class="sector-card"><svg class="icon sector-icon"><use href="#i-bag"/></svg><h3>Consumer &amp; Retail</h3><p>Cultural relevance backed by consistent brand discipline.</p></div>
+        <div class="sector-card"><svg class="icon sector-icon"><use href="#i-cap"/></svg><h3>Education</h3><p>Institutional reputation built with students, parents, and faculty alike.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section id="approach">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="kicker">Our Approach</p>
+          <h2>Four disciplines. One continuous line of work.</h2>
+        </div>
+        <p class="sub">Communications work rarely ends where it starts — this is the sequence we hold ourselves to, campaign after campaign.</p>
+      </div>
+      <div class="approach-list reveal">
+        <div class="approach-item">
+          <div class="approach-icon"><svg class="icon" style="width:22px;height:22px;stroke:#fff"><use href="#i-ear"/></svg></div>
+          <p class="num">STEP 01</p>
+          <h3>Listen</h3>
+          <p>Understand the audience, the market, and the risk before writing a single word.</p>
+        </div>
+        <div class="approach-item">
+          <div class="approach-icon"><svg class="icon" style="width:22px;height:22px;stroke:#fff"><use href="#i-compass"/></svg></div>
+          <p class="num">STEP 02</p>
+          <h3>Shape</h3>
+          <p>Build the narrative, the messaging, and the plan around what's actually true.</p>
+        </div>
+        <div class="approach-item">
+          <div class="approach-icon"><svg class="icon" style="width:22px;height:22px;stroke:#fff"><use href="#i-broadcast"/></svg></div>
+          <p class="num">STEP 03</p>
+          <h3>Amplify</h3>
+          <p>Place the story where it earns attention — press, platforms, and people who matter.</p>
+        </div>
+        <div class="approach-item">
+          <div class="approach-icon"><svg class="icon" style="width:22px;height:22px;stroke:#fff"><use href="#i-shield"/></svg></div>
+          <p class="num">STEP 04</p>
+          <h3>Protect</h3>
+          <p>Stay ready. Reputation is defended continuously, not just when it's threatened.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto">
+    <div class="manifesto-bg">
+      <img src="https://picsum.photos/seed/tpr-manifesto-2026/1800/900" alt="" role="presentation">
+    </div>
+    <div class="wrap">
+      <blockquote class="reveal">&ldquo;Perception is not an accident. It is authored, defended, and earned — one sentence, one story, one relationship at a time.&rdquo;</blockquote>
+      <div class="rule"></div>
+    </div>
+  </section>
+
+  <!-- STAT BANNER -->
+  <section class="stat-banner">
+    <div class="wrap stat-grid reveal">
+      <div class="stat-item">
+        <p class="num">08</p>
+        <p class="label">Specialist Services</p>
+      </div>
+      <div class="stat-item">
+        <p class="num">08</p>
+        <p class="label">Sectors Served</p>
+      </div>
+      <div class="stat-item">
+        <p class="num">04</p>
+        <p class="label">Core Disciplines</p>
+      </div>
+      <div class="stat-item">
+        <p class="num">1 Day</p>
+        <p class="label">Response Time</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section id="leadership" class="leadership">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="kicker">Leadership</p>
+          <h2>A senior team, close to every account.</h2>
+        </div>
+        <p class="sub">No layers between strategy and execution — the people who plan the work are the people who stay on it.</p>
+      </div>
+      <div class="leadership-grid reveal">
+        <div class="lead-card">
+          <div class="avatar g1">MP</div>
+          <h3>Managing Partner</h3>
+          <p>Founder &amp; CEO</p>
+        </div>
+        <div class="lead-card">
+          <div class="avatar g2">CS</div>
+          <h3>Client Strategy Lead</h3>
+          <p>Director</p>
+        </div>
+        <div class="lead-card">
+          <div class="avatar g3">MR</div>
+          <h3>Media Relations Lead</h3>
+          <p>Senior Vice President</p>
+        </div>
+        <div class="lead-card">
+          <div class="avatar g4">DC</div>
+          <h3>Digital &amp; Content Lead</h3>
+          <p>Vice President</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-info reveal">
+        <p class="kicker">Get In Touch</p>
+        <h2>Let's shape the story before someone else tells it for you.</h2>
+        <p class="lede">Tell us what you're building, defending, or launching — a member of our team will respond within one business day.</p>
+
+        <div class="contact-detail">
+          <p class="label">Studio</p>
+          <p class="value">Gurugram, Haryana, India</p>
+        </div>
+        <div class="contact-detail">
+          <p class="label">Email</p>
+          <p class="value"><a href="mailto:hello@tprcommunication.com">hello@tprcommunication.com</a></p>
+        </div>
+        <div class="contact-detail">
+          <p class="label">Phone</p>
+          <p class="value"><a href="tel:+910000000000">+91 00000 00000</a></p>
+        </div>
+
+        <div class="social-row">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.48 1s2.5 1.12 2.5 2.5zM.24 8h4.5V23H.24V8zM8.5 8h4.31v2.05h.06c.6-1.14 2.07-2.35 4.26-2.35 4.55 0 5.39 3 5.39 6.9V23h-4.5v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23H8.5V8z"/></svg></a>
+          <a href="#" aria-label="Twitter/X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23.5 22h-7l-5.5-7.2L4.6 22H1.5l8.1-9.3L1 2h7.2l5 6.6L18.9 2zm-1.2 18h1.7L7.4 3.9H5.6L17.7 20z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2 .24 2.4.4a4.9 4.9 0 011.8 1.15 4.9 4.9 0 011.15 1.8c.16.4.34 1.2.4 2.4.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.24 2-.4 2.4a4.9 4.9 0 01-1.15 1.8 4.9 4.9 0 01-1.8 1.15c-.4.16-1.2.34-2.4.4-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-2-.24-2.4-.4a4.9 4.9 0 01-1.8-1.15 4.9 4.9 0 01-1.15-1.8c-.16-.4-.34-1.2-.4-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.24-2 .4-2.4a4.9 4.9 0 011.15-1.8A4.9 4.9 0 015.6 2.75c.4-.16 1.2-.34 2.4-.4C9.3 2.2 9.7 2.2 12 2.2zm0 1.8c-3.15 0-3.52 0-4.77.07-.98.05-1.5.2-1.86.34-.47.18-.8.4-1.15.75-.35.35-.57.68-.75 1.15-.14.36-.3.88-.34 1.86C3.06 8.42 3.05 8.79 3.05 12s0 3.58.07 4.83c.05.98.2 1.5.34 1.86.18.47.4.8.75 1.15.35.35.68.57 1.15.75.36.14.88.3 1.86.34 1.25.06 1.62.07 4.78.07s3.52 0 4.78-.07c.98-.05 1.5-.2 1.86-.34.47-.18.8-.4 1.15-.75.35-.35.57-.68.75-1.15.14-.36.3-.88.34-1.86.06-1.25.07-1.62.07-4.83s0-3.58-.07-4.83c-.05-.98-.2-1.5-.34-1.86a2.9 2.9 0 00-.75-1.15 2.9 2.9 0 00-1.15-.75c-.36-.14-.88-.3-1.86-.34C15.52 4 15.15 4 12 4zm0 3.8a4.2 4.2 0 110 8.4 4.2 4.2 0 010-8.4zm0 1.8a2.4 2.4 0 100 4.8 2.4 2.4 0 000-4.8zm5.3-1.98a.98.98 0 11-1.96 0 .98.98 0 011.96 0z"/></svg></a>
+        </div>
+      </div>
+
+      <form id="contactForm" class="reveal">
+        <div class="form-row">
+          <div class="field">
+            <label for="name">Full Name</label>
+            <input id="name" name="name" type="text" required>
+          </div>
+          <div class="field">
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required>
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel">
+          </div>
+        </div>
+        <div class="field">
+          <label for="message">How can we help?</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <div class="submit-row">
+          <button type="submit" class="btn btn-primary">Send Message</button>
+          <span class="form-note" id="formNote">Thank you — we'll be in touch within one business day.</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo-text"><span class="top">TPR Communication</span></span>
+        <p>A strategic public relations and corporate communications agency, headquartered in Gurugram, India.</p>
+      </div>
+      <div class="footer-col">
+        <p class="label">Navigate</p>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#sectors">Sectors</a></li>
+          <li><a href="#approach">Approach</a></li>
+          <li><a href="#leadership">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="label">Services</p>
+        <ul>
+          <li><a href="#services">Media Relations</a></li>
+          <li><a href="#services">Crisis Management</a></li>
+          <li><a href="#services">Investor Relations</a></li>
+          <li><a href="#services">Public Affairs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="label">Contact</p>
+        <ul>
+          <li><a href="mailto:hello@tprcommunication.com">hello@tprcommunication.com</a></li>
+          <li><a href="tel:+910000000000">+91 00000 00000</a></li>
+          <li>Gurugram, Haryana, India</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 TPR Communication. All rights reserved.</span>
+      <span>Strategic PR &amp; Corporate Communications</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header scroll state
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Mobile menu (simple toggle -> scrolls nav links into a stack)
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.querySelector('.nav-links');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = navLinks.style.display === 'flex';
+    if (isOpen){
+      navLinks.style.display = 'none';
+    } else {
+      navLinks.style.cssText = 'display:flex; position:absolute; top:82px; left:0; right:0; background:#ffffff; flex-direction:column; padding:24px; gap:22px; border-bottom:1px solid #E4E8EF;';
+    }
+  });
+
+  // Contact form (front-end only — connect to a real backend/email service before launch)
+  const form = document.getElementById('contactForm');
+  const note = document.getElementById('formNote');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    note.classList.add('show');
+    form.reset();
+    setTimeout(() => note.classList.remove('show'), 6000);
+  });
+</script>
+
+</body>
+</html>
