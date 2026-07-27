@@ -1,44 +1,53 @@
 import React from 'react';
+import Image from 'next/image';
 
 export function Philosophy() {
   return (
-    <section className="philosophy">
+    <section className="philosophy" style={{ padding: '100px 0', background: 'var(--bg-primary)' }}>
       <div className="wrap phil-grid">
         <div className="phil-photo-wrap reveal">
-          <div className="phil-photo duotone">
-            <img src="https://picsum.photos/seed/tpr-phil-2026/900/1100" alt="TPR Communications Counsel" />
-          </div>
-          <div className="phil-photo-badge">
-            <p className="badge-title">Counsel Discipline</p>
-            <p className="badge-quote">&ldquo;Sitting close enough to strategy to know what&apos;s actually at stake.&rdquo;</p>
+          <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
+            <Image
+              src="/aboutus.png"
+              alt="TPR Communications — Who We Are"
+              fill
+              sizes="(max-width: 768px) 100vw, 500px"
+              style={{ objectFit: 'cover' }}
+            />
           </div>
         </div>
 
-        <div className="reveal reveal-delay-1">
-          <p className="kicker">Our Philosophy</p>
-          <p className="phil-quote">
-            &ldquo;Reputation is not declared by a brand. It is decided, <strong>sentence by sentence</strong>, by everyone else.&rdquo;
-          </p>
+        <div className="reveal reveal-delay-1" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <p className="kicker">Who We Are</p>
+          <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 40px)', fontFamily: 'var(--serif)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '20px', lineHeight: 1.25 }}>
+            Evidence over instinct.<br />Craft over noise.
+          </h2>
 
-          <div className="phil-pillars">
-            <div className="pillar-pill">
-              <span>01</span> Truth Over Spin
-            </div>
-            <div className="pillar-pill">
-              <span>02</span> Proactive Narrative
-            </div>
-            <div className="pillar-pill">
-              <span>03</span> Newsroom Fluency
-            </div>
+          <div className="phil-body phil-text" style={{ fontSize: '15.5px', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
+            <p>
+              TPR Communications was founded on a simple conviction: that communication works best when it is built on evidence, not instinct. We bring together researchers, strategists, media professionals, and creative producers under one roof, so that every narrative we build for a client is grounded in insight and delivered with precision.
+            </p>
+            <p style={{ marginTop: '16px' }}>
+              Our name stands for a promise — <strong style={{ color: 'var(--gold)', fontWeight: 700 }}>Trust, Purpose, Reputation</strong> — the three outcomes every engagement is designed to deliver. We do not chase headlines for their own sake. We build communication programmes that are defensible under scrutiny, consistent across platforms, and aligned to the long-term interests of the organisations and individuals we represent.
+            </p>
+            <p style={{ marginTop: '16px' }}>
+              From boardrooms to newsrooms, from public institutions to political campaigns, our teams operate with the same discipline: understand the landscape first, then design the message, then deliver it with craft.
+            </p>
           </div>
 
-          <div className="phil-body phil-text">
-            <p>
-              Every organisation communicates whether it intends to or not — through what it says, what it withholds, and what it does under pressure. At TPR Communication, we treat that as the whole discipline of public relations: <strong style={{ color: 'var(--orange-dark)', fontWeight: 700 }}>shaping how a brand is understood, not just how it is announced.</strong>
-            </p>
-            <p>
-              We work as counsel first and executors second — sitting close enough to strategy to know what&apos;s actually at stake, and close enough to the newsroom, the timeline, and the comment section to know how it will land. The standard stays the same: <strong style={{ color: 'var(--orange)', fontWeight: 700 }}>say the true thing, say it clearly, and say it before someone else says it for you.</strong>
-            </p>
+          <div style={{ marginTop: '32px', display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '12px 18px' }}>
+              <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', fontWeight: 700, display: 'block' }}>TRUST</span>
+              <span style={{ fontSize: '13px', color: 'var(--text-primary)', fontWeight: 600 }}>Evidence-Based Defense</span>
+            </div>
+            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '12px 18px' }}>
+              <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', fontWeight: 700, display: 'block' }}>PURPOSE</span>
+              <span style={{ fontSize: '13px', color: 'var(--text-primary)', fontWeight: 600 }}>Strategic Alignment</span>
+            </div>
+            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '12px 18px' }}>
+              <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', fontWeight: 700, display: 'block' }}>REPUTATION</span>
+              <span style={{ fontSize: '13px', color: 'var(--text-primary)', fontWeight: 600 }}>Protected Legacy</span>
+            </div>
           </div>
         </div>
       </div>

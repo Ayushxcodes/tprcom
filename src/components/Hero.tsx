@@ -1,111 +1,117 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+
+const heroImages = [
+  { src: '/hero1.png', label: 'RESEARCH & MEDIA DESK' },
+  { src: '/hero2.png', label: 'STRATEGIC COMMUNICATIONS' },
+  { src: '/hero3.png', label: 'REPUTATION & SCRUTINY COUNSEL' },
+];
 
 export function Hero() {
+  const [currentIdx, setCurrentIdx] = useState<number>(0);
+
+  // Automated background slideshow transition every 6 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % heroImages.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <section className="hero">
-      <div className="hero-bg">
-        <img src="https://picsum.photos/seed/tpr-hero-2026/1800/1100" alt="" role="presentation" />
+    <section className="hero" style={{ minHeight: '100vh', display: 'flex', alignItems: 'flex-end', position: 'relative', overflow: 'hidden', padding: 0 }}>
+      {/* AUTOMATED BACKGROUND SLIDESHOW WITH HERO1, HERO2, HERO3 */}
+      <div className="hero-bg" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+        {heroImages.map((img, idx) => (
+          <div
+            key={idx}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              opacity: idx === currentIdx ? 1 : 0,
+              transition: 'opacity 1.4s ease-in-out',
+              zIndex: idx === currentIdx ? 1 : 0
+            }}
+          >
+            <img
+              src={img.src}
+              alt="TPR Communications Strategic PR"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                filter: 'contrast(1.05) brightness(0.72)',
+                transform: idx === currentIdx ? 'scale(1.04)' : 'scale(1)',
+                transition: 'transform 7s ease-out'
+              }}
+            />
+          </div>
+        ))}
+        
+        {/* SUBTLE NATURAL VIGNETTE GRADIENT FOR READABILITY */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.48) 50%, transparent 100%)',
+          zIndex: 2
+        }} />
       </div>
-      <div className="grid-bg-overlay" aria-hidden="true" />
-      <div className="wrap hero-grid">
-        <div className="reveal">
-          <div className="hero-badge">
-            <span className="pulse-dot"></span>
-            <span>24/7 Strategic Crisis &amp; Media Command</span>
+
+      {/* FAR-LEFT BOTTOM-CORNER CONTENT CONTAINER */}
+      <div style={{ position: 'relative', zIndex: 10, width: '100%', paddingLeft: 'clamp(24px, 5vw, 64px)', paddingRight: '24px', paddingBottom: '56px', paddingTop: '120px' }}>
+        <div className="reveal" style={{ maxWidth: '780px', textAlign: 'left' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--gold)' }} />
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', letterSpacing: '0.18em', fontWeight: 700, textTransform: 'uppercase' }}>
+              RESEARCH-LED STRATEGIC PR
+            </span>
           </div>
 
-          <p className="kicker">TPR Communication — Est. Gurugram</p>
-          <h1>
-            In the business of being <em>believed.</em>
+          <h1 style={{ fontSize: 'clamp(40px, 5.2vw, 72px)', lineHeight: 1.08, color: '#FFFFFF', fontWeight: 700, margin: '0 0 18px 0', textShadow: '0 4px 20px rgba(0,0,0,0.85)' }}>
+            Quintessentially<br />
+            <em style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--gold)', textShadow: '0 0 35px rgba(184, 153, 94, 0.5)' }}>
+              quality-driven.
+            </em>
           </h1>
-          <p className="lede">
-            TPR Communication is a corporate public relations and strategic communications agency. We help ambitious brands earn trust, command attention, and hold their ground when the story matters most.
+
+          <p className="lede" style={{ fontSize: '18px', color: 'rgba(255, 255, 255, 0.95)', lineHeight: 1.6, maxWidth: '600px', margin: '0 0 28px 0', textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}>
+            TPR Communications is a research-led, quality-driven full-service PR firm delivering strategic communications across the spectrum — helping brands earn trust, build credibility, strengthen reputation, and stand out with purpose.
           </p>
-          <div className="hero-actions">
-            <a href="#contact" className="btn btn-primary">
-              Start a Conversation
-              <svg className="icon" style={{ width: '16px', height: '16px' }} viewBox="0 0 24 24">
+
+          <div className="hero-actions" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+            <a href="#contact" className="btn btn-primary" style={{ padding: '15px 30px', fontSize: '14.5px' }}>
+              Get in Touch
+              <svg className="icon" style={{ width: '16px', height: '16px', marginLeft: '6px' }} viewBox="0 0 24 24">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </a>
-            <a href="#services" className="btn btn-ghost">Explore Our Practice</a>
+            <a href="#services" className="btn btn-ghost" style={{ padding: '15px 30px', fontSize: '14.5px' }}>
+              Explore Our Services
+            </a>
           </div>
-        </div>
 
-        <div className="reveal reveal-delay-2 hero-visual-container">
-          {/* CONTINUOUS PR STRATEGY PATHWAY SYSTEM */}
-          <div className="hero-pathway-wrapper">
-            <div className="pathway-flow-container">
-              {/* WAYPOINT 01: BRAND INPUT */}
-              <div className="pathway-node">
-                <div className="step-badge">01</div>
-                <div className="node-info">
-                  <div className="lbl">● NARRATIVE ORIGIN</div>
-                  <div className="val">Ambitious Enterprise Vision</div>
-                </div>
-              </div>
-
-              {/* PATHWAY CONNECTING LINE 01 TO 02 */}
-              <svg className="pathway-track-svg" viewBox="0 0 300 64">
-                <line x1="150" y1="0" x2="150" y2="64" className="pathway-line-glow" strokeWidth="2.5" />
-                <circle cx="150" cy="32" r="5" fill="#FF6A2B">
-                  <animate attributeName="cy" values="0;64" dur="1.4s" repeatCount="indefinite" />
-                </circle>
-              </svg>
-
-              {/* WAYPOINT 02: TPR ENGINE */}
-              <div className="pathway-node" style={{ borderColor: 'var(--orange)' }}>
-                <div className="step-badge" style={{ background: 'linear-gradient(135deg, var(--orange), #FF9D71)' }}>02</div>
-                <div className="node-info">
-                  <div className="lbl">● TPR STRATEGIC ENGINE</div>
-                  <div className="val">Media Positioning &amp; Crisis Defense</div>
-                </div>
-              </div>
-
-              {/* PATHWAY CONNECTING LINE 02 TO DESTINATIONS */}
-              <svg className="pathway-track-svg" viewBox="0 0 300 64">
-                <path d="M150 0 L150 28 L50 28 L50 64 M150 28 L150 64 M150 28 L250 28 L250 64" className="pathway-line-glow" fill="none" strokeWidth="2.2" />
-                <circle cx="150" cy="28" r="4" fill="#10B981">
-                  <animate attributeName="r" values="3;6;3" dur="1s" repeatCount="indefinite" />
-                </circle>
-              </svg>
-
-              {/* DESTINATION TERMINALS (EARN TRUST, COMMAND ATTENTION, HOLD GROUND) */}
-              <div className="pathway-destinations">
-                <div className="pathway-dest-card">
-                  <div className="icon-ring">
-                    <svg className="icon" viewBox="0 0 24 24">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                      <path d="M9 12l2 2 4-4" />
-                    </svg>
-                  </div>
-                  <div className="title">Earn Trust</div>
-                  <div className="tag">99.4% CREDIBILITY</div>
-                </div>
-
-                <div className="pathway-dest-card">
-                  <div className="icon-ring">
-                    <svg className="icon" viewBox="0 0 24 24">
-                      <path d="M11 5L6 9H2v6h4l5 4V5z" />
-                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-                    </svg>
-                  </div>
-                  <div className="title">Command Attention</div>
-                  <div className="tag">TIER-1 REACH</div>
-                </div>
-
-                <div className="pathway-dest-card">
-                  <div className="icon-ring">
-                    <svg className="icon" viewBox="0 0 24 24">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                  </div>
-                  <div className="title">Hold Ground</div>
-                  <div className="tag">CRISIS SHIELD</div>
-                </div>
-              </div>
-            </div>
+          {/* SLIDESHOW PROGRESS INDICATORS */}
+          <div style={{ display: 'flex', gap: '10px', marginTop: '32px', alignItems: 'center' }}>
+            {heroImages.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIdx(idx)}
+                style={{
+                  height: '4px',
+                  width: idx === currentIdx ? '32px' : '10px',
+                  borderRadius: '2px',
+                  background: idx === currentIdx ? 'var(--gold)' : 'rgba(255, 255, 255, 0.35)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.4s ease'
+                }}
+                aria-label={`Switch to slide ${idx + 1}`}
+              />
+            ))}
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', marginLeft: '10px', letterSpacing: '0.14em', fontWeight: 700 }}>
+              0{currentIdx + 1} / 0{heroImages.length} ● {heroImages[currentIdx].label}
+            </span>
           </div>
         </div>
       </div>

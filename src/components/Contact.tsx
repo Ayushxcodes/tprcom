@@ -39,15 +39,12 @@ export function Contact() {
       <div className="wrap contact-grid">
         <div className="contact-info reveal">
           <p className="kicker">Get In Touch</p>
-          <h2>Let&apos;s shape the story before someone else tells it for you.</h2>
-          <p className="lede">
-            Tell us what you&apos;re building, defending, or launching — a member of our senior leadership team will respond within one business day.
+          <h2>Let’s build a communication strategy that earns trust and stands the test of scrutiny.</h2>
+          <p className="lede" style={{ fontSize: '15px', color: 'var(--text-secondary)', marginTop: '14px', lineHeight: 1.7 }}>
+            Whether you are navigating a crisis, preparing for a public listing, building a long-term reputation strategy, or shaping a political narrative, TPR Communications is ready to partner with you.
           </p>
 
-          <div className="studio-photo-card">
-            <img src="https://picsum.photos/seed/tpr-hq-studio/800/450" alt="Gurugram Studio Headquarters" />
-            <div className="overlay-pill">● GURUGRAM HEADQUARTERS &amp; MEDIA DESK</div>
-          </div>
+
 
           <div className="contact-detail">
             <p className="label">Studio Location</p>
@@ -142,7 +139,7 @@ export function Contact() {
               id="message"
               name="message"
               required
-              placeholder="Tell us about your strategic communications brief, upcoming announcement, or crisis counsel needs..."
+              placeholder="Tell us about your strategic communications brief, political campaign, IPO, or crisis counsel needs..."
               value={formData.message}
               onChange={handleChange}
             />

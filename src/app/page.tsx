@@ -1,14 +1,12 @@
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
-import { Marquee } from '@/components/Marquee';
 import { Philosophy } from '@/components/Philosophy';
+import { PoliticalComms } from '@/components/PoliticalComms';
 import { Services } from '@/components/Services';
 import { Work } from '@/components/Work';
 import { Sectors } from '@/components/Sectors';
 import { Approach } from '@/components/Approach';
-import { Manifesto } from '@/components/Manifesto';
-import { Stats } from '@/components/Stats';
-import { Leadership } from '@/components/Leadership';
+import { ClientLogos } from '@/components/ClientLogos';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
 import { ScrollReveal } from '@/components/ScrollReveal';
@@ -19,15 +17,13 @@ export default function Home() {
       <Header />
       <main id="top">
         <Hero />
-        <Marquee />
         <Philosophy />
+        <PoliticalComms />
         <Services />
         <Work />
         <Sectors />
         <Approach />
-        <Manifesto />
-        <Stats />
-        <Leadership />
+        <ClientLogos />
         <Contact />
       </main>
       <Footer />

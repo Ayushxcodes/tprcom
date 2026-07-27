@@ -1,22 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('tpr_theme') as 'light' | 'dark' | null;
+      if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme;
+    }
+    return 'light';
+  });
 
   useEffect(() => {
-    // Check saved theme or system preference
-    const savedTheme = localStorage.getItem('tpr_theme') as 'light' | 'dark' | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
+    document.documentElement.setAttribute('data-theme', theme);
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -29,7 +29,7 @@ export function Header() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [theme]);
 
   const toggleTheme = () => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
@@ -53,19 +53,25 @@ export function Header() {
         <div className="wrap">
           <div className="header-inner">
             <nav className="wrap">
-              <a href="#top" className="logo">
-                <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="30" cy="30" r="27" fill="#0B1F3A" />
-                  <path d="M30 30 L30 8 A22 22 0 0 1 47 39 Z" fill="#2F6FED" opacity="0.85" />
-                  <path d="M30 30 L47 39 A22 22 0 0 1 15 45 Z" fill="#FF6A2B" opacity="0.9" />
-                  <text x="30" y="35" textAnchor="middle" fontFamily="Fraunces, serif" fontSize="15" fill="#ffffff" fontWeight="600">
-                    TPR
-                  </text>
-                </svg>
-                <span className="logo-text">
-                  <span className="top">TPR Communication</span>
-                  <br />
-                  <span className="bottom">Strategic PR &amp; Corp. Comms</span>
+              <a href="#top" className="logo" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Image
+                  src="/Logo.png"
+                  alt="TPR Communications"
+                  width={180}
+                  height={44}
+                  priority
+                  style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
+                />
+                <div className="logo-comms-divider" style={{ height: '28px', width: '1px', background: 'var(--border-color)', margin: '0 4px' }} />
+                <span className="logo-comms-text" style={{
+                  fontFamily: 'var(--serif)',
+                  fontSize: '16px',
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: '#1e2e3b',
+                  fontWeight: 800
+                }}>
+                  COMMUNICATIONS
                 </span>
               </a>
 
@@ -92,10 +98,8 @@ export function Header() {
                 }
               >
                 <a href="#services" onClick={() => setIsMobileMenuOpen(false)}>Services</a>
-                <a href="#work" onClick={() => setIsMobileMenuOpen(false)}>Work</a>
                 <a href="#sectors" onClick={() => setIsMobileMenuOpen(false)}>Sectors</a>
-                <a href="#approach" onClick={() => setIsMobileMenuOpen(false)}>Approach</a>
-                <a href="#leadership" onClick={() => setIsMobileMenuOpen(false)}>About</a>
+                <a href="#manifesto" onClick={() => setIsMobileMenuOpen(false)}>About</a>
 
                 <button
                   className="theme-toggle-btn"

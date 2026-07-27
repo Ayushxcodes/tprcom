@@ -1,0 +1,6 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="60" rx="8" fill="#0A1628"/>
+  <circle cx="35" cy="30" r="14" fill="#B8995E" opacity="0.2"/>
+  <path d="M 35 18 L 45 38 L 25 38 Z" fill="#B8995E"/>
+  <text x="60" y="36" font-family="Cinzel, serif" font-weight="700" font-size="16" fill="#FFFFFF" letter-spacing="2">APEX</text>
+</svg>

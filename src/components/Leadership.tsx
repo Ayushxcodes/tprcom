@@ -9,34 +9,22 @@ interface LeaderItem {
 
 const leaders: LeaderItem[] = [
   {
-    image: 'https://picsum.photos/seed/tpr-exec-1/600/800',
-    name: 'Manish Patel',
-    role: 'Managing Partner & CEO',
-    expertise: 'Former senior news editor & corporate strategist with 18+ years advising Fortune 500 boards.',
+    image: '/member1.jpeg',
+    name: 'Tarun Purwaney',
+    role: 'Founder & CEO',
+    expertise: 'Former senior communications strategist with 18+ years advising top corporate boards.',
   },
   {
-    image: 'https://picsum.photos/seed/tpr-exec-2/600/800',
-    name: 'Claire Sharma',
-    role: 'Director, Client Strategy',
-    expertise: 'Specialist in high-stakes corporate narrative, reputation defense, and market entry messaging.',
-  },
-  {
-    image: 'https://picsum.photos/seed/tpr-exec-3/600/800',
-    name: 'Mark Redford',
-    role: 'SVP, Media Relations',
-    expertise: 'Deep newsroom connections across national dailies, financial press, and broadcast networks.',
-  },
-  {
-    image: 'https://picsum.photos/seed/tpr-exec-4/600/800',
-    name: 'Divya Chaudhry',
-    role: 'VP, Digital & Content',
-    expertise: 'Architect of executive online presence, platform crisis monitoring, and multi-channel campaign PR.',
+    image: '/member2.jpeg',
+    name: 'Research & Strategy Team',
+    role: 'Strategic Counsel Desk',
+    expertise: 'Specializing in evidence-based corporate narratives, reputation defense, and political advisory.',
   },
 ];
 
 export function Leadership() {
   return (
-    <section id="leadership" className="leadership">
+    <section id="leadership" className="leadership" style={{ padding: '80px 0' }}>
       <div className="wrap">
         <div className="section-head reveal">
           <div>
@@ -47,16 +35,36 @@ export function Leadership() {
             No layers between strategy and execution — the people who plan the work are the people who stay on it.
           </p>
         </div>
-        <div className="leadership-grid reveal">
+        
+        <div
+          className="reveal"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '24px',
+            flexWrap: 'wrap',
+            marginTop: '36px'
+          }}
+        >
           {leaders.map((leader, idx) => (
-            <div className={`lead-photo-card reveal-delay-${idx + 1}`} key={idx}>
+            <div
+              className={`lead-photo-card reveal-delay-${idx + 1}`}
+              key={idx}
+              style={{
+                width: '100%',
+                maxWidth: '300px',
+                aspectRatio: '4/5',
+                padding: '20px',
+                borderRadius: '14px'
+              }}
+            >
               <div className="photo">
                 <img src={leader.image} alt={leader.name} />
               </div>
               <div className="info">
-                <h3>{leader.name}</h3>
-                <p className="title">{leader.role}</p>
-                <p className="exp">{leader.expertise}</p>
+                <h3 style={{ fontSize: '18px', fontWeight: 600 }}>{leader.name}</h3>
+                <p className="title" style={{ fontSize: '12px', color: 'var(--gold)', marginTop: '2px' }}>{leader.role}</p>
+                <p className="exp" style={{ fontSize: '12.5px', marginTop: '6px', lineHeight: 1.5 }}>{leader.expertise}</p>
               </div>
             </div>
           ))}

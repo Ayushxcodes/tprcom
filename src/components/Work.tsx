@@ -16,7 +16,7 @@ interface WorkItem {
 const workData: WorkItem[] = [
   {
     id: 'boardroom',
-    image: 'https://picsum.photos/seed/tpr-work-boardroom/1000/650',
+    image: '/assets/boardroom.png',
     tag: 'Boardroom Counsel',
     title: 'Corporate Strategy & M&A Governance',
     description: 'Advising cross-border executive teams through sensitive merger disclosures, shareholder communications, and regulatory scrutiny.',
@@ -30,7 +30,7 @@ const workData: WorkItem[] = [
   },
   {
     id: 'newsroom',
-    image: 'https://picsum.photos/seed/tpr-work-newsroom/1000/650',
+    image: '/assets/newsroom.png',
     tag: 'Newsroom Authority',
     title: 'Tier-1 Global Media & Press Desk',
     description: 'Securing front-page editorial features and strategic executive commentary across global tier-1 financial publications.',
@@ -44,7 +44,7 @@ const workData: WorkItem[] = [
   },
   {
     id: 'publicsq',
-    image: 'https://picsum.photos/seed/tpr-work-publicsq/1000/650',
+    image: '/assets/digital.png',
     tag: 'Public Square',
     title: 'Platforms, Feeds & Digital Brand Voice',
     description: 'Building multi-platform thought leadership and rapid-response digital communications for high-growth tech pioneers.',
@@ -58,7 +58,7 @@ const workData: WorkItem[] = [
   },
   {
     id: 'policy',
-    image: 'https://picsum.photos/seed/tpr-work-policy/1000/650',
+    image: '/assets/policy.png',
     tag: 'Policy Table',
     title: 'Government & Public Affairs Desk',
     description: 'Navigating complex policy shifts and institutional dialogues to foster long-term public trust and regulatory clarity.',
@@ -112,9 +112,9 @@ export function Work() {
                       <div className="work-expand-indicator" style={{
                         fontFamily: 'var(--mono)',
                         fontSize: '11px',
-                        color: 'var(--orange)',
-                        background: 'rgba(5, 14, 26, 0.85)',
-                        border: '1px solid rgba(255, 106, 43, 0.4)',
+                        color: 'var(--gold)',
+                        background: 'rgba(15, 23, 34, 0.88)',
+                        border: '1px solid var(--border-color)',
                         padding: '4px 10px',
                         borderRadius: '9999px',
                         display: 'inline-flex',

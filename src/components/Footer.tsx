@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 export function Footer() {
   return (
@@ -6,13 +7,20 @@ export function Footer() {
       <div className="wrap">
         <div className="footer-top">
           <div className="footer-brand">
-            <span className="logo-text">
-              <span className="top">TPR Communication</span>
-            </span>
+            <div style={{ marginBottom: '16px' }}>
+              <Image
+                src="/Logofooter.png"
+                alt="TPR Communications"
+                width={220}
+                height={56}
+                style={{ height: '56px', width: 'auto', objectFit: 'contain' }}
+              />
+            </div>
             <p>
-              A strategic public relations and corporate communications agency, headquartered in Gurugram, India.
+              A strategic public relations and corporate communications agency, headquartered in Gurugram, India. Built for market leaders, listed entities, and growth visionaries.
             </p>
           </div>
+
           <div className="footer-col">
             <p className="label">Navigate</p>
             <ul>
@@ -23,8 +31,9 @@ export function Footer() {
               <li><a href="#leadership">About</a></li>
             </ul>
           </div>
+
           <div className="footer-col">
-            <p className="label">Services</p>
+            <p className="label">Practices</p>
             <ul>
               <li><a href="#services">Media Relations</a></li>
               <li><a href="#services">Crisis Management</a></li>
@@ -32,6 +41,7 @@ export function Footer() {
               <li><a href="#services">Public Affairs</a></li>
             </ul>
           </div>
+
           <div className="footer-col">
             <p className="label">Contact</p>
             <ul>
@@ -41,9 +51,12 @@ export function Footer() {
             </ul>
           </div>
         </div>
+
         <div className="footer-bottom">
-          <span>© 2026 TPR Communication. All rights reserved.</span>
-          <span>Strategic PR &amp; Corporate Communications</span>
+          <span>© 2026 TPR Communications. All rights reserved.</span>
+          <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--gold)' }}>
+            STRATEGIC PR &amp; CORPORATE COMMUNICATIONS
+          </span>
         </div>
       </div>
     </footer>

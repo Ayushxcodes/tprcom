@@ -3,194 +3,239 @@
 import React, { useState } from 'react';
 import { Icon, IconName } from './Icons';
 
-interface StepItem {
+interface PillarItem {
   id: string;
+  num: string;
   icon: IconName;
-  image: string;
-  stepNum: string;
-  stepLabel: string;
   title: string;
   description: string;
-  deliverables: string[];
+  tag: string;
 }
 
-const approachSteps: StepItem[] = [
+const setsUsApartItems: PillarItem[] = [
   {
-    id: 'listen',
-    icon: 'ear',
-    image: 'https://picsum.photos/seed/tpr-step-listen/800/600',
-    stepNum: '01',
-    stepLabel: 'STEP 01 — AUDIENCE AUDIT',
-    title: 'Listen',
-    description: 'Understand the audience, the market, and the hidden risks before writing a single word of public copy.',
-    deliverables: ['Perception Intelligence Audit', 'Competitor Share of Voice Analysis', 'Vulnerability & Risk Index'],
+    id: 'research',
+    num: '01',
+    icon: 'chart',
+    title: 'Research-Led Thinking',
+    description: 'Every strategy begins with evidence — media landscape analysis, stakeholder mapping, sentiment tracking, and audience research so recommendations are grounded in fact.',
+    tag: 'EVIDENCE-BASED'
   },
   {
-    id: 'shape',
-    icon: 'compass',
-    image: 'https://picsum.photos/seed/tpr-step-shape/800/600',
-    stepNum: '02',
-    stepLabel: 'STEP 02 — NARRATIVE ARCHITECTURE',
-    title: 'Shape',
-    description: 'Build the core messaging, C-suite positioning, and press strategy around what is genuinely authentic.',
-    deliverables: ['C-Suite Narrative Architecture', 'Core Messaging Playbook', 'Crisis Response Matrix'],
+    id: 'academic',
+    num: '02',
+    icon: 'newspaper',
+    title: 'Academic Insight, Applied',
+    description: 'Our approach draws on academic rigour in communication theory and behavioural insight, translated into practical strategies that hold up under tight news cycles.',
+    tag: 'RIGOROUS METHOD'
   },
   {
-    id: 'amplify',
-    icon: 'broadcast',
-    image: 'https://picsum.photos/seed/tpr-step-amplify/800/600',
-    stepNum: '03',
-    stepLabel: 'STEP 03 — MEDIA EARNED REACH',
-    title: 'Amplify',
-    description: 'Place the story where it commands maximum authority — tier-1 newsrooms, investor feeds, and key events.',
-    deliverables: ['Global Wire & Press Desk', 'Executive Op-Ed Syndication', 'Broadcast Interview Placements'],
+    id: 'fullspec',
+    num: '03',
+    icon: 'users',
+    title: 'Full-Spectrum Capability',
+    description: 'From crisis response to IPO communications, press relations to political advisory — operating as a single integrated team rather than disconnected specialists.',
+    tag: 'INTEGRATED DESK'
   },
   {
-    id: 'protect',
+    id: 'media',
+    num: '04',
+    icon: 'newspaper',
+    title: 'Media Fluency',
+    description: 'Our team’s newsroom and media experience means we understand not just what to say, but how journalists, regulators, and audiences will read it.',
+    tag: 'NEWSROOM GRADE'
+  },
+  {
+    id: 'benchmark',
+    num: '05',
     icon: 'shield',
-    image: 'https://picsum.photos/seed/tpr-step-protect/800/600',
-    stepNum: '04',
-    stepLabel: 'STEP 04 — REPUTATION DEFENSE',
-    title: 'Protect',
-    description: 'Stay ready. Corporate reputation is defended continuously through rapid response and steady governance.',
-    deliverables: ['24/7 Rapid Response Desk', 'Shareholder Sentiment Defense', 'Issue Mitigation Desk'],
-  },
+    title: 'A New Benchmark in Client Service',
+    description: 'We measure ourselves not by output, but by outcomes — the trust earned, the reputations protected, and the credibility built for every client we serve.',
+    tag: 'OUTCOME FOCUSED'
+  }
 ];
 
 export function Approach() {
-  const [activeStep, setActiveStep] = useState<StepItem | null>(null);
-
-  const handleCardClick = (e: React.MouseEvent, step: StepItem) => {
-    e.stopPropagation();
-    setActiveStep(prev => (prev?.id === step.id ? null : step));
-  };
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
-    <section id="approach">
+    <section id="approach" className="approach-section" style={{ background: 'var(--bg-secondary)', padding: '90px 0', position: 'relative', overflow: 'hidden' }}>
       <div className="wrap">
         <div className="section-head reveal">
           <div>
-            <p className="kicker">Our Approach</p>
-            <h2>Four disciplines. One continuous orbital workflow.</h2>
+            <p className="kicker">Why Partner With Us</p>
+            <h2>What Sets Us Apart</h2>
           </div>
           <p className="sub">
-            Communications work revolves around a central core — tap any card below to reveal its strategic execution playbook.
+            The five strategic pillars that define our evidence-based counsel, flowing continuously from the TPR research core.
           </p>
         </div>
 
-        <div className="approach-orbital-section reveal">
-          <div className="orbital-system-stage">
-            {/* DASHED ORBITAL RING */}
-            <div className="orbital-ring"></div>
-
-            {/* CENTRAL STRATEGY HUB */}
-            <div className="orbital-core-hub">
-              <span className="core-tag">TPR ENGINE</span>
-              <h3>Strategic Core</h3>
-              <p>Continuous PR Discipline</p>
-            </div>
-
-            {/* ROTATING ORBITAL CARDS */}
-            <div className={`orbital-satellites-track ${activeStep ? 'paused' : ''}`}>
-              {approachSteps.map((step, idx) => {
-                const isActive = activeStep?.id === step.id;
-                return (
-                  <div
-                    className={`orbiting-card-node pos-${idx} ${isActive ? 'mobile-active-dark' : ''}`}
-                    key={step.id}
-                    onClick={(e) => handleCardClick(e, step)}
-                    title={`Click to view ${step.title}`}
-                  >
-                    <div className="orbiting-card-counter-rotate">
-                      {/* BACKGROUND PHOTO (HIDDEN WHEN ACTIVE IN MOBILE) */}
-                      {!isActive && (
-                        <div className="orbiting-card-photo">
-                          <img src={step.image} alt={step.title} />
-                        </div>
-                      )}
-
-                      <div className="orbiting-card-header">
-                        <div className="orbiting-card-icon">
-                          <Icon name={step.icon} style={{ width: '20px', height: '20px' }} />
-                        </div>
-                        <span className="orbiting-card-num">{step.stepNum}</span>
-                      </div>
-
-                      <div className="orbiting-card-body">
-                        <span className="orbiting-card-lbl">STEP {step.stepNum}</span>
-                        <h3>{step.title}</h3>
-
-                        {/* INLINE TEXT REPLACING IMAGE WHEN ACTIVE */}
-                        {isActive && (
-                          <div className="mobile-card-inline-details">
-                            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5 }}>
-                              {step.description}
-                            </p>
-                            <div style={{ display: 'grid', gap: '4px', marginTop: '6px' }}>
-                              {step.deliverables.map((del, dIdx) => (
-                                <div key={dIdx} style={{
-                                  fontFamily: 'var(--mono)',
-                                  fontSize: '10.5px',
-                                  color: 'var(--orange)',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: '6px'
-                                }}>
-                                  <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--orange)' }}></span>
-                                  {del}
-                                </div>
-                              ))}
-                            </div>
-                            <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'rgba(255,255,255,0.5)', marginTop: '8px' }}>
-                              ▲ Tap to close
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* DESKTOP CENTER POP-UP DETAIL CARD */}
-            {activeStep && (
-              <div className="approach-popup-card active">
-                <button
-                  className="approach-popup-close-btn"
-                  onClick={() => setActiveStep(null)}
-                  aria-label="Close pop-up"
-                >
-                  &times;
-                </button>
-
-                <div className="approach-popup-img">
-                  <img src={activeStep.image} alt={activeStep.title} />
-                </div>
-
-                <div className="approach-popup-body">
-                  <p className="step-tag">{activeStep.stepLabel}</p>
-                  <h3>{activeStep.title}</h3>
-                  <p>{activeStep.description}</p>
-
-                  <div style={{ marginTop: '16px', display: 'grid', gap: '6px' }}>
-                    {activeStep.deliverables.map((del, dIdx) => (
-                      <div key={dIdx} style={{
-                        fontFamily: 'var(--mono)',
-                        fontSize: '11.5px',
-                        color: 'var(--text-primary)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px'
-                      }}>
-                        <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--orange)' }}></span>
-                        {del}
-                      </div>
-                    ))}
-                  </div>
+        {/* MOBILE VIEW: CLEAN STACKED CARDS CONTAINER */}
+        <div className="approach-mobile-stack" style={{ marginTop: '40px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {setsUsApartItems.map((item) => (
+            <div
+              key={`mob-${item.id}`}
+              className="sector-clean-card"
+              style={{
+                width: '100%',
+                padding: '24px',
+                background: 'var(--bg-card)',
+                borderRadius: '16px',
+                border: '1px solid var(--border-color)',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.04)'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: '11.5px', color: 'var(--gold)', fontWeight: 700 }}>
+                  PILLAR {item.num}
+                </span>
+                <div className="card-icon" style={{
+                  width: '36px', height: '36px', borderRadius: '8px',
+                  background: 'var(--bg-primary)', border: '1px solid var(--border-color)',
+                  color: 'var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                }}>
+                  <Icon name={item.icon} style={{ width: '18px', height: '18px' }} />
                 </div>
               </div>
-            )}
+
+              <h3 style={{ fontSize: '19px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '8px', lineHeight: 1.35 }}>
+                {item.title}
+              </h3>
+              <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                {item.description}
+              </p>
+
+              <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', fontWeight: 600 }}>
+                  ● {item.tag}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* DESKTOP VIEW: CIRCULAR ORBITAL SYSTEM */}
+        <div className="approach-desktop-system reveal" style={{ position: 'relative', marginTop: '60px', minHeight: '760px', alignItems: 'center', justifyContent: 'center' }}>
+          
+          {/* SVG DOTTED DATA FLOW LINES (DESKTOP) */}
+          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 2, overflow: 'visible' }} viewBox="0 0 1000 760" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="goldLineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="var(--gold)" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#D4B67A" stopOpacity="0.5" />
+              </linearGradient>
+            </defs>
+
+            <path d="M 500 380 L 500 110" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
+            <path d="M 500 380 L 840 230" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
+            <path d="M 500 380 L 800 620" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
+            <path d="M 500 380 L 200 620" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
+            <path d="M 500 380 L 160 230" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
+
+            <circle r="4.5" fill="var(--gold)">
+              <animateMotion path="M 500 380 L 500 110" dur="2s" repeatCount="indefinite" />
+            </circle>
+            <circle r="4.5" fill="var(--gold)">
+              <animateMotion path="M 500 380 L 840 230" dur="2.4s" repeatCount="indefinite" />
+            </circle>
+            <circle r="4.5" fill="var(--gold)">
+              <animateMotion path="M 500 380 L 800 620" dur="2.7s" repeatCount="indefinite" />
+            </circle>
+            <circle r="4.5" fill="var(--gold)">
+              <animateMotion path="M 500 380 L 200 620" dur="2.2s" repeatCount="indefinite" />
+            </circle>
+            <circle r="4.5" fill="var(--gold)">
+              <animateMotion path="M 500 380 L 160 230" dur="2.5s" repeatCount="indefinite" />
+            </circle>
+          </svg>
+
+          {/* CENTRAL TPR CIRCLE */}
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '150px',
+            height: '150px',
+            borderRadius: '50%',
+            background: 'var(--bg-card)',
+            border: '2.5px solid var(--gold)',
+            boxShadow: '0 0 50px rgba(184, 153, 94, 0.3)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10,
+            textAlign: 'center',
+            padding: '16px'
+          }}>
+            <span style={{ fontFamily: 'var(--serif)', fontSize: '28px', fontWeight: 800, color: 'var(--gold)', letterSpacing: '0.12em' }}>
+              TPR
+            </span>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', letterSpacing: '0.22em', color: 'var(--text-muted)', marginTop: '4px', textTransform: 'uppercase', fontWeight: 700 }}>
+              RESEARCH CORE
+            </span>
+          </div>
+
+          {/* 5 CARDS POSITIONED IN PERFECT ORBIT (DESKTOP) */}
+          <div style={{ width: '100%', height: '760px', position: 'relative', zIndex: 5 }}>
+            {setsUsApartItems.map((item, idx) => {
+              const positions = [
+                { top: '0px', left: '50%', transform: 'translateX(-50%)' },                 // 01: Top Center
+                { top: '120px', right: '0px' },                                              // 02: Top Right
+                { bottom: '20px', right: '40px' },                                           // 03: Bottom Right
+                { bottom: '20px', left: '40px' },                                            // 04: Bottom Left
+                { top: '120px', left: '0px' }                                                // 05: Top Left
+              ];
+              const pos = positions[idx];
+              const isActive = activeId === item.id;
+
+              return (
+                <div
+                  key={item.id}
+                  className={`sector-clean-card ${isActive ? 'active-selected' : ''}`}
+                  onClick={() => setActiveId(isActive ? null : item.id)}
+                  style={{
+                    position: 'absolute',
+                    width: '320px',
+                    minHeight: '220px',
+                    padding: '24px',
+                    background: 'var(--bg-card)',
+                    boxShadow: isActive ? '0 20px 45px rgba(184, 153, 94, 0.25)' : '0 10px 30px rgba(0,0,0,0.06)',
+                    ...pos
+                  }}
+                >
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                      <span style={{ fontFamily: 'var(--mono)', fontSize: '11.5px', color: 'var(--gold)', fontWeight: 700 }}>
+                        PILLAR {item.num}
+                      </span>
+                      <div className="card-icon" style={{
+                        width: '36px', height: '36px', borderRadius: '8px',
+                        background: 'var(--bg-primary)', border: '1px solid var(--border-color)',
+                        color: 'var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                      }}>
+                        <Icon name={item.icon} style={{ width: '18px', height: '18px' }} />
+                      </div>
+                    </div>
+
+                    <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '8px', lineHeight: 1.35 }}>
+                      {item.title}
+                    </h3>
+                    <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+                      {item.description}
+                    </p>
+                  </div>
+
+                  <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontFamily: 'var(--mono)', fontSize: '10.5px', color: 'var(--gold)', fontWeight: 600 }}>
+                      ● {item.tag}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

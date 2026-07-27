@@ -25,8 +25,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TPR Communication — Strategic Public Relations & Corporate Communications",
-  description: "TPR Communication is a strategic PR and corporate communications agency helping ambitious brands earn trust, command attention, and protect their reputation.",
+  title: "TPR Communications — Strategic Public Relations & Corporate Communications",
+  description: "TPR Communications is a strategic PR and corporate communications agency helping ambitious brands earn trust, command attention, and protect their reputation.",
 };
 
 export default function RootLayout({
