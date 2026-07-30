@@ -48,18 +48,18 @@ export function Contact() {
 
           <div className="contact-detail">
             <p className="label">Studio Location</p>
-            <p className="value">Gurugram, Haryana, India</p>
+            <p className="value">425 Tower S1, Cloud 9 Vaishali, Delhi NCR — 201010</p>
           </div>
           <div className="contact-detail">
             <p className="label">Direct Inquiry</p>
             <p className="value">
-              <a href="mailto:hello@tprcommunication.com">hello@tprcommunication.com</a>
+              <a href="mailto:official@tprcommunications.com">official@tprcommunications.com</a>
             </p>
           </div>
           <div className="contact-detail">
             <p className="label">Telephone</p>
             <p className="value">
-              <a href="tel:+910000000000">+91 00000 00000</a>
+              <a href="tel:+918796564094">+91 87965 64094</a>
             </p>
           </div>
 

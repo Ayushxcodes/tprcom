@@ -124,6 +124,14 @@ button { font-family: inherit; cursor: pointer; }
   display: inline-block;
   border-radius: 2px;
 }
+.kicker.kicker-centered::after {
+  content: '';
+  width: 32px;
+  height: 2px;
+  background: var(--orange);
+  display: inline-block;
+  border-radius: 2px;
+}
 
 h1, h2, h3, h4 {
   font-family: var(--serif);
@@ -807,6 +815,11 @@ section { padding: 140px 0; position: relative; }
   gap: 24px;
   margin-top: 48px;
 }
+@media (min-width: 1025px) {
+  .services-clean-grid > .service-clean-card:nth-child(9) {
+    grid-column-start: 2;
+  }
+}
 @media (max-width: 1024px) {
   .services-clean-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -953,15 +966,18 @@ section { padding: 140px 0; position: relative; }
   flex-wrap: wrap;
   gap: 6px;
 }
-.service-clean-card .tag-chip {
+.service-clean-card .tag-chip,
+.clean-tag {
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  color: var(--text-muted);
-  padding: 4px 10px;
+  color: var(--gold);
+  padding: 5px 11px;
   border-radius: 6px;
   font-family: var(--mono);
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
+  display: inline-block;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 
 /* HERO PATHWAY CIRCUIT (GLOWING ORANGE RESTORED) */
@@ -2148,7 +2164,25 @@ footer {
 
 @media (max-width: 640px) {
   .logo-comms-text {
-    font-size: 11px !important;
-    letter-spacing: 0.08em !important;
+    font-size: 17px !important;
+    letter-spacing: 0.1em !important;
   }
+}
+
+/* TPR PILLS HOVER ANIMATION */
+.tpr-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px 22px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.tpr-pill:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  background: rgba(184, 153, 94, 0.08);
+  box-shadow: 0 10px 25px rgba(184, 153, 94, 0.22);
 }

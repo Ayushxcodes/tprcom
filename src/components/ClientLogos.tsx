@@ -20,9 +20,9 @@ export function ClientLogos() {
   return (
     <section className="client-logos-section" style={{ background: 'var(--bg-secondary)', padding: '70px 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', overflow: 'hidden' }}>
       <div className="wrap reveal" style={{ marginBottom: '36px', textAlign: 'center' }}>
-        <p className="kicker" style={{ justifyContent: 'center' }}>Institutional Trust</p>
-        <h2 style={{ fontSize: '28px', fontFamily: 'var(--serif)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
-          Trusted by <span style={{ color: 'var(--gold)' }}>Leading Brands</span>
+        <p className="kicker kicker-centered" style={{ justifyContent: 'center' }}>Institutional Trust</p>
+        <h2 style={{ fontSize: '32px', fontFamily: 'var(--serif)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
+          Our Revered Partners
         </h2>
         <p className="sub" style={{ margin: '0 auto', maxWidth: '600px' }}>
           We&apos;re proud to provide strategic counsel to industry leaders and innovative enterprise clients worldwide.

@@ -65,7 +65,7 @@ export function Header() {
                 <div className="logo-comms-divider" style={{ height: '28px', width: '1px', background: 'var(--border-color)', margin: '0 4px' }} />
                 <span className="logo-comms-text" style={{
                   fontFamily: 'var(--serif)',
-                  fontSize: '16px',
+                  fontSize: '20px',
                   letterSpacing: '0.14em',
                   textTransform: 'uppercase',
                   color: '#1e2e3b',
@@ -99,7 +99,8 @@ export function Header() {
               >
                 <a href="#services" onClick={() => setIsMobileMenuOpen(false)}>Services</a>
                 <a href="#sectors" onClick={() => setIsMobileMenuOpen(false)}>Sectors</a>
-                <a href="#manifesto" onClick={() => setIsMobileMenuOpen(false)}>About</a>
+                <a href="#approach" onClick={() => setIsMobileMenuOpen(false)}>About</a>
+                <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Career</a>
 
                 <button
                   className="theme-toggle-btn"

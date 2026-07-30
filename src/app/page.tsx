@@ -17,12 +17,11 @@ export default function Home() {
       <Header />
       <main id="top">
         <Hero />
+        <Approach />
         <Philosophy />
-        <PoliticalComms />
         <Services />
         <Work />
         <Sectors />
-        <Approach />
         <ClientLogos />
         <Contact />
       </main>

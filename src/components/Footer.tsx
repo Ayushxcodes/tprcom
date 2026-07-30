@@ -17,7 +17,7 @@ export function Footer() {
               />
             </div>
             <p>
-              A strategic public relations and corporate communications agency, headquartered in Gurugram, India. Built for market leaders, listed entities, and growth visionaries.
+              A strategic public relations and corporate communications agency, headquartered in Delhi NCR, India. Built for market leaders, listed entities, and growth visionaries.
             </p>
           </div>
 
@@ -45,9 +45,9 @@ export function Footer() {
           <div className="footer-col">
             <p className="label">Contact</p>
             <ul>
-              <li><a href="mailto:hello@tprcommunication.com">hello@tprcommunication.com</a></li>
-              <li><a href="tel:+910000000000">+91 00000 00000</a></li>
-              <li>Gurugram, Haryana, India</li>
+              <li><a href="mailto:official@tprcommunications.com">official@tprcommunications.com</a></li>
+              <li><a href="tel:+918796564094">+91 87965 64094</a></li>
+              <li>425 Tower S1, Cloud 9 Vaishali, Delhi NCR — 201010</li>
             </ul>
           </div>
         </div>

@@ -20,7 +20,7 @@ export function Philosophy() {
         <div className="reveal reveal-delay-1" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <p className="kicker">Who We Are</p>
           <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 40px)', fontFamily: 'var(--serif)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '20px', lineHeight: 1.25 }}>
-            Evidence over instinct.<br />Craft over noise.
+            Quality over quantity first.<br />Craft over noise.
           </h2>
 
           <div className="phil-body phil-text" style={{ fontSize: '15.5px', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
@@ -28,7 +28,7 @@ export function Philosophy() {
               TPR Communications was founded on a simple conviction: that communication works best when it is built on evidence, not instinct. We bring together researchers, strategists, media professionals, and creative producers under one roof, so that every narrative we build for a client is grounded in insight and delivered with precision.
             </p>
             <p style={{ marginTop: '16px' }}>
-              Our name stands for a promise — <strong style={{ color: 'var(--gold)', fontWeight: 700 }}>Trust, Purpose, Reputation</strong> — the three outcomes every engagement is designed to deliver. We do not chase headlines for their own sake. We build communication programmes that are defensible under scrutiny, consistent across platforms, and aligned to the long-term interests of the organisations and individuals we represent.
+              Our name stands for — <strong style={{ color: 'var(--gold)', fontWeight: 700 }}>Trust, Purpose, Reputation</strong> — the three outcomes every engagement is designed to deliver. We do not chase headlines for their own sake. We build communication programmes that are defensible under scrutiny, consistent across platforms, and aligned to the long-term interests of the organisations and individuals we represent.
             </p>
             <p style={{ marginTop: '16px' }}>
               From boardrooms to newsrooms, from public institutions to political campaigns, our teams operate with the same discipline: understand the landscape first, then design the message, then deliver it with craft.
@@ -36,17 +36,14 @@ export function Philosophy() {
           </div>
 
           <div style={{ marginTop: '32px', display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '12px 18px' }}>
-              <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', fontWeight: 700, display: 'block' }}>TRUST</span>
-              <span style={{ fontSize: '13px', color: 'var(--text-primary)', fontWeight: 600 }}>Evidence-Based Defense</span>
+            <div className="tpr-pill">
+              <span style={{ fontFamily: 'var(--mono)', fontSize: '12px', color: 'var(--gold)', fontWeight: 700, letterSpacing: '0.1em' }}>TRUST</span>
             </div>
-            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '12px 18px' }}>
-              <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', fontWeight: 700, display: 'block' }}>PURPOSE</span>
-              <span style={{ fontSize: '13px', color: 'var(--text-primary)', fontWeight: 600 }}>Strategic Alignment</span>
+            <div className="tpr-pill">
+              <span style={{ fontFamily: 'var(--mono)', fontSize: '12px', color: 'var(--gold)', fontWeight: 700, letterSpacing: '0.1em' }}>PURPOSE</span>
             </div>
-            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '12px 18px' }}>
-              <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', fontWeight: 700, display: 'block' }}>REPUTATION</span>
-              <span style={{ fontSize: '13px', color: 'var(--text-primary)', fontWeight: 600 }}>Protected Legacy</span>
+            <div className="tpr-pill">
+              <span style={{ fontFamily: 'var(--mono)', fontSize: '12px', color: 'var(--gold)', fontWeight: 700, letterSpacing: '0.1em' }}>REPUTATION</span>
             </div>
           </div>
         </div>

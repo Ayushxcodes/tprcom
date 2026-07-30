@@ -12,59 +12,73 @@ interface ServiceItem {
 const servicesData: ServiceItem[] = [
   {
     num: '01',
-    title: 'Strategic Communication',
-    description: 'Long-term communication architecture aligned to business, institutional, or personal objectives — built on research and designed for consistency across every touchpoint.',
-    icon: 'megaphone',
-    tags: ['Long-Term Architecture', 'Research-Led Frameworks'],
+    title: 'Public Relations',
+    description: 'Newsroom-grade drafting, tier-1 media relations, and earned coverage strategies that establish authority and trust across print, broadcast, and digital outlets.',
+    icon: 'newspaper',
+    tags: ['Media Outreach', 'Earned Coverage'],
   },
   {
     num: '02',
-    title: 'Crisis Communication',
-    description: 'Rapid-response planning and real-time management to protect reputation, control narrative, and restore stakeholder trust during high-pressure situations.',
-    icon: 'shield',
-    tags: ['Rapid Response', 'Stakeholder Trust Restoration'],
+    title: 'Strategic Communications',
+    description: 'Long-term communication architecture aligned to corporate, institutional, and leadership objectives — built on evidence and designed for consistency.',
+    icon: 'megaphone',
+    tags: ['Core Narrative', 'Research Frameworks'],
   },
   {
     num: '03',
-    title: 'IPO Solutions',
-    description: 'End-to-end communication support for public listings — from pre-IPO positioning and investor narrative to post-listing reputation management.',
-    icon: 'chart',
-    tags: ['Pre-IPO Positioning', 'Investor Narrative Desk'],
+    title: 'Political Communications',
+    description: 'Strategic counsel for political leaders, parties, and policy campaigns — combining voter insight, narrative design, and disciplined message delivery.',
+    icon: 'landmark',
+    tags: ['Policy Counsel', 'Message Discipline'],
   },
   {
     num: '04',
-    title: 'Press Release & Media Relations',
-    description: 'Newsroom-grade drafting and strategic media outreach that ensures the right story reaches the right audience through the right platform.',
-    icon: 'newspaper',
-    tags: ['Newsroom Drafting', 'Strategic Wire Outreach'],
+    title: 'Digital & Content Strategy',
+    description: 'Platform-specific content architecture and digital amplification strategies that extend corporate narratives across digital news cycles and networks.',
+    icon: 'broadcast',
+    tags: ['Digital Newsroom', 'Executive Amplification'],
   },
   {
     num: '05',
-    title: 'Political Advisory',
-    description: 'Strategic counsel for political leaders, parties, and institutions — combining research, narrative design, and disciplined message delivery.',
-    icon: 'landmark',
-    tags: ['Voter Research', 'Campaign Message Discipline'],
+    title: 'Influencer & Creator Solutions',
+    description: 'Targeted creator alliances, opinion leader engagements, and voice-amplification partnerships that connect brands with highly engaged digital communities.',
+    icon: 'users',
+    tags: ['KOL Alliances', 'Community Engagement'],
   },
   {
     num: '06',
-    title: 'Corporate & Public Affairs',
-    description: 'Stakeholder engagement, policy communication, and institutional messaging that build credibility with regulators, media, and the public.',
-    icon: 'users',
-    tags: ['Regulatory PR', 'Institutional Messaging'],
+    title: 'Reputation Management',
+    description: 'Continuous sentiment monitoring, proactive positioning, and rapid-response crisis defense to build and protect institutional and personal equity.',
+    icon: 'shield',
+    tags: ['Sentiment Tracking', 'Crisis Defense'],
   },
   {
     num: '07',
-    title: 'Reputation Management',
-    description: 'Ongoing monitoring and proactive positioning to build, protect, and strengthen brand and personal reputation over time.',
+    title: 'Events & Conferences',
+    description: 'End-to-end media management, keynote positioning, and high-impact press briefings for corporate summits, product launches, and industry conferences.',
     icon: 'compass',
-    tags: ['Sentiment Monitoring', 'Proactive Defense'],
+    tags: ['Summit Press Desks', 'Keynote Placement'],
   },
   {
     num: '08',
-    title: 'Digital & Content Strategy',
-    description: 'Platform-specific content and amplification strategies that extend traditional PR narratives into the digital-first news cycle.',
-    icon: 'broadcast',
-    tags: ['Digital News Cycle', 'Executive Amplification'],
+    title: 'Content & Newsletters',
+    description: 'Editorial-grade corporate publications, executive newsletters, whitepapers, and thought pieces crafted for key stakeholders and decision-makers.',
+    icon: 'pen',
+    tags: ['Executive Briefings', 'Corporate Publishing'],
+  },
+  {
+    num: '09',
+    title: 'Media Space Buying',
+    description: 'Strategic placement and media buying across premium print, digital news portals, and broadcast networks to guarantee high-impact brand visibility.',
+    icon: 'chart',
+    tags: ['Strategic Placement', 'High-Impact Visibility'],
+  },
+  {
+    num: '10',
+    title: 'Thought Leadership',
+    description: 'Executive positioning, byline placement, op-ed strategies, and speaker bureau management that establish C-suite executives as industry authority figures.',
+    icon: 'bank',
+    tags: ['Op-Ed Placement', 'Executive Authority'],
   },
 ];
 
@@ -99,7 +113,7 @@ export function Services() {
 
               <div className="tags-row">
                 {service.tags.map((tag, tIdx) => (
-                  <span className="tag-chip" key={tIdx}>
+                  <span className="clean-tag" key={tIdx}>
                     {tag}
                   </span>
                 ))}
