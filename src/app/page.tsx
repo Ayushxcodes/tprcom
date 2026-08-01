@@ -17,8 +17,8 @@ export default function Home() {
       <Header />
       <main id="top">
         <Hero />
-        <Approach />
         <Philosophy />
+        <Approach />
         <Services />
         <Work />
         <Sectors />
