@@ -31,7 +31,7 @@ const sectorData: SectorItem[] = [
     icon: 'chip',
     image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
     title: 'TECHNOLOGY',
-    description: 'Deeptech, AI platforms, enterprise SaaS, and venture-backed innovators.',
+    description: 'Deep tech, AI platforms, enterprise SaaS, and venture-backed innovators.',
     detailedCopy: 'Translating complex technology architectures into high-impact market value narratives, positioning tech founders as industry visionaries.',
     caseHighlight: 'Secured exclusive launch coverage across global technology wire outlets and tier-1 national press desks within 48 hours.',
   },
@@ -51,7 +51,7 @@ const sectorData: SectorItem[] = [
     icon: 'heart',
     image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80',
     title: 'HEALTHCARE',
-    description: 'Pharma leaders, hospital chains, diagnostics, and healthtech platforms.',
+    description: 'Pharma leaders, hospital chains, diagnostics, doctors and health tech platforms.',
     detailedCopy: 'Highly compliant communications for medical breakthroughs, clinical trials, regulatory approvals, and patient-first reputation management.',
     caseHighlight: 'Positioned a healthcare innovator during pivotal clinical trial milestones, driving strategic global pharmaceutical partnerships.',
   },
@@ -61,7 +61,7 @@ const sectorData: SectorItem[] = [
     icon: 'landmark',
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
     title: 'REAL ESTATE AND INFRASTRUCTURE',
-    description: 'Commercial developers, REITs, mega-infrastructure, and urban projects.',
+    description: 'Developers, REITs, mega-infrastructure, urban, and public-funded projects.',
     detailedCopy: 'Navigating land development narratives, REIT listings, ESG compliance communications, and multi-stakeholder community sentiment.',
     caseHighlight: 'Managed strategic communications during complex regulatory proceedings, preserving market confidence and stakeholder trust.',
   },
@@ -71,7 +71,7 @@ const sectorData: SectorItem[] = [
     icon: 'leaf',
     image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80',
     title: 'POWER AND ENERGY',
-    description: 'Renewable IPPs, clean energy, EV infrastructure, and transition leaders.',
+    description: 'Power, clean energy, renewable energy, Oil & Gas, and EV.',
     detailedCopy: 'Highlighting decarbonization journeys, clean energy innovation, and green financing to institutional investors and regulatory policymakers.',
     caseHighlight: 'Crafted sustainability positioning for a major solar developer prior to their international green bond flotation.',
   },
@@ -91,7 +91,7 @@ const sectorData: SectorItem[] = [
     icon: 'bank',
     image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1200&q=80',
     title: 'BFSI AND FINTECH',
-    description: 'Banking institutions, NBFCs, private equity, capital markets, and fintech pioneers.',
+    description: 'Lending institutions, insurers, NBFCs, private equity, capital markets, and fintech.',
     detailedCopy: 'Managing earnings disclosures, investor relations, regulatory filings, and market perception for top financial organizations and fintech disruptors.',
     caseHighlight: 'Orchestrated the public communication strategy for a cross-border IPO, achieving full editorial coverage across national financial dailies.',
   },
@@ -137,11 +137,13 @@ export function Sectors() {
       <div className="wrap">
         <div className="section-head reveal">
           <div>
-            <p className="kicker">Sectors We Serve</p>
-            <h2>Deep domain literacy across complex industries.</h2>
+            <p className="kicker" style={{ fontSize: '13px', letterSpacing: '0.28em' }}>Sectors We Serve</p>
+            <h2 style={{ fontSize: 'clamp(32px, 4vw, 48px)', fontFamily: 'var(--serif)', fontWeight: 800 }}>
+              Sectors We Serve
+            </h2>
           </div>
-          <p className="sub">
-            Hover or click any sector on the right to view its strategic domain intelligence and benchmark highlights.
+          <p className="sub" style={{ fontSize: '17px' }}>
+            Legacy, Traditional, Emerging, Sunrise &amp; Tech-Powered Sectors
           </p>
         </div>
 

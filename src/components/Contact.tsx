@@ -38,17 +38,15 @@ export function Contact() {
     <section id="contact" className="contact">
       <div className="wrap contact-grid">
         <div className="contact-info reveal">
-          <p className="kicker">Get In Touch</p>
-          <h2>Let’s build a communication strategy that earns trust and stands the test of scrutiny.</h2>
-          <p className="lede" style={{ fontSize: '15px', color: 'var(--text-secondary)', marginTop: '14px', lineHeight: 1.7 }}>
-            Whether you are navigating a crisis, preparing for a public listing, building a long-term reputation strategy, or shaping a political narrative, TPR Communications is ready to partner with you.
+          <p className="kicker" style={{ fontSize: '13px', letterSpacing: '0.28em' }}>Get In Touch</p>
+          <h2 style={{ fontSize: 'clamp(32px, 4vw, 44px)', fontFamily: 'var(--serif)', fontWeight: 800 }}>Let’s weave indelible memories</h2>
+          <p className="lede" style={{ fontSize: '16px', color: 'var(--text-secondary)', marginTop: '14px', lineHeight: 1.75 }}>
+            TPR-Communications will take pride in building research-led, quality-driven, lasting, and long-term reputation strategy for you and your brand with time-tested and innovative solutions.
           </p>
 
-
-
           <div className="contact-detail">
-            <p className="label">Studio Location</p>
-            <p className="value">425 Tower S1, Cloud 9 Vaishali, Delhi NCR — 201010</p>
+            <p className="label">Address</p>
+            <p className="value">Cloud 9 Vaishali, S1 Tower, Office no. 425, Delhi NCR. Pin - 201010</p>
           </div>
           <div className="contact-detail">
             <p className="label">Direct Inquiry</p>

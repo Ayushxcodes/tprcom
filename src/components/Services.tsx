@@ -13,72 +13,72 @@ const servicesData: ServiceItem[] = [
   {
     num: '01',
     title: 'Public Relations',
-    description: 'Newsroom-grade drafting, tier-1 media relations, and earned coverage strategies that establish authority and trust across print, broadcast, and digital outlets.',
+    description: 'From strategic storytelling and media relations to executive profiling and reputation management, we help brands shape public perception and earn meaningful visibility. Our focus is on creating quality narratives that resonate with audiences and deliver positive impact.',
     icon: 'newspaper',
-    tags: ['Media Outreach', 'Earned Coverage'],
+    tags: ['Media Relations', 'Research-driven'],
   },
   {
     num: '02',
     title: 'Strategic Communications',
-    description: 'Long-term communication architecture aligned to corporate, institutional, and leadership objectives — built on evidence and designed for consistency.',
+    description: 'End-to-end strategic communication solutions that shape perception, strengthen stakeholder relationships, and support organisational objectives through purposeful messaging and integrated execution.',
     icon: 'megaphone',
-    tags: ['Core Narrative', 'Research Frameworks'],
+    tags: ['Strategic Communications', 'Corporate Communications'],
   },
   {
     num: '03',
     title: 'Political Communications',
-    description: 'Strategic counsel for political leaders, parties, and policy campaigns — combining voter insight, narrative design, and disciplined message delivery.',
+    description: 'Research-driven communication strategies that translate policy priorities into compelling public narratives, fostering meaningful engagement, boosting stakeholder confidence, and effective message dissemination.',
     icon: 'landmark',
-    tags: ['Policy Counsel', 'Message Discipline'],
+    tags: ['Political Communication', 'Stakeholder Engagement'],
   },
   {
     num: '04',
     title: 'Digital & Content Strategy',
-    description: 'Platform-specific content architecture and digital amplification strategies that extend corporate narratives across digital news cycles and networks.',
+    description: 'Platform-specific content architecture and digital amplification strategies that extend corporate narratives across the digital spectrum.',
     icon: 'broadcast',
-    tags: ['Digital Newsroom', 'Executive Amplification'],
+    tags: ['Social Media Marketing', 'Digital Marketing'],
   },
   {
     num: '05',
     title: 'Influencer & Creator Solutions',
-    description: 'Targeted creator alliances, opinion leader engagements, and voice-amplification partnerships that connect brands with highly engaged digital communities.',
+    description: 'Strategic collaborations with influencers, content creators, and key opinion leaders to amplify brand narratives, enhance credibility, and drive authentic audience engagement across digital platforms.',
     icon: 'users',
-    tags: ['KOL Alliances', 'Community Engagement'],
+    tags: ['Influencer Marketing', 'Influencer Relations'],
   },
   {
     num: '06',
     title: 'Reputation Management',
-    description: 'Continuous sentiment monitoring, proactive positioning, and rapid-response crisis defense to build and protect institutional and personal equity.',
+    description: 'Integrated public relations programmes designed to strengthen brand reputation, manage public perception, and build lasting trust through strategic communications, media relations, and leadership positioning.',
     icon: 'shield',
-    tags: ['Sentiment Tracking', 'Crisis Defense'],
+    tags: ['Reputation Management', 'Brand Building'],
   },
   {
     num: '07',
     title: 'Events & Conferences',
-    description: 'End-to-end media management, keynote positioning, and high-impact press briefings for corporate summits, product launches, and industry conferences.',
+    description: 'Strategic communication support for corporate events, conferences, product launches, and industry forums through media relations, press conferences, spokesperson engagement, and impactful event publicity.',
     icon: 'compass',
-    tags: ['Summit Press Desks', 'Keynote Placement'],
+    tags: ['Press Conferences', 'Spokesperson Engagement'],
   },
   {
     num: '08',
     title: 'Content & Newsletters',
-    description: 'Editorial-grade corporate publications, executive newsletters, whitepapers, and thought pieces crafted for key stakeholders and decision-makers.',
+    description: 'Weaving high-quality content meant for corporate publications, executive newsletters, whitepapers, and thought leadership pieces crafted for key stakeholders and decision-makers.',
     icon: 'pen',
-    tags: ['Executive Briefings', 'Corporate Publishing'],
+    tags: ['Whitepaper', 'Thought Leadership Article'],
   },
   {
     num: '09',
     title: 'Media Space Buying',
-    description: 'Strategic placement and media buying across premium print, digital news portals, and broadcast networks to guarantee high-impact brand visibility.',
+    description: 'Strategic placement and media buying across print, digital news portals, and broadcast networks to amplify high-impact brand visibility.',
     icon: 'chart',
-    tags: ['Strategic Placement', 'High-Impact Visibility'],
+    tags: ['Media Space Buying', 'Digital News Portals'],
   },
   {
     num: '10',
     title: 'Thought Leadership',
     description: 'Executive positioning, byline placement, op-ed strategies, and speaker bureau management that establish C-suite executives as industry authority figures.',
     icon: 'bank',
-    tags: ['Op-Ed Placement', 'Executive Authority'],
+    tags: ['Op-Ed', 'Speaking Opportunities'],
   },
 ];
 
@@ -88,10 +88,12 @@ export function Services() {
       <div className="wrap">
         <div className="section-head reveal">
           <div>
-            <p className="kicker">Our Services</p>
-            <h2>Full-service PR across every stage of your communication journey.</h2>
+            <p className="kicker" style={{ fontSize: '13px', letterSpacing: '0.28em' }}>Our Services</p>
+            <h2 style={{ fontSize: 'clamp(32px, 4vw, 48px)', fontFamily: 'var(--serif)', fontWeight: 800 }}>
+              Full-service PR across every stage of your communication journey.
+            </h2>
           </div>
-          <p className="sub">
+          <p className="sub" style={{ fontSize: '17px' }}>
             From everyday reputation building to high-stakes, high-visibility moments — delivered by an integrated team spanning research, strategy, and media.
           </p>
         </div>
@@ -107,11 +109,11 @@ export function Services() {
               </div>
 
               <div className="card-mid">
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
+                <h3 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '10px' }}>{service.title}</h3>
+                <p style={{ fontSize: '14.5px', lineHeight: 1.65 }}>{service.description}</p>
               </div>
 
-              <div className="tags-row">
+              <div className="tags-row" style={{ marginTop: '16px' }}>
                 {service.tags.map((tag, tIdx) => (
                   <span className="clean-tag" key={tIdx}>
                     {tag}

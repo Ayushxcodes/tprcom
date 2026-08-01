@@ -47,7 +47,7 @@ export function Footer() {
             <ul>
               <li><a href="mailto:official@tprcommunications.com">official@tprcommunications.com</a></li>
               <li><a href="tel:+918796564094">+91 87965 64094</a></li>
-              <li>425 Tower S1, Cloud 9 Vaishali, Delhi NCR — 201010</li>
+              <li>Cloud 9 Vaishali, S1 Tower, Office no. 425, Delhi NCR. Pin - 201010</li>
             </ul>
           </div>
         </div>

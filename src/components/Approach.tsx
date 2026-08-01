@@ -17,39 +17,39 @@ const setsUsApartItems: PillarItem[] = [
     id: 'research',
     num: '01',
     icon: 'chart',
-    title: 'Research-Led Thinking',
-    description: 'Every strategy begins with evidence — media landscape analysis, stakeholder mapping, sentiment tracking, and audience research so recommendations are grounded in fact.',
+    title: 'Research-led PR',
+    description: 'TPR Communications believes every brand has compelling stories worth telling. As a full-service public relations firm, we amalgamate our media expertise with strategic thinking and research to create impactful communication that helps brands build trust, shape perception, and drive meaningful business outcomes. We are committed to delivering excellence through thoughtful counsel and exceptional client service.',
     tag: 'EVIDENCE-BASED'
   },
   {
-    id: 'academic',
+    id: 'quality',
     num: '02',
-    icon: 'newspaper',
-    title: 'Academic Insight, Applied',
-    description: 'Our approach draws on academic rigour in communication theory and behavioural insight, translated into practical strategies that hold up under tight news cycles.',
-    tag: 'RIGOROUS METHOD'
+    icon: 'shield',
+    title: 'Quality-driven',
+    description: 'More than quantity, TPR Communications believes quality should be the cornerstone of every activity that revolves around PR and communications. We believe in delivering strategic communication that builds credibility, strengthens reputation, and creates meaningful stakeholder engagement.',
+    tag: 'QUALITY CORNERSTONE'
   },
   {
     id: 'fullspec',
     num: '03',
     icon: 'users',
-    title: 'Full-Spectrum Capability',
-    description: 'From crisis response to IPO communications, press relations to political advisory — operating as a single integrated team rather than disconnected specialists.',
-    tag: 'INTEGRATED DESK'
+    title: 'Full Spectrum Capability',
+    description: 'From strategic communication to Crisis response and press relations to political advisory, TPR Communications delivers cutting-edge solutions across the spectrum, both traditional and new-age digital media.',
+    tag: 'FULL SPECTRUM'
   },
   {
     id: 'media',
     num: '04',
     icon: 'newspaper',
     title: 'Media Fluency',
-    description: 'Our team’s newsroom and media experience means we understand not just what to say, but how journalists, regulators, and audiences will read it.',
-    tag: 'NEWSROOM GRADE'
+    description: "Our team's newsroom and media experience understands not just what to say, but why and how to communicate it to targeted audiences, including journalists, stakeholders, and policymakers.",
+    tag: 'NEWSROOM FLUENCY'
   },
   {
     id: 'benchmark',
     num: '05',
-    icon: 'shield',
-    title: 'A New Benchmark in Client Service',
+    icon: 'landmark',
+    title: 'A Benchmark in Client Servicing',
     description: 'We measure ourselves not by output, but by outcomes — the trust earned, the reputations protected, and the credibility built for every client we serve.',
     tag: 'OUTCOME FOCUSED'
   }

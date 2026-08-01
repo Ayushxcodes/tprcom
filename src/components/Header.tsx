@@ -97,10 +97,10 @@ export function Header() {
                     : undefined
                 }
               >
+                <a href="#philosophy" onClick={() => setIsMobileMenuOpen(false)}>About</a>
                 <a href="#services" onClick={() => setIsMobileMenuOpen(false)}>Services</a>
                 <a href="#sectors" onClick={() => setIsMobileMenuOpen(false)}>Sectors</a>
-                <a href="#approach" onClick={() => setIsMobileMenuOpen(false)}>About</a>
-                <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Career</a>
+                <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Careers</a>
 
                 <button
                   className="theme-toggle-btn"

@@ -75,8 +75,8 @@ export function Hero() {
             </em>
           </h1>
 
-          <p className="lede" style={{ fontSize: '18px', color: 'rgba(255, 255, 255, 0.95)', lineHeight: 1.6, maxWidth: '640px', margin: '0 0 28px 0', textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}>
-            TPR Communications was founded on a simple conviction: that communication works best when it is built on evidence, not instinct. We bring together researchers, strategists, media professionals, and creative producers under one roof, so that every narrative we build for a client is grounded in insight and delivered with precision.
+          <p className="lede" style={{ fontSize: '18px', color: 'rgba(255, 255, 255, 0.95)', lineHeight: 1.6, maxWidth: '680px', margin: '0 0 28px 0', textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}>
+            TPR Communications is a research-led, quality-driven full-service PR firm delivering strategic communications across the spectrum, helping brands to earn trust, build credibility, strengthen reputation, and stand out with purpose. Backed by academic insight and media experience, TPR Communications is committed to setting a new benchmark in client servicing.
           </p>
 
           <div className="hero-actions" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>

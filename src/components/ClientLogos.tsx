@@ -3,72 +3,106 @@
 import React from 'react';
 import Image from 'next/image';
 
+interface Partner {
+  name: string;
+  logo?: string;
+}
+
+const partnerClients: Partner[] = [
+  { name: 'Reliance', logo: '/assets/Reliance.webp' },
+  { name: 'Essar', logo: '/assets/essar.png' },
+  { name: 'IIFL - 5Paisa', logo: '/assets/IIFL.png' },
+  { name: 'Indian Aluminium Association', logo: '/assets/indian_aluminium_association.jpeg' },
+  { name: 'Govt of India' },
+  { name: 'International Copper Association', logo: '/assets/international_copper_association.png' },
+  { name: 'Indian Steel Association', logo: '/assets/indian steel association.png' },
+  { name: 'MDC' },
+  { name: 'JSP' },
+  { name: 'PGI' },
+  { name: 'Zydus', logo: '/assets/Zydus.svg' },
+  { name: 'SSEL', logo: '/assets/ssel.png' },
+  { name: 'ICCEMA', logo: '/assets/icema.jpeg' },
+  { name: 'Ministry of Health and Family Welfare', logo: '/assets/ministry of health.png' },
+  { name: 'Su-vastika', logo: '/assets/suvastika.jpg' },
+  { name: 'BigMint', logo: '/assets/bigmint.jpeg' },
+  { name: 'Rosneft', logo: '/assets/rosneft.png' },
+  { name: 'Paisalo', logo: '/assets/paisalo.jpeg' },
+  { name: 'NAMTECH', logo: '/assets/namtech.avif' },
+  { name: 'CDRI' },
+  { name: 'Envision' },
+  { name: 'Hiranandani Group', logo: '/assets/hiranadani.avif' },
+  { name: 'Garo Education' },
+  { name: 'JLL' },
+  { name: 'SBRE Bank' },
+  { name: 'Purple Finance', logo: '/assets/purple finance.jpeg' },
+  { name: 'Govt of Rajasthan', logo: '/assets/govenrment of rajasthan.png' },
+  { name: 'DMG Group' },
+  { name: 'IntelliSmart', logo: '/assets/intellismart.jpg' },
+];
+
 export function ClientLogos() {
-  // Exact user-uploaded logo files in public/
-  const logos = [
-    'logo1.png',
-    'logo2.png',
-    'logo3.webp',
-    'logo4.png',
-    'logo5.png',
-    'logo6.png',
-    'logo7 copy.svg',
-    'logo8.png',
-    'logo9.png',
-  ];
+  // Only partners with new image logos in /assets/ appear in ticker animation
+  const tickerLogos = partnerClients.filter((p): p is Partner & { logo: string } => Boolean(p.logo));
 
   return (
-    <section className="client-logos-section" style={{ background: 'var(--bg-secondary)', padding: '70px 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', overflow: 'hidden' }}>
+    <section className="client-logos-section" style={{ background: 'var(--bg-secondary)', padding: '80px 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', overflow: 'hidden' }}>
       <div className="wrap reveal" style={{ marginBottom: '36px', textAlign: 'center' }}>
-        <p className="kicker kicker-centered" style={{ justifyContent: 'center' }}>Institutional Trust</p>
-        <h2 style={{ fontSize: '32px', fontFamily: 'var(--serif)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>
+        <p className="kicker kicker-centered" style={{ justifyContent: 'center', fontSize: '13px', letterSpacing: '0.28em' }}>
+          Institutional Trust
+        </p>
+        <h2 style={{ fontSize: 'clamp(30px, 4vw, 42px)', fontFamily: 'var(--serif)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '10px' }}>
           Our Revered Partners
         </h2>
-        <p className="sub" style={{ margin: '0 auto', maxWidth: '600px' }}>
-          We&apos;re proud to provide strategic counsel to industry leaders and innovative enterprise clients worldwide.
+        <p className="sub" style={{ margin: '0 auto', maxWidth: '780px', fontSize: '17px', lineHeight: 1.6 }}>
+          We are proud and privileged to serve trailblazers, iconoclasts, disruptors, leaders and reformers
         </p>
       </div>
 
-      {/* Infinite Ticker */}
+      {/* INFINITE MARQUEE TICKER (Only /assets/ downloaded logos) */}
       <div className="wrap">
-        <div style={{ position: 'relative', background: 'var(--bg-card)', borderRadius: '20px', border: '1px solid var(--border-color)', padding: '32px 0', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+        <div style={{ position: 'relative', background: 'var(--bg-card)', borderRadius: '20px', border: '1px solid var(--border-color)', padding: '36px 0', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
           {/* Edge Fade Gradients */}
-          <div style={{ pointerEvents: 'none', position: 'absolute', top: 0, bottom: 0, left: 0, width: '100px', background: 'linear-gradient(90deg, var(--bg-card) 0%, transparent 100%)', zIndex: 10 }} />
-          <div style={{ pointerEvents: 'none', position: 'absolute', top: 0, bottom: 0, right: 0, width: '100px', background: 'linear-gradient(270deg, var(--bg-card) 0%, transparent 100%)', zIndex: 10 }} />
+          <div style={{ pointerEvents: 'none', position: 'absolute', top: 0, bottom: 0, left: 0, width: '120px', background: 'linear-gradient(90deg, var(--bg-card) 0%, transparent 100%)', zIndex: 10 }} />
+          <div style={{ pointerEvents: 'none', position: 'absolute', top: 0, bottom: 0, right: 0, width: '120px', background: 'linear-gradient(270deg, var(--bg-card) 0%, transparent 100%)', zIndex: 10 }} />
 
           <div className="ticker-container">
             <div className="ticker-track">
-              {/* First set of logos */}
-              {logos.map((logo, index) => (
+              {/* First Set of /assets/ Logos */}
+              {tickerLogos.map((item, index) => (
                 <div
                   key={`first-${index}`}
                   className="ticker-item"
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 32px' }}
                 >
-                  <div style={{ width: '140px', height: '54px', position: 'relative', transition: 'all 0.3s ease', cursor: 'pointer' }}>
+                  <div style={{ width: '140px', height: '56px', position: 'relative', transition: 'all 0.3s ease', filter: 'grayscale(100%) opacity(0.85)', cursor: 'pointer' }}
+                       onMouseEnter={(e) => (e.currentTarget.style.filter = 'grayscale(0%) opacity(1)')}
+                       onMouseLeave={(e) => (e.currentTarget.style.filter = 'grayscale(100%) opacity(0.85)')}>
                     <Image
-                      src={`/${logo}`}
-                      alt={`Client Logo ${index + 1}`}
+                      src={item.logo}
+                      alt={item.name}
                       fill
-                      className="object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                      className="object-contain"
                       sizes="140px"
                     />
                   </div>
                 </div>
               ))}
-              {/* Duplicate set for seamless loop */}
-              {logos.map((logo, index) => (
+
+              {/* Second Set for Seamless Infinite Loop */}
+              {tickerLogos.map((item, index) => (
                 <div
                   key={`second-${index}`}
                   className="ticker-item"
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 32px' }}
                 >
-                  <div style={{ width: '140px', height: '54px', position: 'relative', transition: 'all 0.3s ease', cursor: 'pointer' }}>
+                  <div style={{ width: '140px', height: '56px', position: 'relative', transition: 'all 0.3s ease', filter: 'grayscale(100%) opacity(0.85)', cursor: 'pointer' }}
+                       onMouseEnter={(e) => (e.currentTarget.style.filter = 'grayscale(0%) opacity(1)')}
+                       onMouseLeave={(e) => (e.currentTarget.style.filter = 'grayscale(100%) opacity(0.85)')}>
                     <Image
-                      src={`/${logo}`}
-                      alt={`Client Logo ${index + 1}`}
+                      src={item.logo}
+                      alt={item.name}
                       fill
-                      className="object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                      className="object-contain"
                       sizes="140px"
                     />
                   </div>
@@ -76,6 +110,32 @@ export function ClientLogos() {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* UNIFORM PARTNER BADGE SHOWCASE (All 29 Partners Cleanly Rendered) */}
+        <div style={{ marginTop: '36px', display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
+          {partnerClients.map((partner, pIdx) => (
+            <div
+              key={`pbadge-${pIdx}`}
+              style={{
+                padding: '8px 16px',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '20px',
+                fontSize: '12.5px',
+                fontFamily: 'var(--sans)',
+                fontWeight: 600,
+                color: 'var(--text-secondary)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--gold)', display: 'inline-block' }} />
+              {partner.name}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -87,13 +147,13 @@ export function ClientLogos() {
 
         .ticker-track {
           display: flex;
-          animation: ticker-scroll 30s linear infinite;
-          width: calc(200px * 18);
+          align-items: center;
+          animation: ticker-scroll 35s linear infinite;
+          width: max-content;
         }
 
         .ticker-item {
           flex-shrink: 0;
-          width: 200px;
         }
 
         @keyframes ticker-scroll {
@@ -107,15 +167,6 @@ export function ClientLogos() {
 
         .ticker-container:hover .ticker-track {
           animation-play-state: paused;
-        }
-
-        @media (max-width: 768px) {
-          .ticker-item {
-            width: 150px;
-          }
-          .ticker-track {
-            width: calc(150px * 18);
-          }
         }
       `}</style>
     </section>
