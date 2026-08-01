@@ -116,10 +116,10 @@ export function Approach() {
         </div>
 
         {/* DESKTOP VIEW: CIRCULAR ORBITAL SYSTEM */}
-        <div className="approach-desktop-system reveal" style={{ position: 'relative', marginTop: '60px', minHeight: '760px', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="approach-desktop-system reveal" style={{ position: 'relative', marginTop: '60px', minHeight: '840px', alignItems: 'center', justifyContent: 'center' }}>
           
           {/* SVG DOTTED DATA FLOW LINES (DESKTOP) */}
-          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 2, overflow: 'visible' }} viewBox="0 0 1000 760" preserveAspectRatio="none">
+          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 2, overflow: 'visible' }} viewBox="0 0 1000 840" preserveAspectRatio="none">
             <defs>
               <linearGradient id="goldLineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="var(--gold)" stopOpacity="0.9" />
@@ -127,26 +127,26 @@ export function Approach() {
               </linearGradient>
             </defs>
 
-            <path d="M 500 380 L 500 110" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
-            <path d="M 500 380 L 840 230" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
-            <path d="M 500 380 L 800 620" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
-            <path d="M 500 380 L 200 620" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
-            <path d="M 500 380 L 160 230" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
+            <path d="M 500 420 L 500 140" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
+            <path d="M 500 420 L 840 260" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
+            <path d="M 500 420 L 800 680" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
+            <path d="M 500 420 L 200 680" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
+            <path d="M 500 420 L 160 260" stroke="url(#goldLineGrad)" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
 
             <circle r="4.5" fill="var(--gold)">
-              <animateMotion path="M 500 380 L 500 110" dur="2s" repeatCount="indefinite" />
+              <animateMotion path="M 500 420 L 500 140" dur="2s" repeatCount="indefinite" />
             </circle>
             <circle r="4.5" fill="var(--gold)">
-              <animateMotion path="M 500 380 L 840 230" dur="2.4s" repeatCount="indefinite" />
+              <animateMotion path="M 500 420 L 840 260" dur="2.4s" repeatCount="indefinite" />
             </circle>
             <circle r="4.5" fill="var(--gold)">
-              <animateMotion path="M 500 380 L 800 620" dur="2.7s" repeatCount="indefinite" />
+              <animateMotion path="M 500 420 L 800 680" dur="2.7s" repeatCount="indefinite" />
             </circle>
             <circle r="4.5" fill="var(--gold)">
-              <animateMotion path="M 500 380 L 200 620" dur="2.2s" repeatCount="indefinite" />
+              <animateMotion path="M 500 420 L 200 680" dur="2.2s" repeatCount="indefinite" />
             </circle>
             <circle r="4.5" fill="var(--gold)">
-              <animateMotion path="M 500 380 L 160 230" dur="2.5s" repeatCount="indefinite" />
+              <animateMotion path="M 500 420 L 160 260" dur="2.5s" repeatCount="indefinite" />
             </circle>
           </svg>
 
@@ -179,14 +179,14 @@ export function Approach() {
           </div>
 
           {/* 5 CARDS POSITIONED IN PERFECT ORBIT (DESKTOP) */}
-          <div style={{ width: '100%', height: '760px', position: 'relative', zIndex: 5 }}>
+          <div style={{ width: '100%', height: '840px', position: 'relative', zIndex: 5 }}>
             {setsUsApartItems.map((item, idx) => {
               const positions = [
-                { top: '0px', left: '50%', transform: 'translateX(-50%)' },                 // 01: Top Center
-                { top: '120px', right: '0px' },                                              // 02: Top Right
-                { bottom: '20px', right: '40px' },                                           // 03: Bottom Right
-                { bottom: '20px', left: '40px' },                                            // 04: Bottom Left
-                { top: '120px', left: '0px' }                                                // 05: Top Left
+                { top: '-10px', left: '50%', transform: 'translateX(-50%)', width: '450px' }, // 01: Top Center (Broader to prevent vertical overlap with center!)
+                { top: '140px', right: '0px', width: '320px' },                                 // 02: Top Right
+                { bottom: '20px', right: '20px', width: '320px' },                              // 03: Bottom Right
+                { bottom: '20px', left: '20px', width: '320px' },                               // 04: Bottom Left
+                { top: '140px', left: '0px', width: '320px' }                                   // 05: Top Left
               ];
               const pos = positions[idx];
               const isActive = activeId === item.id;
@@ -198,8 +198,6 @@ export function Approach() {
                   onClick={() => setActiveId(isActive ? null : item.id)}
                   style={{
                     position: 'absolute',
-                    width: '320px',
-                    minHeight: '220px',
                     padding: '24px',
                     background: 'var(--bg-card)',
                     boxShadow: isActive ? '0 20px 45px rgba(184, 153, 94, 0.25)' : '0 10px 30px rgba(0,0,0,0.06)',
