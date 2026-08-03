@@ -2027,8 +2027,19 @@ footer {
 
 /* RESPONSIVE & MOBILE UX OPTIMIZATION */
 @media (max-width: 980px) {
-  header { top: 12px; }
-  header nav.wrap { height: 60px; }
+  header { top: 10px; }
+  header .wrap { padding: 0 10px !important; }
+  header nav.wrap { height: 60px; padding-left: 12px !important; padding-right: 10px !important; }
+  .logo { gap: 5px !important; }
+  .logo img { height: 40px !important; width: auto !important; }
+  .logo-comms-divider { height: 24px !important; margin: 0 4px !important; }
+  .logo-comms-text {
+    font-size: clamp(13px, 3.8vw, 18px) !important;
+    letter-spacing: 0.08em !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
+    font-weight: 800 !important;
+  }
   .nav-links { display: none; }
   .menu-btn { display: flex; }
   .hero-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -2142,6 +2153,19 @@ footer {
 
 @media (max-width: 640px) {
   section { padding: 70px 0; }
+  header .wrap { padding: 0 6px !important; }
+  header nav.wrap { padding-left: 8px !important; padding-right: 6px !important; }
+  .logo img {
+    height: 38px !important;
+  }
+  .logo-comms-divider {
+    height: 22px !important;
+    margin: 0 3px !important;
+  }
+  .logo-comms-text {
+    font-size: clamp(12px, 3.2vw, 15.5px) !important;
+    letter-spacing: 0.05em !important;
+  }
   .sector-photo-grid, .leadership-grid, .footer-top, .stat-grid { grid-template-columns: 1fr; }
   .orbital-satellites-track { grid-template-columns: 1fr; }
   .hero { padding-top: 140px; }
@@ -2153,6 +2177,7 @@ footer {
   .pathway-dest-card { padding: 18px 12px; }
 }
 
+
 /* WHY PARTNER WITH US RESPONSIVE VISIBILITY */
 .approach-mobile-stack { display: none !important; }
 .approach-desktop-system { display: flex !important; }
@@ -2162,12 +2187,6 @@ footer {
   .approach-desktop-system { display: none !important; }
 }
 
-@media (max-width: 640px) {
-  .logo-comms-text {
-    font-size: 17px !important;
-    letter-spacing: 0.1em !important;
-  }
-}
 
 /* TPR PILLS HOVER ANIMATION */
 .tpr-pill {
