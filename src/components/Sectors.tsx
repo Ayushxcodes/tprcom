@@ -19,7 +19,7 @@ const sectorData: SectorItem[] = [
     id: 'fmcg',
     num: '01',
     icon: 'bag',
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80',
+    image: '/assets/fmcg.jpg',
     title: 'FMCG',
     description: 'Consumer packaged goods, personal care, food & beverage, and retail leaders.',
     detailedCopy: 'Driving brand recall, product launch momentum, executive thought leadership, and proactive recall defense for national and global consumer brands.',
@@ -79,7 +79,7 @@ const sectorData: SectorItem[] = [
     id: 'govt',
     num: '07',
     icon: 'shield',
-    image: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80',
+    image: '/govt_sector.png',
     title: 'GOVERNMENT AND PUBLIC SECTOR',
     description: 'Public institutions, state enterprises, civic initiatives, and policy communications.',
     detailedCopy: 'Designing policy messaging, public awareness campaigns, and defensive crisis communications for government bodies and public sector organizations.',
@@ -133,22 +133,19 @@ export function Sectors() {
   const activeSector = sectorData[activeIndex];
 
   return (
-    <section id="sectors" className="sectors" style={{ background: 'var(--bg-secondary)', padding: '100px 0' }}>
+    <section id="sectors" className="sectors" style={{ background: 'var(--bg-secondary)', padding: '120px 0' }}>
       <div className="wrap">
-        <div className="section-head reveal">
-          <div>
-            <p className="kicker" style={{ fontSize: '13px', letterSpacing: '0.28em' }}>Sectors We Serve</p>
-            <h2 style={{ fontSize: 'clamp(32px, 4vw, 48px)', fontFamily: 'var(--serif)', fontWeight: 800 }}>
-              Sectors We Serve
+        <div className="section-head reveal" style={{ display: 'block', marginBottom: '60px', width: '100%' }}>
+          <div style={{ width: '100%' }}>
+            <p className="kicker" style={{ fontSize: '25px', letterSpacing: '0.32em', fontWeight: 800 }}>Sectors We Serve</p>
+            <h2 style={{ fontSize: 'clamp(40px, 5.5vw, 66px)', fontFamily: 'var(--serif)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-0.02em', marginTop: '12px', width: '100%', maxWidth: '100%' }}>
+              Legacy, Traditional, Emerging, Sunrise &amp; Tech-Powered Sectors
             </h2>
           </div>
-          <p className="sub" style={{ fontSize: '17px' }}>
-            Legacy, Traditional, Emerging, Sunrise &amp; Tech-Powered Sectors
-          </p>
         </div>
 
         {/* SPLIT CONTAINER: LEFT SLIDESHOW + RIGHT INTERACTIVE LIST */}
-        <div className="reveal" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '40px', marginTop: '48px', alignItems: 'stretch' }}>
+        <div className="reveal" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', marginTop: '48px', alignItems: 'stretch' }}>
           
           {/* LEFT SLIDESHOW CONTAINER */}
           <div
@@ -157,15 +154,15 @@ export function Sectors() {
             onMouseLeave={() => setIsAutoPlaying(true)}
             style={{
               position: 'relative',
-              borderRadius: '20px',
+              borderRadius: '24px',
               overflow: 'hidden',
               background: 'var(--bg-dark)',
-              border: '1px solid var(--border-color)',
-              minHeight: '520px',
+              border: '2px solid var(--border-color)',
+              minHeight: '580px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'flex-end',
-              boxShadow: '0 20px 50px rgba(0,0,0,0.18)'
+              boxShadow: '0 25px 60px rgba(0,0,0,0.22)'
             }}
           >
             {/* BACKGROUND SLIDESHOW IMAGE WITH SMOOTH TRANSITION */}
@@ -178,7 +175,7 @@ export function Sectors() {
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
-                  filter: 'contrast(1.1) brightness(0.65)',
+                  filter: 'contrast(1.15) brightness(0.6)',
                   transition: 'opacity 0.6s ease, transform 0.8s ease',
                   animation: 'fadeInImg 0.6s ease'
                 }}
@@ -189,59 +186,59 @@ export function Sectors() {
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(180deg, rgba(5,14,26,0.2) 0%, rgba(5,14,26,0.92) 80%)',
+              background: 'linear-gradient(180deg, rgba(5,14,26,0.15) 0%, rgba(5,14,26,0.95) 75%)',
               zIndex: 1
             }} />
 
             {/* SLIDESHOW CONTENT OVERLAY */}
-            <div style={{ position: 'relative', zIndex: 2, padding: '36px 32px', color: '#FFFFFF' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+            <div style={{ position: 'relative', zIndex: 2, padding: '40px 36px', color: '#FFFFFF' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '18px' }}>
                 <span style={{
                   fontFamily: 'var(--mono)',
-                  fontSize: '11px',
+                  fontSize: '12px',
                   color: 'var(--gold)',
-                  background: 'rgba(15, 23, 34, 0.85)',
-                  border: '1px solid var(--gold)',
-                  padding: '4px 10px',
-                  borderRadius: '6px',
-                  fontWeight: 700,
-                  letterSpacing: '0.14em'
+                  background: 'rgba(15, 23, 34, 0.9)',
+                  border: '1.5px solid var(--gold)',
+                  padding: '5px 12px',
+                  borderRadius: '8px',
+                  fontWeight: 800,
+                  letterSpacing: '0.16em'
                 }}>
-                  SECTOR {activeSector.num} OF 08
+                  SECTOR {activeSector.num} OF {sectorData.length.toString().padStart(2, '0')}
                 </span>
                 <div style={{
-                  width: '32px', height: '32px', borderRadius: '8px',
-                  background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+                  width: '36px', height: '36px', borderRadius: '10px',
+                  background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.25)',
                   color: 'var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center'
                 }}>
-                  <Icon name={activeSector.icon} style={{ width: '16px', height: '16px' }} />
+                  <Icon name={activeSector.icon} style={{ width: '18px', height: '18px' }} />
                 </div>
               </div>
 
-              <h3 style={{ fontSize: '28px', fontWeight: 700, color: '#FFFFFF', marginBottom: '10px' }}>
+              <h3 style={{ fontSize: 'clamp(30px, 3.5vw, 42px)', fontWeight: 900, color: '#FFFFFF', marginBottom: '12px', letterSpacing: '0.02em', lineHeight: 1.1 }}>
                 {activeSector.title}
               </h3>
-              <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.6, marginBottom: '18px' }}>
+              <p style={{ fontSize: '16.5px', color: 'rgba(255,255,255,0.9)', lineHeight: 1.65, marginBottom: '22px', fontWeight: 400 }}>
                 {activeSector.detailedCopy}
               </p>
 
               <div style={{
-                background: 'rgba(22, 34, 49, 0.75)',
-                borderLeft: '3px solid var(--gold)',
-                padding: '14px 16px',
-                borderRadius: '8px',
-                backdropFilter: 'blur(10px)'
+                background: 'rgba(22, 34, 49, 0.85)',
+                borderLeft: '4px solid var(--gold)',
+                padding: '16px 20px',
+                borderRadius: '10px',
+                backdropFilter: 'blur(12px)'
               }}>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--gold)', letterSpacing: '0.14em', display: 'block', marginBottom: '4px', fontWeight: 700 }}>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', letterSpacing: '0.16em', display: 'block', marginBottom: '6px', fontWeight: 800 }}>
                   BENCHMARK HIGHLIGHT
                 </span>
-                <p style={{ fontSize: '13px', color: '#FFFFFF', fontStyle: 'italic' }}>
-                  {activeSector.caseHighlight}
+                <p style={{ fontSize: '14.5px', color: '#FFFFFF', fontStyle: 'italic', lineHeight: 1.5, fontWeight: 500 }}>
+                  "{activeSector.caseHighlight}"
                 </p>
               </div>
 
               {/* SLIDE PROGRESS INDICATOR DOTS */}
-              <div style={{ display: 'flex', gap: '8px', marginTop: '24px', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: '8px', marginTop: '28px', alignItems: 'center' }}>
                 {sectorData.map((_, idx) => (
                   <button
                     key={idx}
@@ -250,9 +247,9 @@ export function Sectors() {
                       setIsAutoPlaying(false);
                     }}
                     style={{
-                      height: '4px',
-                      width: idx === activeIndex ? '28px' : '8px',
-                      borderRadius: '2px',
+                      height: '5px',
+                      width: idx === activeIndex ? '32px' : '10px',
+                      borderRadius: '3px',
                       background: idx === activeIndex ? 'var(--gold)' : 'rgba(255,255,255,0.3)',
                       border: 'none',
                       cursor: 'pointer',
@@ -270,7 +267,7 @@ export function Sectors() {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '12px'
+              gap: '14px'
             }}
           >
             {sectorData.map((item, idx) => {
@@ -288,23 +285,23 @@ export function Sectors() {
                   }}
                   style={{
                     background: isActive ? 'var(--bg-card)' : 'var(--bg-primary)',
-                    border: isActive ? '1.5px solid var(--gold)' : '1px solid var(--border-color)',
-                    borderRadius: '14px',
-                    padding: '18px 22px',
+                    border: isActive ? '2px solid var(--gold)' : '1px solid var(--border-color)',
+                    borderRadius: '16px',
+                    padding: '20px 26px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
-                    boxShadow: isActive ? '0 10px 25px rgba(184, 153, 94, 0.15)' : 'none',
-                    transform: isActive ? 'translateX(6px)' : 'none'
+                    boxShadow: isActive ? '0 12px 30px rgba(184, 153, 94, 0.2)' : 'none',
+                    transform: isActive ? 'translateX(8px)' : 'none'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                     <span style={{
                       fontFamily: 'var(--mono)',
-                      fontSize: '13px',
-                      fontWeight: 700,
+                      fontSize: '15px',
+                      fontWeight: 900,
                       color: isActive ? 'var(--gold)' : 'var(--text-muted)',
                       letterSpacing: '0.12em'
                     }}>
@@ -313,14 +310,21 @@ export function Sectors() {
 
                     <div>
                       <h4 style={{
-                        fontSize: '16px',
-                        fontWeight: 600,
+                        fontSize: isActive ? '20px' : '18px',
+                        fontWeight: 900,
                         color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-                        transition: 'color 0.2s ease'
+                        letterSpacing: '0.03em',
+                        transition: 'all 0.2s ease'
                       }}>
                         {item.title}
                       </h4>
-                      <p style={{ fontSize: '12.5px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                      <p style={{
+                        fontSize: '14px',
+                        fontWeight: 500,
+                        color: isActive ? 'var(--text-primary)' : 'var(--text-muted)',
+                        marginTop: '4px',
+                        lineHeight: 1.45
+                      }}>
                         {item.description}
                       </p>
                     </div>
@@ -329,9 +333,9 @@ export function Sectors() {
                   <div style={{
                     color: isActive ? 'var(--gold)' : 'var(--text-muted)',
                     transition: 'transform 0.3s ease',
-                    transform: isActive ? 'translateX(3px)' : 'none'
+                    transform: isActive ? 'translateX(5px) scale(1.15)' : 'none'
                   }}>
-                    <svg style={{ width: '18px', height: '18px' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg style={{ width: '22px', height: '22px' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </div>

@@ -11,28 +11,28 @@ interface WorkItem {
 const workData: WorkItem[] = [
   {
     id: 'corridors',
-    image: '/assets/policy.png',
+    image: '/assets/Power Corridor Image.png',
     tag: 'Policy & Governance',
     title: 'Corridors of power',
     description: 'Navigating through corridors of power, our counsel builds narratives, plugs in the missing links, and ensures the client’s interests are fully protected.',
   },
   {
     id: 'boardroom',
-    image: '/assets/boardroom.png',
+    image: '/assets/Boaordroom.png',
     tag: 'Boardroom Counsel',
     title: 'Boardrooms',
     description: 'Our seasoned Team Leaders guide the Boards on achievable, research-based communication strategies.',
   },
   {
     id: 'digital',
-    image: '/assets/digital.png',
+    image: '/assets/digital feeed.png',
     tag: 'Public Square',
     title: 'Platforms, Feeds & Digital Brand Voice',
     description: 'The highly efficient digital diggers build multi-platform thought leadership and rapid-response digital communications across platforms.',
   },
   {
     id: 'newsroom',
-    image: '/assets/newsroom.png',
+    image: '/assets/tier1.png',
     tag: 'Newsroom Authority',
     title: 'Tier 1 Global Media and Press Desk',
     description: 'Team TPR ensures impactful editorial features and strategic executive commentary across global tier-1 mainline and financial publications.',
@@ -49,10 +49,7 @@ export function Work() {
             <h2 style={{ fontSize: 'clamp(32px, 4vw, 48px)', fontFamily: 'var(--serif)', fontWeight: 800, lineHeight: 1.15 }}>
               The Corridors of Power, Boardrooms, the Fourth Estate and Digital Empire.
             </h2>
-          </div>
-          <p className="sub" style={{ fontSize: '17px', maxWidth: '720px' }}>
-            The rooms, newsrooms, and digital networks through which our counsel travels.
-          </p>
+          </div>    
         </div>
 
         <div className="work-grid-masonry reveal" style={{ marginTop: '48px' }}>

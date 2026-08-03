@@ -9,6 +9,7 @@ interface Partner {
 }
 
 const partnerClients: Partner[] = [
+  { name: 'Govt of Rajasthan', logo: '/assets/govenrment of rajasthan.png' },
   { name: 'Reliance', logo: '/assets/Reliance.webp' },
   { name: 'Essar', logo: '/assets/essar.png' },
   { name: 'IIFL - 5Paisa', logo: '/assets/IIFL.png' },
@@ -35,7 +36,6 @@ const partnerClients: Partner[] = [
   { name: 'JLL' },
   { name: 'SBRE Bank' },
   { name: 'Purple Finance', logo: '/assets/purple finance.jpeg' },
-  { name: 'Govt of Rajasthan', logo: '/assets/govenrment of rajasthan.png' },
   { name: 'DMG Group' },
   { name: 'IntelliSmart', logo: '/assets/intellismart.jpg' },
 ];

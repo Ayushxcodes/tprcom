@@ -66,9 +66,6 @@ export function Approach() {
             <p className="kicker">Why Partner With Us</p>
             <h2>What Sets Us Apart</h2>
           </div>
-          <p className="sub">
-            The five strategic pillars that define our evidence-based counsel, flowing continuously from the TPR research core.
-          </p>
         </div>
 
         {/* MOBILE VIEW: CLEAN STACKED CARDS CONTAINER */}

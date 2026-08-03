@@ -27,7 +27,6 @@ export function Footer() {
               <li><a href="#services">Services</a></li>
               <li><a href="#work">Work</a></li>
               <li><a href="#sectors">Sectors</a></li>
-              <li><a href="#approach">Approach</a></li>
               <li><a href="#leadership">About</a></li>
             </ul>
           </div>
