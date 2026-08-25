@@ -55,8 +55,8 @@ function getInitialAuthStatus(): boolean {
 }
 
 export function ContentProvider({ children }: { children: React.ReactNode }) {
-  const [content, setContent] = useState<SiteContent>(getInitialContent);
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(getInitialAuthStatus);
+  const [content, setContent] = useState<SiteContent>(initialSiteContent);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const fetchContent = async () => {
@@ -67,7 +67,11 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
         if (data.success && data.content) {
           setContent(data.content);
           if (typeof window !== 'undefined') {
-            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data.content));
+            try {
+              localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data.content));
+            } catch {
+              // Ignore quota
+            }
           }
           setIsLoading(false);
           return;
@@ -94,10 +98,25 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
       // Local fallback
     }
 
-    return getInitialAuthStatus();
+    const localAuth = getInitialAuthStatus();
+    setIsAdminLoggedIn(localAuth);
+    return localAuth;
   };
 
   useEffect(() => {
+    // 1. Sync from localStorage after hydration without causing SSR mismatch
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (saved) {
+          setContent({ ...initialSiteContent, ...JSON.parse(saved) });
+        }
+      } catch (err) {
+        console.error('Error reading localStorage:', err);
+      }
+    }
+
+    // 2. Fetch fresh content from server/database
     fetchContent();
     checkAuthStatus();
   }, []);
