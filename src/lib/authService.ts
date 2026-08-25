@@ -83,7 +83,7 @@ export async function authenticateAdmin(username: string, password: string): Pro
     }
   }
 
-  // 2. Fallback to Environment Variables if DB user is not created yet
+  // 2. Strict Environment Variables Check (No Hardcoded Fallbacks)
   const expectedUser = process.env.ADMIN_USERNAME || process.env.NEXT_PUBLIC_ADMIN_USERNAME;
   const expectedPass = process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 

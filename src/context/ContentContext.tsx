@@ -206,46 +206,35 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ username, password }),
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success) {
-          clearLockoutState();
-          setIsAdminLoggedIn(true);
-          return { success: true };
-        }
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        clearLockoutState();
+        setIsAdminLoggedIn(true);
+        return { success: true };
       }
-    } catch {
-      // Local fallback check
-    }
 
-    // Static / Offline fallback check using authService
-    const authResult = await authenticateAdmin(username, password);
-
-    if (authResult.success && authResult.user) {
-      clearLockoutState();
-      setIsAdminLoggedIn(true);
-      if (typeof window !== 'undefined') {
-        const session = createSession(authResult.user);
-        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session));
+      recordFailedAttempt();
+      const updatedState = getLockoutState();
+      const attemptsLeft = MAX_FAILED_ATTEMPTS - updatedState.attempts;
+      if (attemptsLeft <= 0) {
+        return {
+          success: false,
+          error: 'Too many failed login attempts. Security lock activated for 60 seconds.',
+        };
       }
-      return { success: true };
-    }
 
-    recordFailedAttempt();
-
-    const updatedState = getLockoutState();
-    const attemptsLeft = MAX_FAILED_ATTEMPTS - updatedState.attempts;
-    if (attemptsLeft <= 0) {
       return {
         success: false,
-        error: 'Too many failed login attempts. Security lock activated for 60 seconds.',
+        error: data.error || `Invalid credentials. (${attemptsLeft} attempt${attemptsLeft === 1 ? '' : 's'} remaining)`,
+      };
+    } catch {
+      recordFailedAttempt();
+      return {
+        success: false,
+        error: 'Authentication server unreachable. Please check network connection.',
       };
     }
-
-    return {
-      success: false,
-      error: authResult.error || `Invalid credentials. (${attemptsLeft} attempt${attemptsLeft === 1 ? '' : 's'} remaining)`,
-    };
   };
 
   const logoutAdmin = async () => {
