@@ -107,7 +107,11 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
       // Immediate UI feedback
       setContent(newContent);
       if (typeof window !== 'undefined') {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newContent));
+        try {
+          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newContent));
+        } catch (lsErr) {
+          console.warn('localStorage quota warning (ignored to preserve server save):', lsErr);
+        }
       }
 
       // Dynamic DB Server Persistence

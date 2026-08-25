@@ -13,22 +13,48 @@ interface ImageUploadInputProps {
 }
 
 function ImageUploadInput({ label = 'Image URL / Upload File', value, onChange }: ImageUploadInputProps) {
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          onChange(event.target.result as string);
+    if (!file) return;
+
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.url) {
+          onChange(data.url);
+          setIsUploading(false);
+          return;
         }
-      };
-      reader.readAsDataURL(file);
+      }
+    } catch (err) {
+      console.error('File upload failed:', err);
     }
+
+    // Fallback to FileReader Base64 if server upload fails
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (event.target?.result) {
+        onChange(event.target.result as string);
+      }
+      setIsUploading(false);
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%' }}>
-      {label && <label style={{ fontSize: '12px', color: '#94A3B8', fontWeight: 600 }}>{label}</label>}
+      {label && <label style={{ fontSize: '12px', color: '#475569', fontWeight: 600 }}>{label}</label>}
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         {value ? (
           <div
@@ -36,10 +62,10 @@ function ImageUploadInput({ label = 'Image URL / Upload File', value, onChange }
               width: '42px',
               height: '42px',
               borderRadius: '8px',
-              border: '1px solid var(--gold)',
+              border: '1px solid #B8995E',
               overflow: 'hidden',
               flexShrink: 0,
-              background: '#050E1A',
+              background: '#F8FAFC',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -53,17 +79,18 @@ function ImageUploadInput({ label = 'Image URL / Upload File', value, onChange }
               width: '42px',
               height: '42px',
               borderRadius: '8px',
-              border: '1px dashed #475569',
+              border: '1px dashed #CBD5E1',
               flexShrink: 0,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '16px',
+              fontSize: '11px',
+              fontWeight: 700,
               color: '#64748B',
-              background: '#08101C',
+              background: '#F1F5F9',
             }}
           >
-            📷
+            Img
           </div>
         )}
 
@@ -78,22 +105,23 @@ function ImageUploadInput({ label = 'Image URL / Upload File', value, onChange }
         <label
           style={{
             background: 'rgba(184, 153, 94, 0.15)',
-            border: '1px solid var(--gold)',
-            color: 'var(--gold)',
+            border: '1px solid #B8995E',
+            color: '#946E29',
             padding: '9px 14px',
             borderRadius: '8px',
             fontSize: '12px',
             fontWeight: 700,
-            cursor: 'pointer',
+            cursor: isUploading ? 'not-allowed' : 'pointer',
             whiteSpace: 'nowrap',
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
+            opacity: isUploading ? 0.7 : 1,
           }}
           title="Upload image file from your device"
         >
-          📁 Upload
-          <input type="file" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} />
+          {isUploading ? 'Uploading...' : 'Upload'}
+          <input type="file" accept="image/*" disabled={isUploading} onChange={handleFileChange} style={{ display: 'none' }} />
         </label>
       </div>
     </div>
@@ -143,15 +171,15 @@ export default function AdminDashboardPage() {
       <div
         style={{
           minHeight: '100vh',
-          background: '#050E1A',
-          color: '#FFFFFF',
+          background: '#F8FAFC',
+          color: '#0F172A',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           fontFamily: 'var(--sans)',
         }}
       >
-        <p style={{ color: 'var(--gold)' }}>Verifying admin authorization...</p>
+        <p style={{ color: '#946E29', fontWeight: 600 }}>Verifying admin authorization...</p>
       </div>
     );
   }
@@ -164,7 +192,7 @@ export default function AdminDashboardPage() {
     setIsSaving(false);
 
     if (result.success) {
-      setSaveStatus({ message: '✓ All content updated and persisted successfully!', type: 'success' });
+      setSaveStatus({ message: 'All content updated and persisted successfully!', type: 'success' });
       setTimeout(() => setSaveStatus({ message: '', type: '' }), 4000);
     } else {
       setSaveStatus({ message: `Failed to save: ${result.error}`, type: 'error' });
@@ -197,8 +225,8 @@ export default function AdminDashboardPage() {
     <div
       style={{
         minHeight: '100vh',
-        background: '#050E1A',
-        color: '#E2E8F0',
+        background: '#F1F5F9',
+        color: '#0F172A',
         fontFamily: 'var(--sans)',
         display: 'flex',
         flexDirection: 'column',
@@ -207,8 +235,9 @@ export default function AdminDashboardPage() {
       {/* CMS DASHBOARD HEADER */}
       <header
         style={{
-          background: '#0B1521',
-          borderBottom: '1px solid rgba(184, 153, 94, 0.25)',
+          background: '#FFFFFF',
+          borderBottom: '1px solid #E2E8F0',
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)',
           padding: '16px 32px',
           display: 'flex',
           alignItems: 'center',
@@ -225,7 +254,7 @@ export default function AdminDashboardPage() {
               fontFamily: 'var(--serif)',
               fontSize: '24px',
               fontWeight: 800,
-              color: 'var(--gold)',
+              color: '#946E29',
               letterSpacing: '0.08em',
             }}
           >
@@ -233,9 +262,9 @@ export default function AdminDashboardPage() {
           </span>
           <span
             style={{
-              background: 'rgba(184, 153, 94, 0.15)',
-              border: '1px solid var(--gold)',
-              color: 'var(--gold)',
+              background: 'rgba(184, 153, 94, 0.12)',
+              border: '1px solid #B8995E',
+              color: '#946E29',
               fontSize: '11px',
               fontFamily: 'var(--mono)',
               padding: '3px 8px',
@@ -252,7 +281,7 @@ export default function AdminDashboardPage() {
             <span
               style={{
                 fontSize: '13px',
-                color: saveStatus.type === 'success' ? '#34D399' : '#F87171',
+                color: saveStatus.type === 'success' ? '#059669' : '#DC2626',
                 marginRight: '12px',
                 fontWeight: 600,
               }}
@@ -265,26 +294,26 @@ export default function AdminDashboardPage() {
             href="/"
             target="_blank"
             style={{
-              background: 'rgba(255, 255, 255, 0.08)',
-              color: '#FFFFFF',
+              background: '#FFFFFF',
+              color: '#0F172A',
               padding: '9px 16px',
               borderRadius: '8px',
               fontSize: '13px',
               fontWeight: 600,
               textDecoration: 'none',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
+              border: '1px solid #CBD5E1',
             }}
           >
-            👁 Live Preview
+            Live Preview
           </Link>
 
           <button
             onClick={handleReset}
             disabled={isSaving}
             style={{
-              background: 'rgba(239, 68, 68, 0.15)',
-              color: '#F87171',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
+              background: '#FEF2F2',
+              color: '#DC2626',
+              border: '1px solid #FCA5A5',
               padding: '9px 16px',
               borderRadius: '8px',
               fontSize: '13px',
@@ -299,46 +328,47 @@ export default function AdminDashboardPage() {
             onClick={exportContentJson}
             title="Download content.json for updating your static host code"
             style={{
-              background: 'rgba(255, 255, 255, 0.08)',
-              color: '#FFFFFF',
+              background: '#F8FAFC',
+              color: '#0F172A',
               padding: '9px 16px',
               borderRadius: '8px',
               fontSize: '13px',
               fontWeight: 600,
               cursor: 'pointer',
-              border: '1px solid rgba(255, 255, 255, 0.18)',
+              border: '1px solid #CBD5E1',
             }}
           >
-            📥 Export content.json
+            Export content.json
           </button>
 
           <button
             onClick={handleSave}
             disabled={isSaving}
             style={{
-              background: 'var(--gold)',
-              color: '#050E1A',
+              background: 'linear-gradient(135deg, #B8995E 0%, #946E29 100%)',
+              color: '#FFFFFF',
               border: 'none',
               padding: '9px 24px',
               borderRadius: '8px',
               fontSize: '13.5px',
               fontWeight: 800,
               cursor: isSaving ? 'not-allowed' : 'pointer',
-              boxShadow: '0 4px 14px rgba(184, 153, 94, 0.3)',
+              boxShadow: '0 4px 14px rgba(184, 153, 94, 0.35)',
             }}
           >
-            {isSaving ? 'Saving...' : '💾 Save All Changes'}
+            {isSaving ? 'Saving...' : 'Save All Changes'}
           </button>
 
           <button
             onClick={logoutAdmin}
             style={{
               background: 'transparent',
-              color: '#94A3B8',
+              color: '#64748B',
               border: 'none',
               fontSize: '13px',
               cursor: 'pointer',
               marginLeft: '8px',
+              fontWeight: 600,
             }}
           >
             Logout
@@ -352,8 +382,8 @@ export default function AdminDashboardPage() {
         <aside
           style={{
             width: '260px',
-            background: '#08101C',
-            borderRight: '1px solid rgba(255, 255, 255, 0.08)',
+            background: '#F8FAFC',
+            borderRight: '1px solid #E2E8F0',
             padding: '24px 16px',
             display: 'flex',
             flexDirection: 'column',
@@ -375,37 +405,36 @@ export default function AdminDashboardPage() {
           </div>
 
           {([
-            { id: 'hero', label: '1. Hero Section', icon: '✨' },
-            { id: 'philosophy', label: '2. Who We Are (Philosophy)', icon: '📖' },
-            { id: 'approach', label: '3. What Sets Us Apart', icon: '🏛️' },
-            { id: 'services', label: '4. Services (10 Items)', icon: '⚡' },
-            { id: 'work', label: '5. Work & Portfolio', icon: '🖼️' },
-            { id: 'sectors', label: '6. Sectors We Serve', icon: '🎯' },
-            { id: 'leadership', label: '7. Leadership Team', icon: '👤' },
-            { id: 'clientLogos', label: '8. Client Logos & Partners', icon: '🤝' },
-            { id: 'contact', label: '9. Contact Info', icon: '📞' },
-            { id: 'footer', label: '10. Footer Section', icon: '🏷️' },
-          ] as const satisfies readonly { id: TabId; label: string; icon: string }[]).map((tab) => (
+            { id: 'hero', label: '1. Hero Section' },
+            { id: 'philosophy', label: '2. Who We Are (Philosophy)' },
+            { id: 'approach', label: '3. What Sets Us Apart' },
+            { id: 'services', label: '4. Services (10 Items)' },
+            { id: 'work', label: '5. Work & Portfolio' },
+            { id: 'sectors', label: '6. Sectors We Serve' },
+            { id: 'leadership', label: '7. Leadership Team' },
+            { id: 'clientLogos', label: '8. Client Logos & Partners' },
+            { id: 'contact', label: '9. Contact Info' },
+            { id: 'footer', label: '10. Footer Section' },
+          ] as const satisfies readonly { id: TabId; label: string }[]).map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '10px',
                 padding: '12px 16px',
                 borderRadius: '10px',
                 border: 'none',
-                background: activeTab === tab.id ? 'var(--gold)' : 'transparent',
-                color: activeTab === tab.id ? '#050E1A' : '#CBD5E1',
-                fontWeight: activeTab === tab.id ? 800 : 500,
+                background: activeTab === tab.id ? 'linear-gradient(135deg, #B8995E 0%, #946E29 100%)' : 'transparent',
+                color: activeTab === tab.id ? '#FFFFFF' : '#475569',
+                fontWeight: activeTab === tab.id ? 700 : 600,
                 fontSize: '13.5px',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transition: 'all 0.2s ease',
+                boxShadow: activeTab === tab.id ? '0 2px 8px rgba(184, 153, 94, 0.3)' : 'none',
               }}
             >
-              <span>{tab.icon}</span>
               <span>{tab.label}</span>
             </button>
           ))}
@@ -416,10 +445,10 @@ export default function AdminDashboardPage() {
           {/* TAB 1: HERO */}
           {activeTab === 'hero' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--gold)' }}>Hero Section Content</h2>
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#946E29' }}>Hero Section Content</h2>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Kicker Tag</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Kicker Tag</label>
                 <input
                   type="text"
                   value={formData.hero.kicker}
@@ -430,7 +459,7 @@ export default function AdminDashboardPage() {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Main Title Heading</label>
+                  <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Main Title Heading</label>
                   <input
                     type="text"
                     value={formData.hero.title}
@@ -439,7 +468,7 @@ export default function AdminDashboardPage() {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Italic Subtitle</label>
+                  <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Italic Subtitle</label>
                   <input
                     type="text"
                     value={formData.hero.italicTitle}
@@ -450,7 +479,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Main Hero Lede Paragraph</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Main Hero Lede Paragraph</label>
                 <textarea
                   rows={4}
                   value={formData.hero.lede}
@@ -461,7 +490,7 @@ export default function AdminDashboardPage() {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Primary Button Text</label>
+                  <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Primary Button Text</label>
                   <input
                     type="text"
                     value={formData.hero.primaryBtnText}
@@ -470,7 +499,7 @@ export default function AdminDashboardPage() {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Secondary Button Text</label>
+                  <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Secondary Button Text</label>
                   <input
                     type="text"
                     value={formData.hero.secondaryBtnText}
@@ -480,13 +509,14 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
 
-              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '16px', color: '#FFFFFF' }}>Slideshow Background Images</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '16px', color: '#0F172A' }}>Slideshow Background Images</h3>
               {formData.hero.slides.map((slide, sIdx) => (
                 <div
                   key={sIdx}
                   style={{
-                    background: '#0B1521',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    background: '#FFFFFF',
+                    border: '1px solid #E2E8F0',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
                     padding: '16px',
                     borderRadius: '12px',
                     display: 'flex',
@@ -516,7 +546,7 @@ export default function AdminDashboardPage() {
                   </div>
 
                   <div>
-                    <label style={{ fontSize: '11px', color: '#94A3B8' }}>Slide Overlay Label</label>
+                    <label style={{ fontSize: '11px', color: '#475569', fontWeight: 600 }}>Slide Overlay Label</label>
                     <input
                       type="text"
                       value={slide.label}
@@ -537,7 +567,7 @@ export default function AdminDashboardPage() {
                 }}
                 style={addBtnStyle}
               >
-                + Add Hero Slide
+                Add Slide
               </button>
             </div>
           )}
@@ -545,10 +575,10 @@ export default function AdminDashboardPage() {
           {/* TAB 2: PHILOSOPHY */}
           {activeTab === 'philosophy' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--gold)' }}>Philosophy & Who We Are</h2>
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#946E29' }}>Philosophy & Who We Are</h2>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Kicker Tag</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Kicker Tag</label>
                 <input
                   type="text"
                   value={formData.philosophy.kicker}
@@ -558,7 +588,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Main Title Heading</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Main Title Heading</label>
                 <textarea
                   rows={2}
                   value={formData.philosophy.title}
@@ -568,7 +598,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Paragraph 1</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Paragraph 1</label>
                 <textarea
                   rows={4}
                   value={formData.philosophy.paragraph1}
@@ -578,7 +608,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Paragraph 2</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Paragraph 2</label>
                 <textarea
                   rows={4}
                   value={formData.philosophy.paragraph2}
@@ -588,7 +618,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Highlight Tagline</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Highlight Tagline</label>
                 <input
                   type="text"
                   value={formData.philosophy.highlightText}
@@ -608,10 +638,10 @@ export default function AdminDashboardPage() {
           {/* TAB 3: APPROACH */}
           {activeTab === 'approach' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--gold)' }}>Approach & Pillars (5 Pillars)</h2>
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#946E29' }}>Approach & Pillars (5 Pillars)</h2>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Kicker Tag</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Kicker Tag</label>
                 <input
                   type="text"
                   value={formData.approach.kicker}
@@ -621,7 +651,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Main Title</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Main Title</label>
                 <input
                   type="text"
                   value={formData.approach.title}
@@ -630,13 +660,14 @@ export default function AdminDashboardPage() {
                 />
               </div>
 
-              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#FFFFFF' }}>Pillars List</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#0F172A' }}>Pillars List</h3>
               {formData.approach.pillars.map((pillar, pIdx) => (
                 <div
                   key={pIdx}
                   style={{
-                    background: '#0B1521',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    background: '#FFFFFF',
+                    border: '1px solid #E2E8F0',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
                     padding: '20px',
                     borderRadius: '14px',
                     display: 'flex',
@@ -689,10 +720,10 @@ export default function AdminDashboardPage() {
           {/* TAB 4: SERVICES */}
           {activeTab === 'services' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--gold)' }}>Services Offered</h2>
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#946E29' }}>Services Offered</h2>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Section Kicker</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Section Kicker</label>
                 <input
                   type="text"
                   value={formData.services.kicker}
@@ -702,7 +733,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Main Section Title</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Main Section Title</label>
                 <input
                   type="text"
                   value={formData.services.title}
@@ -712,7 +743,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Subtitle</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Subtitle</label>
                 <textarea
                   rows={2}
                   value={formData.services.sub}
@@ -721,14 +752,15 @@ export default function AdminDashboardPage() {
                 />
               </div>
 
-              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#FFFFFF' }}>Service Cards ({formData.services.items.length})</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#0F172A' }}>Service Cards ({formData.services.items.length})</h3>
 
               {formData.services.items.map((service, sIdx) => (
                 <div
                   key={sIdx}
                   style={{
-                    background: '#0B1521',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    background: '#FFFFFF',
+                    border: '1px solid #E2E8F0',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
                     padding: '20px',
                     borderRadius: '14px',
                     display: 'flex',
@@ -737,7 +769,7 @@ export default function AdminDashboardPage() {
                   }}
                 >
                   <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: '16px', alignItems: 'center' }}>
-                    <span style={{ fontFamily: 'var(--mono)', color: 'var(--gold)', fontWeight: 800 }}>{service.num}</span>
+                    <span style={{ fontFamily: 'var(--mono)', color: '#946E29', fontWeight: 800 }}>{service.num}</span>
                     <input
                       type="text"
                       placeholder="Service Title"
@@ -773,7 +805,7 @@ export default function AdminDashboardPage() {
                   />
 
                   <div>
-                    <label style={{ fontSize: '11px', color: '#94A3B8' }}>Tags (comma-separated)</label>
+                    <label style={{ fontSize: '11px', color: '#475569', fontWeight: 600 }}>Tags (comma-separated)</label>
                     <input
                       type="text"
                       value={service.tags.join(', ')}
@@ -806,10 +838,10 @@ export default function AdminDashboardPage() {
           {/* TAB 5: WORK */}
           {activeTab === 'work' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--gold)' }}>Work & Portfolio</h2>
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#946E29' }}>Work & Portfolio</h2>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Section Kicker</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Section Kicker</label>
                 <input
                   type="text"
                   value={formData.work.kicker}
@@ -819,7 +851,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Section Main Title</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Section Main Title</label>
                 <textarea
                   rows={2}
                   value={formData.work.title}
@@ -828,14 +860,15 @@ export default function AdminDashboardPage() {
                 />
               </div>
 
-              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#FFFFFF' }}>Work Showcase Items</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#0F172A' }}>Work Showcase Items</h3>
 
               {formData.work.items.map((item, wIdx) => (
                 <div
                   key={wIdx}
                   style={{
-                    background: '#0B1521',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    background: '#FFFFFF',
+                    border: '1px solid #E2E8F0',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
                     padding: '20px',
                     borderRadius: '14px',
                     display: 'flex',
@@ -916,7 +949,7 @@ export default function AdminDashboardPage() {
                 }}
                 style={addBtnStyle}
               >
-                + Add Work Showcase Item
+                Add Work Showcase Item
               </button>
             </div>
           )}
@@ -924,10 +957,10 @@ export default function AdminDashboardPage() {
           {/* TAB 6: SECTORS */}
           {activeTab === 'sectors' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--gold)' }}>Sectors We Serve</h2>
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#946E29' }}>Sectors We Serve</h2>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Kicker</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Kicker</label>
                 <input
                   type="text"
                   value={formData.sectors.kicker}
@@ -937,7 +970,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Section Title</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Section Title</label>
                 <input
                   type="text"
                   value={formData.sectors.title}
@@ -946,14 +979,15 @@ export default function AdminDashboardPage() {
                 />
               </div>
 
-              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#FFFFFF' }}>Sector Cards ({formData.sectors.items.length})</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#0F172A' }}>Sector Cards ({formData.sectors.items.length})</h3>
 
               {formData.sectors.items.map((sec, secIdx) => (
                 <div
                   key={secIdx}
                   style={{
-                    background: '#0B1521',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    background: '#FFFFFF',
+                    border: '1px solid #E2E8F0',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
                     padding: '20px',
                     borderRadius: '14px',
                     display: 'flex',
@@ -962,7 +996,7 @@ export default function AdminDashboardPage() {
                   }}
                 >
                   <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: '16px', alignItems: 'center' }}>
-                    <span style={{ fontFamily: 'var(--mono)', color: 'var(--gold)', fontWeight: 800 }}>{sec.num}</span>
+                    <span style={{ fontFamily: 'var(--mono)', color: '#946E29', fontWeight: 800 }}>{sec.num}</span>
                     <input
                       type="text"
                       placeholder="Sector Title (e.g. FMCG)"
@@ -996,7 +1030,7 @@ export default function AdminDashboardPage() {
                   />
 
                   <div>
-                    <label style={{ fontSize: '11px', color: '#94A3B8' }}>Short Description</label>
+                    <label style={{ fontSize: '11px', color: '#475569', fontWeight: 600 }}>Short Description</label>
                     <input
                       type="text"
                       value={sec.description}
@@ -1010,7 +1044,7 @@ export default function AdminDashboardPage() {
                   </div>
 
                   <div>
-                    <label style={{ fontSize: '11px', color: '#94A3B8' }}>Detailed Copy</label>
+                    <label style={{ fontSize: '11px', color: '#475569', fontWeight: 600 }}>Detailed Copy</label>
                     <textarea
                       rows={2}
                       value={sec.detailedCopy}
@@ -1024,7 +1058,7 @@ export default function AdminDashboardPage() {
                   </div>
 
                   <div>
-                    <label style={{ fontSize: '11px', color: '#94A3B8' }}>Benchmark Highlight Quote</label>
+                    <label style={{ fontSize: '11px', color: '#475569', fontWeight: 600 }}>Benchmark Highlight Quote</label>
                     <input
                       type="text"
                       value={sec.caseHighlight}
@@ -1058,7 +1092,7 @@ export default function AdminDashboardPage() {
                 }}
                 style={addBtnStyle}
               >
-                + Add Sector Card
+                Add Sector Card
               </button>
             </div>
           )}
@@ -1066,10 +1100,10 @@ export default function AdminDashboardPage() {
           {/* TAB 7: LEADERSHIP */}
           {activeTab === 'leadership' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--gold)' }}>Leadership & Team</h2>
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#946E29' }}>Leadership & Team</h2>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Kicker</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Kicker</label>
                 <input
                   type="text"
                   value={formData.leadership.kicker}
@@ -1079,7 +1113,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Title</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Title</label>
                 <input
                   type="text"
                   value={formData.leadership.title}
@@ -1089,7 +1123,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Sub-heading</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Sub-heading</label>
                 <input
                   type="text"
                   value={formData.leadership.sub}
@@ -1098,14 +1132,15 @@ export default function AdminDashboardPage() {
                 />
               </div>
 
-              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#FFFFFF' }}>Team Members</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#0F172A' }}>Team Members</h3>
 
               {formData.leadership.members.map((member, mIdx) => (
                 <div
                   key={mIdx}
                   style={{
-                    background: '#0B1521',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    background: '#FFFFFF',
+                    border: '1px solid #E2E8F0',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
                     padding: '20px',
                     borderRadius: '14px',
                     display: 'flex',
@@ -1185,7 +1220,7 @@ export default function AdminDashboardPage() {
                 }}
                 style={addBtnStyle}
               >
-                + Add Leader Member
+                Add Leader Member
               </button>
             </div>
           )}
@@ -1193,10 +1228,10 @@ export default function AdminDashboardPage() {
           {/* TAB 8: CLIENT LOGOS */}
           {activeTab === 'clientLogos' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--gold)' }}>Client Logos & Partners</h2>
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#946E29' }}>Client Logos & Partners</h2>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Kicker</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Kicker</label>
                 <input
                   type="text"
                   value={formData.clientLogos.kicker}
@@ -1206,7 +1241,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Title</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Title</label>
                 <input
                   type="text"
                   value={formData.clientLogos.title}
@@ -1216,7 +1251,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Subtitle</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Subtitle</label>
                 <input
                   type="text"
                   value={formData.clientLogos.sub}
@@ -1225,7 +1260,7 @@ export default function AdminDashboardPage() {
                 />
               </div>
 
-              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#FFFFFF' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, marginTop: '12px', color: '#0F172A' }}>
                 Partners List ({formData.clientLogos.partners.length})
               </h3>
 
@@ -1234,8 +1269,9 @@ export default function AdminDashboardPage() {
                   <div
                     key={pIdx}
                     style={{
-                      background: '#0B1521',
-                      border: '1px solid rgba(255,255,255,0.08)',
+                      background: '#FFFFFF',
+                      border: '1px solid #E2E8F0',
+                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
                       padding: '16px',
                       borderRadius: '12px',
                       display: 'flex',
@@ -1289,7 +1325,7 @@ export default function AdminDashboardPage() {
                 }}
                 style={addBtnStyle}
               >
-                + Add Partner Logo
+                Add Partner Logo
               </button>
             </div>
           )}
@@ -1297,10 +1333,10 @@ export default function AdminDashboardPage() {
           {/* TAB 9: CONTACT */}
           {activeTab === 'contact' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--gold)' }}>Contact Section</h2>
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#946E29' }}>Contact Section</h2>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Kicker</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Kicker</label>
                 <input
                   type="text"
                   value={formData.contact.kicker}
@@ -1310,7 +1346,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Title</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Title</label>
                 <input
                   type="text"
                   value={formData.contact.title}
@@ -1320,7 +1356,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Description Lede</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Description Lede</label>
                 <textarea
                   rows={3}
                   value={formData.contact.lede}
@@ -1331,7 +1367,7 @@ export default function AdminDashboardPage() {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Address</label>
+                  <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Address</label>
                   <input
                     type="text"
                     value={formData.contact.address}
@@ -1340,7 +1376,7 @@ export default function AdminDashboardPage() {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Email</label>
+                  <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Email</label>
                   <input
                     type="text"
                     value={formData.contact.email}
@@ -1351,7 +1387,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Phone</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Phone</label>
                 <input
                   type="text"
                   value={formData.contact.phone}
@@ -1365,10 +1401,10 @@ export default function AdminDashboardPage() {
           {/* TAB 10: FOOTER */}
           {activeTab === 'footer' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--gold)' }}>Footer Branding</h2>
+              <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#946E29' }}>Footer Branding</h2>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Brand Tagline</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Brand Tagline</label>
                 <input
                   type="text"
                   value={formData.footer.tagline}
@@ -1378,7 +1414,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '13px', color: '#94A3B8', marginBottom: '6px' }}>Copyright Text</label>
+                <label style={{ display: 'block', fontSize: '13px', color: '#475569', fontWeight: 600, marginBottom: '6px' }}>Copyright Text</label>
                 <input
                   type="text"
                   value={formData.footer.copyright}
@@ -1396,20 +1432,21 @@ export default function AdminDashboardPage() {
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  background: '#040A12',
-  border: '1px solid rgba(255, 255, 255, 0.15)',
+  background: '#FFFFFF',
+  border: '1.5px solid #CBD5E1',
   borderRadius: '8px',
   padding: '10px 14px',
   fontSize: '14px',
-  color: '#FFFFFF',
+  color: '#0F172A',
   outline: 'none',
   fontFamily: 'var(--sans)',
+  transition: 'all 0.2s ease',
 };
 
 const deleteBtnStyle: React.CSSProperties = {
-  background: 'rgba(239, 68, 68, 0.15)',
-  color: '#F87171',
-  border: '1px solid rgba(239, 68, 68, 0.3)',
+  background: '#FEF2F2',
+  color: '#DC2626',
+  border: '1px solid #FCA5A5',
   borderRadius: '6px',
   padding: '6px 12px',
   fontSize: '12px',
@@ -1419,9 +1456,9 @@ const deleteBtnStyle: React.CSSProperties = {
 
 const addBtnStyle: React.CSSProperties = {
   alignSelf: 'flex-start',
-  background: 'rgba(184, 153, 94, 0.15)',
-  border: '1.5px dashed var(--gold)',
-  color: 'var(--gold)',
+  background: '#FFFFFF',
+  border: '1.5px dashed #B8995E',
+  color: '#946E29',
   borderRadius: '10px',
   padding: '12px 20px',
   fontSize: '13.5px',
