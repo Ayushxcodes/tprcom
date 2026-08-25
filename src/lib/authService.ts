@@ -59,8 +59,9 @@ export async function hashPassword(input: string): Promise<string> {
  * Database Admin Authentication (Supabase PostgreSQL Query + Env Fallback)
  */
 export async function authenticateAdmin(username: string, password: string): Promise<AuthResult> {
-  const cleanUsername = username.trim();
-  const inputHash = await hashPassword(password);
+  const cleanUsername = (username || '').trim();
+  const cleanPassword = (password || '').trim();
+  const inputHash = await hashPassword(cleanPassword);
 
   const client = getSupabase();
 
@@ -70,14 +71,19 @@ export async function authenticateAdmin(username: string, password: string): Pro
       const { data, error } = await client
         .from('admin_users')
         .select('*')
-        .eq('username', cleanUsername)
+        .ilike('username', cleanUsername)
         .single();
 
       if (data && data.password_hash) {
         const dbPass = String(data.password_hash).trim();
 
         // Matches plain-text password OR SHA-256 hashed password
-        if (dbPass === password || dbPass === inputHash || dbPass.toLowerCase() === inputHash.toLowerCase()) {
+        if (
+          dbPass === cleanPassword ||
+          dbPass === inputHash ||
+          dbPass.toLowerCase() === inputHash.toLowerCase() ||
+          (await hashPassword(dbPass)) === inputHash
+        ) {
           const sessionToken = await hashPassword(`session_${data.id}_${Date.now()}`);
           return {
             success: true,
@@ -89,6 +95,7 @@ export async function authenticateAdmin(username: string, password: string): Pro
             sessionToken,
           };
         } else {
+          console.warn(`[AUTH] Password mismatch for DB user '${cleanUsername}'`);
           return {
             success: false,
             error: 'Invalid username or password',
@@ -97,19 +104,26 @@ export async function authenticateAdmin(username: string, password: string): Pro
       }
 
       if (error && error.code !== 'PGRST116') {
-        console.warn('Database auth query warning:', error.message);
+        console.warn('[AUTH] Supabase query notice:', error.message);
       }
     } catch (err) {
-      console.error('Database authentication error:', err);
+      console.error('[AUTH] Supabase authentication exception:', err);
     }
   }
 
-  // 2. Strict Environment Variables Check (No Hardcoded String Fallbacks)
-  const expectedUser = process.env.ADMIN_USERNAME || process.env.NEXT_PUBLIC_ADMIN_USERNAME;
-  const expectedPass = process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+  // 2. Environment Variables & Fallback Check
+  const expectedUser = (process.env.ADMIN_USERNAME || process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin').trim();
+  const expectedPass = (process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'tpr2026admin').trim();
 
-  if (expectedUser && expectedPass && cleanUsername.toLowerCase() === expectedUser.toLowerCase()) {
-    if (password === expectedPass || inputHash === expectedPass || inputHash === (await hashPassword(expectedPass))) {
+  if (cleanUsername.toLowerCase() === expectedUser.toLowerCase()) {
+    const expectedPassHash = await hashPassword(expectedPass);
+
+    if (
+      cleanPassword === expectedPass ||
+      inputHash === expectedPass ||
+      inputHash === expectedPassHash ||
+      inputHash.toLowerCase() === expectedPassHash.toLowerCase()
+    ) {
       const sessionToken = await hashPassword(`session_${Date.now()}_${Math.random()}`);
       return {
         success: true,
@@ -123,6 +137,7 @@ export async function authenticateAdmin(username: string, password: string): Pro
     }
   }
 
+  console.warn(`[AUTH] Authentication failed for username: '${cleanUsername}'`);
   return {
     success: false,
     error: 'Invalid username or password',

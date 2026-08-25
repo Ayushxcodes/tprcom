@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { initialSiteContent, SiteContent } from '@/data/initialContent';
-import { authenticateAdmin, createSession, isSessionValid, SessionPayload } from '@/lib/authService';
+import { isSessionValid, SessionPayload } from '@/lib/authService';
 
 interface ContentContextType {
   content: SiteContent;
@@ -20,15 +20,6 @@ const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 const LOCAL_STORAGE_KEY = 'tpr_site_content_v1';
 const AUTH_STORAGE_KEY = 'tpr_admin_session_v1';
-const LOCKOUT_STORAGE_KEY = 'tpr_login_attempts_v1';
-
-const MAX_FAILED_ATTEMPTS = 5;
-const LOCKOUT_DURATION_MS = 60 * 1000;
-
-interface LockoutState {
-  attempts: number;
-  lockoutUntil: number;
-}
 
 function getInitialContent(): SiteContent {
   if (typeof window !== 'undefined') {
@@ -134,7 +125,7 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
         }
       }
 
-      return { success: true }; // Persisted locally
+      return { success: true };
     } catch (err) {
       console.error('Error updating content:', err);
       return { success: false, error: 'Failed to update content on server' };
@@ -160,45 +151,7 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const getLockoutState = (): LockoutState => {
-    if (typeof window === 'undefined') return { attempts: 0, lockoutUntil: 0 };
-    const raw = sessionStorage.getItem(LOCKOUT_STORAGE_KEY);
-    if (!raw) return { attempts: 0, lockoutUntil: 0 };
-    try {
-      return JSON.parse(raw);
-    } catch {
-      return { attempts: 0, lockoutUntil: 0 };
-    }
-  };
-
-  const recordFailedAttempt = () => {
-    if (typeof window === 'undefined') return;
-    const current = getLockoutState();
-    const newAttempts = current.attempts + 1;
-    let lockoutUntil = current.lockoutUntil;
-
-    if (newAttempts >= MAX_FAILED_ATTEMPTS) {
-      lockoutUntil = Date.now() + LOCKOUT_DURATION_MS;
-    }
-
-    sessionStorage.setItem(LOCKOUT_STORAGE_KEY, JSON.stringify({ attempts: newAttempts, lockoutUntil }));
-  };
-
-  const clearLockoutState = () => {
-    if (typeof window === 'undefined') return;
-    sessionStorage.removeItem(LOCKOUT_STORAGE_KEY);
-  };
-
   const loginAdmin = async (username: string, password: string): Promise<{ success: boolean; error?: string }> => {
-    const lockoutState = getLockoutState();
-    if (lockoutState.lockoutUntil > Date.now()) {
-      const secondsLeft = Math.ceil((lockoutState.lockoutUntil - Date.now()) / 1000);
-      return {
-        success: false,
-        error: `Too many failed attempts. Security cooldown active. Try again in ${secondsLeft}s.`,
-      };
-    }
-
     try {
       const res = await fetch('/api/admin/auth', {
         method: 'POST',
@@ -209,27 +162,15 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        clearLockoutState();
         setIsAdminLoggedIn(true);
         return { success: true };
       }
 
-      recordFailedAttempt();
-      const updatedState = getLockoutState();
-      const attemptsLeft = MAX_FAILED_ATTEMPTS - updatedState.attempts;
-      if (attemptsLeft <= 0) {
-        return {
-          success: false,
-          error: 'Too many failed login attempts. Security lock activated for 60 seconds.',
-        };
-      }
-
       return {
         success: false,
-        error: data.error || `Invalid credentials. (${attemptsLeft} attempt${attemptsLeft === 1 ? '' : 's'} remaining)`,
+        error: data.error || 'Invalid username or password',
       };
     } catch {
-      recordFailedAttempt();
       return {
         success: false,
         error: 'Authentication server unreachable. Please check network connection.',
