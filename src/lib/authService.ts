@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { getSupabase } from '@/lib/supabase';
 
 export interface AuthUser {
@@ -24,21 +25,38 @@ export interface SessionPayload {
 const SESSION_EXPIRY_MS = 8 * 60 * 60 * 1000;
 
 /**
- * SHA-256 Password / Token Hashing Helper
+ * Universal SHA-256 Password / Token Hashing Helper (Node.js & Browser Safe)
  */
 export async function hashPassword(input: string): Promise<string> {
-  if (typeof window !== 'undefined' && window.crypto && window.crypto.subtle) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(input);
-    const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+  if (!input) return '';
+
+  // Server-side (Node.js environment in Next.js API Routes)
+  if (typeof window === 'undefined') {
+    try {
+      return crypto.createHash('sha256').update(input).digest('hex');
+    } catch {
+      return input;
+    }
   }
+
+  // Client-side (Browser environment)
+  if (window.crypto && window.crypto.subtle) {
+    try {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(input);
+      const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+    } catch {
+      return input;
+    }
+  }
+
   return input;
 }
 
 /**
- * Database Admin Authentication (Supabase PostgreSQL Query)
+ * Database Admin Authentication (Supabase PostgreSQL Query + Env Fallback)
  */
 export async function authenticateAdmin(username: string, password: string): Promise<AuthResult> {
   const cleanUsername = username.trim();
@@ -56,7 +74,10 @@ export async function authenticateAdmin(username: string, password: string): Pro
         .single();
 
       if (data && data.password_hash) {
-        if (data.password_hash === inputHash || data.password_hash === password) {
+        const dbPass = String(data.password_hash).trim();
+
+        // Matches plain-text password OR SHA-256 hashed password
+        if (dbPass === password || dbPass === inputHash || dbPass.toLowerCase() === inputHash.toLowerCase()) {
           const sessionToken = await hashPassword(`session_${data.id}_${Date.now()}`);
           return {
             success: true,
@@ -83,15 +104,12 @@ export async function authenticateAdmin(username: string, password: string): Pro
     }
   }
 
-  // 2. Strict Environment Variables Check (No Hardcoded Fallbacks)
+  // 2. Strict Environment Variables Check (No Hardcoded String Fallbacks)
   const expectedUser = process.env.ADMIN_USERNAME || process.env.NEXT_PUBLIC_ADMIN_USERNAME;
   const expectedPass = process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 
-  if (expectedUser && expectedPass) {
-    const envInputHash = await hashPassword(`${cleanUsername}:${password}`);
-    const targetHash = await hashPassword(`${expectedUser}:${expectedPass}`);
-
-    if (envInputHash === targetHash || (cleanUsername === expectedUser && password === expectedPass)) {
+  if (expectedUser && expectedPass && cleanUsername.toLowerCase() === expectedUser.toLowerCase()) {
+    if (password === expectedPass || inputHash === expectedPass || inputHash === (await hashPassword(expectedPass))) {
       const sessionToken = await hashPassword(`session_${Date.now()}_${Math.random()}`);
       return {
         success: true,
