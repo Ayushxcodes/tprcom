@@ -1,8 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useContent } from '@/context/ContentContext';
 
 export function Contact() {
+  const { content } = useContent();
+  const contactData = content.contact;
+
   const [showNote, setShowNote] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -38,26 +42,26 @@ export function Contact() {
     <section id="contact" className="contact">
       <div className="wrap contact-grid">
         <div className="contact-info reveal">
-          <p className="kicker" style={{ fontSize: '13px', letterSpacing: '0.28em' }}>Get In Touch</p>
-          <h2 style={{ fontSize: 'clamp(32px, 4vw, 44px)', fontFamily: 'var(--serif)', fontWeight: 800 }}>Let’s weave indelible memories</h2>
+          <p className="kicker" style={{ fontSize: '13px', letterSpacing: '0.28em' }}>{contactData.kicker}</p>
+          <h2 style={{ fontSize: 'clamp(32px, 4vw, 44px)', fontFamily: 'var(--serif)', fontWeight: 800 }}>{contactData.title}</h2>
           <p className="lede" style={{ fontSize: '16px', color: 'var(--text-secondary)', marginTop: '14px', lineHeight: 1.75 }}>
-            TPR-Communications will take pride in building research-led, quality-driven, lasting, and long-term reputation strategy for you and your brand with time-tested and innovative solutions.
+            {contactData.lede}
           </p>
 
           <div className="contact-detail">
             <p className="label">Address</p>
-            <p className="value">Cloud 9 Vaishali, S1 Tower, Office no. 425, Delhi NCR. Pin - 201010</p>
+            <p className="value">{contactData.address}</p>
           </div>
           <div className="contact-detail">
             <p className="label">Direct Inquiry</p>
             <p className="value">
-              <a href="mailto:official@tprcommunications.com">official@tprcommunications.com</a>
+              <a href={`mailto:${contactData.email}`}>{contactData.email}</a>
             </p>
           </div>
           <div className="contact-detail">
             <p className="label">Telephone</p>
             <p className="value">
-              <a href="tel:+918796564094">+91 87965 64094</a>
+              <a href={`tel:${contactData.phone.replace(/\s+/g, '')}`}>{contactData.phone}</a>
             </p>
           </div>
 

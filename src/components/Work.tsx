@@ -1,53 +1,21 @@
+'use client';
+
 import React from 'react';
-
-interface WorkItem {
-  id: string;
-  image: string;
-  tag: string;
-  title: string;
-  description: string;
-}
-
-const workData: WorkItem[] = [
-  {
-    id: 'corridors',
-    image: '/assets/Power Corridor Image.png',
-    tag: 'Policy & Governance',
-    title: 'Corridors of power',
-    description: 'Navigating through corridors of power, our counsel builds narratives, plugs in the missing links, and ensures the client’s interests are fully protected.',
-  },
-  {
-    id: 'boardroom',
-    image: '/assets/Boaordroom.png',
-    tag: 'Boardroom Counsel',
-    title: 'Boardrooms',
-    description: 'Our seasoned Team Leaders guide the Boards on achievable, research-based communication strategies.',
-  },
-  {
-    id: 'digital',
-    image: '/assets/digital feeed.png',
-    tag: 'Public Square',
-    title: 'Platforms, Feeds & Digital Brand Voice',
-    description: 'The highly efficient digital diggers build multi-platform thought leadership and rapid-response digital communications across platforms.',
-  },
-  {
-    id: 'newsroom',
-    image: '/assets/tier1.png',
-    tag: 'Newsroom Authority',
-    title: 'Tier 1 Global Media and Press Desk',
-    description: 'Team TPR ensures impactful editorial features and strategic executive commentary across global tier-1 mainline and financial publications.',
-  },
-];
+import { useContent } from '@/context/ContentContext';
 
 export function Work() {
+  const { content } = useContent();
+  const workSection = content.work;
+  const workData = workSection.items || [];
+
   return (
     <section id="work" className="work" style={{ padding: '100px 0', background: 'var(--bg-secondary)' }}>
       <div className="wrap">
         <div className="section-head reveal">
           <div>
-            <p className="kicker" style={{ fontSize: '13px', letterSpacing: '0.28em' }}>Where It Lands</p>
+            <p className="kicker" style={{ fontSize: '13px', letterSpacing: '0.28em' }}>{workSection.kicker}</p>
             <h2 style={{ fontSize: 'clamp(32px, 4vw, 48px)', fontFamily: 'var(--serif)', fontWeight: 800, lineHeight: 1.15 }}>
-              The Corridors of Power, Boardrooms, the Fourth Estate and Digital Empire.
+              {workSection.title}
             </h2>
           </div>    
         </div>
@@ -56,7 +24,7 @@ export function Work() {
           {workData.map((item, idx) => (
             <div
               className={`work-card-large reveal-delay-${idx + 1}`}
-              key={item.id}
+              key={item.id || idx}
               style={{ cursor: 'default' }}
             >
               {/* PHOTO HEADER */}

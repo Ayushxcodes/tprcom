@@ -1,38 +1,23 @@
+'use client';
+
 import React from 'react';
-
-interface LeaderItem {
-  image: string;
-  name: string;
-  role: string;
-  expertise: string;
-}
-
-const leaders: LeaderItem[] = [
-  {
-    image: '/member1.jpeg',
-    name: 'Tarun Purwaney',
-    role: 'Founder & CEO',
-    expertise: 'Former senior communications strategist with 18+ years advising top corporate boards.',
-  },
-  {
-    image: '/member2.jpeg',
-    name: 'Research & Strategy Team',
-    role: 'Strategic Counsel Desk',
-    expertise: 'Specializing in evidence-based corporate narratives, reputation defense, and political advisory.',
-  },
-];
+import { useContent } from '@/context/ContentContext';
 
 export function Leadership() {
+  const { content } = useContent();
+  const leadershipSection = content.leadership;
+  const leaders = leadershipSection.members || [];
+
   return (
     <section id="leadership" className="leadership" style={{ padding: '80px 0' }}>
       <div className="wrap">
         <div className="section-head reveal">
           <div>
-            <p className="kicker">Leadership</p>
-            <h2>A senior team, close to every account.</h2>
+            <p className="kicker">{leadershipSection.kicker}</p>
+            <h2>{leadershipSection.title}</h2>
           </div>
           <p className="sub">
-            No layers between strategy and execution — the people who plan the work are the people who stay on it.
+            {leadershipSection.sub}
           </p>
         </div>
         

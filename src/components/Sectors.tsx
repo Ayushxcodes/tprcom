@@ -2,144 +2,48 @@
 
 import React, { useState, useEffect } from 'react';
 import { Icon, IconName } from './Icons';
-
-interface SectorItem {
-  id: string;
-  num: string;
-  icon: IconName;
-  image: string;
-  title: string;
-  description: string;
-  detailedCopy: string;
-  caseHighlight: string;
-}
-
-const sectorData: SectorItem[] = [
-  {
-    id: 'fmcg',
-    num: '01',
-    icon: 'bag',
-    image: '/assets/fmcg.jpg',
-    title: 'FMCG',
-    description: 'Consumer packaged goods, personal care, food & beverage, and retail leaders.',
-    detailedCopy: 'Driving brand recall, product launch momentum, executive thought leadership, and proactive recall defense for national and global consumer brands.',
-    caseHighlight: 'Led an omnichannel product launch campaign for a flagship consumer brand, securing widespread earned coverage across tier-1 media.',
-  },
-  {
-    id: 'tech',
-    num: '02',
-    icon: 'chip',
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
-    title: 'TECHNOLOGY',
-    description: 'Deep tech, AI platforms, enterprise SaaS, and venture-backed innovators.',
-    detailedCopy: 'Translating complex technology architectures into high-impact market value narratives, positioning tech founders as industry visionaries.',
-    caseHighlight: 'Secured exclusive launch coverage across global technology wire outlets and tier-1 national press desks within 48 hours.',
-  },
-  {
-    id: 'lifestyle',
-    num: '03',
-    icon: 'pen',
-    image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=80',
-    title: 'LIFESTYLE AND FASHION',
-    description: 'Luxury apparel, couture labels, beauty brands, and premium lifestyle experiences.',
-    detailedCopy: 'Building cultural relevance, fashion editor relationships, influencer alignment, and brand prestige across leading digital and print lifestyle titles.',
-    caseHighlight: 'Orchestrated exclusive press previews for a luxury fashion house, establishing market leadership in premium fashion media.',
-  },
-  {
-    id: 'healthcare',
-    num: '04',
-    icon: 'heart',
-    image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80',
-    title: 'HEALTHCARE',
-    description: 'Pharma leaders, hospital chains, diagnostics, doctors and health tech platforms.',
-    detailedCopy: 'Highly compliant communications for medical breakthroughs, clinical trials, regulatory approvals, and patient-first reputation management.',
-    caseHighlight: 'Positioned a healthcare innovator during pivotal clinical trial milestones, driving strategic global pharmaceutical partnerships.',
-  },
-  {
-    id: 'realty',
-    num: '05',
-    icon: 'landmark',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
-    title: 'REAL ESTATE AND INFRASTRUCTURE',
-    description: 'Developers, REITs, mega-infrastructure, urban, and public-funded projects.',
-    detailedCopy: 'Navigating land development narratives, REIT listings, ESG compliance communications, and multi-stakeholder community sentiment.',
-    caseHighlight: 'Managed strategic communications during complex regulatory proceedings, preserving market confidence and stakeholder trust.',
-  },
-  {
-    id: 'power',
-    num: '06',
-    icon: 'leaf',
-    image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80',
-    title: 'POWER AND ENERGY',
-    description: 'Power, clean energy, renewable energy, Oil & Gas, and EV.',
-    detailedCopy: 'Highlighting decarbonization journeys, clean energy innovation, and green financing to institutional investors and regulatory policymakers.',
-    caseHighlight: 'Crafted sustainability positioning for a major solar developer prior to their international green bond flotation.',
-  },
-  {
-    id: 'govt',
-    num: '07',
-    icon: 'shield',
-    image: '/govt_sector.png',
-    title: 'GOVERNMENT AND PUBLIC SECTOR',
-    description: 'Public institutions, state enterprises, civic initiatives, and policy communications.',
-    detailedCopy: 'Designing policy messaging, public awareness campaigns, and defensive crisis communications for government bodies and public sector organizations.',
-    caseHighlight: 'Executed a nationwide public awareness campaign for a major civic infrastructure mandate.',
-  },
-  {
-    id: 'bfsi',
-    num: '08',
-    icon: 'bank',
-    image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1200&q=80',
-    title: 'BFSI AND FINTECH',
-    description: 'Lending institutions, insurers, NBFCs, private equity, capital markets, and fintech.',
-    detailedCopy: 'Managing earnings disclosures, investor relations, regulatory filings, and market perception for top financial organizations and fintech disruptors.',
-    caseHighlight: 'Orchestrated the public communication strategy for a cross-border IPO, achieving full editorial coverage across national financial dailies.',
-  },
-  {
-    id: 'hospitality',
-    num: '09',
-    icon: 'compass',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
-    title: 'HOSPITALITY',
-    description: 'Luxury hotel chains, resort destinations, fine dining groups, and travel brands.',
-    detailedCopy: 'Crafting experiential storytelling, destination launches, executive culinary profiles, and crisis reputation management across luxury hospitality.',
-    caseHighlight: 'Managed nationwide launch PR for a flagship luxury resort brand, driving record editorial features and guest engagement.',
-  },
-  {
-    id: 'mining',
-    num: '10',
-    icon: 'crane',
-    image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80',
-    title: 'MINING AND METALS',
-    description: 'Industrial metals, natural resources, mining conglomerates, and heavy industries.',
-    detailedCopy: 'Communicating industrial resilience, ESG compliance benchmarks, safety protocols, and community engagement for resource industry leaders.',
-    caseHighlight: 'Navigated complex environmental and community relations communications for a major industrial mining group.',
-  },
-];
+import { useContent } from '@/context/ContentContext';
 
 export function Sectors() {
+  const { content } = useContent();
+  const sectorsSection = content.sectors;
+  const sectorData = (sectorsSection.items || []).map((s) => ({
+    ...s,
+    icon: (s.icon || 'bag') as IconName,
+  }));
+
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
 
   // Auto-advance slideshow every 5 seconds unless user interacts
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    if (!isAutoPlaying || sectorData.length === 0) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % sectorData.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, sectorData.length]);
 
-  const activeSector = sectorData[activeIndex];
+  const activeIdx = activeIndex < sectorData.length ? activeIndex : 0;
+  const activeSector = sectorData[activeIdx] || {
+    id: 'default',
+    num: '01',
+    icon: 'bag' as IconName,
+    image: '/assets/fmcg.jpg',
+    title: 'SECTORS',
+    description: '',
+    detailedCopy: '',
+    caseHighlight: '',
+  };
 
   return (
     <section id="sectors" className="sectors" style={{ background: 'var(--bg-secondary)', padding: '120px 0' }}>
       <div className="wrap">
         <div className="section-head reveal" style={{ display: 'block', marginBottom: '60px', width: '100%' }}>
           <div style={{ width: '100%' }}>
-            <p className="kicker" style={{ fontSize: '25px', letterSpacing: '0.32em', fontWeight: 800 }}>Sectors We Serve</p>
+            <p className="kicker" style={{ fontSize: '25px', letterSpacing: '0.32em', fontWeight: 800 }}>{sectorsSection.kicker}</p>
             <h2 style={{ fontSize: 'clamp(40px, 5.5vw, 66px)', fontFamily: 'var(--serif)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-0.02em', marginTop: '12px', width: '100%', maxWidth: '100%' }}>
-              Legacy, Traditional, Emerging, Sunrise &amp; Tech-Powered Sectors
+              {sectorsSection.title}
             </h2>
           </div>
         </div>

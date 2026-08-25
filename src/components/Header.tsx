@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -101,6 +102,13 @@ export function Header() {
                 <a href="#services" onClick={() => setIsMobileMenuOpen(false)}>Services</a>
                 <a href="#sectors" onClick={() => setIsMobileMenuOpen(false)}>Sectors</a>
                 <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Careers</a>
+                <Link
+                  href="/admin/login"
+                  className="nav-admin-btn"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Login
+                </Link>
 
                 <button
                   className="theme-toggle-btn"

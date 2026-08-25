@@ -1,23 +1,31 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-
-const heroImages = [
-  { src: '/hero1.png', label: 'STRATEGIC COMMUNICATIONS' },
-  { src: '/hero2.png', label: 'PUBLIC RELATIONS & MEDIA' },
-  { src: '/hero3.png', label: 'REPUTATION MANAGEMENT' },
-];
+import { useContent } from '@/context/ContentContext';
 
 export function Hero() {
+  const { content } = useContent();
+  const heroData = content.hero;
+  const heroImages = heroData.slides && heroData.slides.length > 0
+    ? heroData.slides
+    : [
+        { src: '/hero1.png', label: 'STRATEGIC COMMUNICATIONS' },
+        { src: '/hero2.png', label: 'PUBLIC RELATIONS & MEDIA' },
+        { src: '/hero3.png', label: 'REPUTATION MANAGEMENT' },
+      ];
+
   const [currentIdx, setCurrentIdx] = useState<number>(0);
 
   // Automated background slideshow transition every 6 seconds
   useEffect(() => {
+    if (heroImages.length === 0) return;
     const timer = setInterval(() => {
       setCurrentIdx((prev) => (prev + 1) % heroImages.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [heroImages.length]);
+
+  const activeIdx = currentIdx < heroImages.length ? currentIdx : 0;
 
   return (
     <section className="hero" style={{ minHeight: '100vh', display: 'flex', alignItems: 'flex-end', position: 'relative', overflow: 'hidden', padding: 0 }}>
@@ -29,9 +37,9 @@ export function Hero() {
             style={{
               position: 'absolute',
               inset: 0,
-              opacity: idx === currentIdx ? 1 : 0,
+              opacity: idx === activeIdx ? 1 : 0,
               transition: 'opacity 1.4s ease-in-out',
-              zIndex: idx === currentIdx ? 1 : 0
+              zIndex: idx === activeIdx ? 1 : 0
             }}
           >
             <img
@@ -42,7 +50,7 @@ export function Hero() {
                 height: '100%',
                 objectFit: 'cover',
                 filter: 'contrast(1.05) brightness(0.72)',
-                transform: idx === currentIdx ? 'scale(1.04)' : 'scale(1)',
+                transform: idx === activeIdx ? 'scale(1.04)' : 'scale(1)',
                 transition: 'transform 7s ease-out'
               }}
             />
@@ -64,30 +72,30 @@ export function Hero() {
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--gold)' }} />
             <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', letterSpacing: '0.18em', fontWeight: 700, textTransform: 'uppercase' }}>
-              RESEARCH-LED STRATEGIC PR
+              {heroData.kicker}
             </span>
           </div>
 
           <h1 style={{ fontSize: 'clamp(40px, 5.2vw, 72px)', lineHeight: 1.08, color: '#FFFFFF', fontWeight: 700, margin: '0 0 18px 0', textShadow: '0 4px 20px rgba(0,0,0,0.85)' }}>
-            Quintessentially<br />
+            {heroData.title}<br />
             <em style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--gold)', textShadow: '0 0 35px rgba(184, 153, 94, 0.5)' }}>
-              quality-driven.
+              {heroData.italicTitle}
             </em>
           </h1>
 
           <p className="lede" style={{ fontSize: '18px', color: 'rgba(255, 255, 255, 0.95)', lineHeight: 1.6, maxWidth: '680px', margin: '0 0 28px 0', textShadow: '0 2px 10px rgba(0,0,0,0.85)' }}>
-            TPR Communications is a research-led, quality-driven full-service PR firm delivering strategic communications across the spectrum, helping brands to earn trust, build credibility, strengthen reputation, and stand out with purpose. Backed by academic insight and media experience, TPR Communications is committed to setting a new benchmark in client servicing.
+            {heroData.lede}
           </p>
 
           <div className="hero-actions" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-            <a href="#contact" className="btn btn-primary" style={{ padding: '15px 30px', fontSize: '14.5px' }}>
-              Get in Touch
+            <a href={heroData.primaryBtnLink} className="btn btn-primary" style={{ padding: '15px 30px', fontSize: '14.5px' }}>
+              {heroData.primaryBtnText}
               <svg className="icon" style={{ width: '16px', height: '16px', marginLeft: '6px' }} viewBox="0 0 24 24">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </a>
-            <a href="#services" className="btn btn-ghost" style={{ padding: '15px 30px', fontSize: '14.5px' }}>
-              Explore Our Services
+            <a href={heroData.secondaryBtnLink} className="btn btn-ghost" style={{ padding: '15px 30px', fontSize: '14.5px' }}>
+              {heroData.secondaryBtnText}
             </a>
           </div>
 
@@ -99,9 +107,9 @@ export function Hero() {
                 onClick={() => setCurrentIdx(idx)}
                 style={{
                   height: '4px',
-                  width: idx === currentIdx ? '32px' : '10px',
+                  width: idx === activeIdx ? '32px' : '10px',
                   borderRadius: '2px',
-                  background: idx === currentIdx ? 'var(--gold)' : 'rgba(255, 255, 255, 0.35)',
+                  background: idx === activeIdx ? 'var(--gold)' : 'rgba(255, 255, 255, 0.35)',
                   border: 'none',
                   cursor: 'pointer',
                   transition: 'all 0.4s ease'
@@ -109,9 +117,11 @@ export function Hero() {
                 aria-label={`Switch to slide ${idx + 1}`}
               />
             ))}
-            <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', marginLeft: '10px', letterSpacing: '0.14em', fontWeight: 700 }}>
-              0{currentIdx + 1} / 0{heroImages.length} ● {heroImages[currentIdx].label}
-            </span>
+            {heroImages[activeIdx] && (
+              <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--gold)', marginLeft: '10px', letterSpacing: '0.14em', fontWeight: 700 }}>
+                0{activeIdx + 1} / 0{heroImages.length} ● {heroImages[activeIdx].label}
+              </span>
+            )}
           </div>
         </div>
       </div>

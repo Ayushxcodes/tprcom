@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import { ContentProvider } from "@/context/ContentContext";
+import { AdminBar } from "@/components/AdminBar";
 
 const fraunces = Fraunces({
   variable: "--font-serif",
@@ -39,7 +41,12 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <ContentProvider>
+          {children}
+          <AdminBar />
+        </ContentProvider>
+      </body>
     </html>
   );
 }

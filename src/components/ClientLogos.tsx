@@ -2,59 +2,32 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useContent } from '@/context/ContentContext';
 
 interface Partner {
   name: string;
   logo?: string;
 }
 
-const partnerClients: Partner[] = [
-  { name: 'Govt of Rajasthan', logo: '/assets/govenrment of rajasthan.png' },
-  { name: 'Reliance', logo: '/assets/Reliance.webp' },
-  { name: 'Essar', logo: '/assets/essar.png' },
-  { name: 'IIFL - 5Paisa', logo: '/assets/IIFL.png' },
-  { name: 'Indian Aluminium Association', logo: '/assets/indian_aluminium_association.jpeg' },
-  { name: 'Govt of India' },
-  { name: 'International Copper Association', logo: '/assets/international_copper_association.png' },
-  { name: 'Indian Steel Association', logo: '/assets/indian steel association.png' },
-  { name: 'MDC' },
-  { name: 'JSP' },
-  { name: 'PGI' },
-  { name: 'Zydus', logo: '/assets/Zydus.svg' },
-  { name: 'SSEL', logo: '/assets/ssel.png' },
-  { name: 'ICCEMA', logo: '/assets/icema.jpeg' },
-  { name: 'Ministry of Health and Family Welfare', logo: '/assets/ministry of health.png' },
-  { name: 'Su-vastika', logo: '/assets/suvastika.jpg' },
-  { name: 'BigMint', logo: '/assets/bigmint.jpeg' },
-  { name: 'Rosneft', logo: '/assets/rosneft.png' },
-  { name: 'Paisalo', logo: '/assets/paisalo.jpeg' },
-  { name: 'NAMTECH', logo: '/assets/namtech.avif' },
-  { name: 'CDRI' },
-  { name: 'Envision' },
-  { name: 'Hiranandani Group', logo: '/assets/hiranadani.avif' },
-  { name: 'Garo Education' },
-  { name: 'JLL' },
-  { name: 'SBRE Bank' },
-  { name: 'Purple Finance', logo: '/assets/purple finance.jpeg' },
-  { name: 'DMG Group' },
-  { name: 'IntelliSmart', logo: '/assets/intellismart.jpg' },
-];
-
 export function ClientLogos() {
-  // Only partners with new image logos in /assets/ appear in ticker animation
+  const { content } = useContent();
+  const clientLogosData = content.clientLogos;
+  const partnerClients: Partner[] = clientLogosData.partners || [];
+
+  // Only partners with image logos appear in ticker animation
   const tickerLogos = partnerClients.filter((p): p is Partner & { logo: string } => Boolean(p.logo));
 
   return (
     <section className="client-logos-section" style={{ background: 'var(--bg-secondary)', padding: '80px 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', overflow: 'hidden' }}>
       <div className="wrap reveal" style={{ marginBottom: '36px', textAlign: 'center' }}>
         <p className="kicker kicker-centered" style={{ justifyContent: 'center', fontSize: '13px', letterSpacing: '0.28em' }}>
-          Institutional Trust
+          {clientLogosData.kicker}
         </p>
         <h2 style={{ fontSize: 'clamp(30px, 4vw, 42px)', fontFamily: 'var(--serif)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '10px' }}>
-          Our Revered Partners
+          {clientLogosData.title}
         </h2>
         <p className="sub" style={{ margin: '0 auto', maxWidth: '780px', fontSize: '17px', lineHeight: 1.6 }}>
-          We are proud and privileged to serve trailblazers, iconoclasts, disruptors, leaders and reformers
+          {clientLogosData.sub}
         </p>
       </div>
 

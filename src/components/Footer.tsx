@@ -1,7 +1,14 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
+import { useContent } from '@/context/ContentContext';
 
 export function Footer() {
+  const { content } = useContent();
+  const footerData = content.footer;
+  const contactData = content.contact;
+
   return (
     <footer>
       <div className="wrap">
@@ -16,9 +23,7 @@ export function Footer() {
                 style={{ height: '56px', width: 'auto', objectFit: 'contain' }}
               />
             </div>
-            <p>
-              A strategic public relations and corporate communications agency, headquartered in Delhi NCR, India. Built for market leaders, listed entities, and growth visionaries.
-            </p>
+            <p>{footerData.tagline}</p>
           </div>
 
           <div className="footer-col">
@@ -44,15 +49,15 @@ export function Footer() {
           <div className="footer-col">
             <p className="label">Contact</p>
             <ul>
-              <li><a href="mailto:official@tprcommunications.com">official@tprcommunications.com</a></li>
-              <li><a href="tel:+918796564094">+91 87965 64094</a></li>
-              <li>Cloud 9 Vaishali, S1 Tower, Office no. 425, Delhi NCR. Pin - 201010</li>
+              <li><a href={`mailto:${contactData.email}`}>{contactData.email}</a></li>
+              <li><a href={`tel:${contactData.phone.replace(/\s+/g, '')}`}>{contactData.phone}</a></li>
+              <li>{contactData.address}</li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>© 2026 TPR Communications. All rights reserved.</span>
+          <span>{footerData.copyright}</span>
           <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--gold)' }}>
             STRATEGIC PR &amp; CORPORATE COMMUNICATIONS
           </span>
