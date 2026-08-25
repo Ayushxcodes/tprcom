@@ -1,85 +1,62 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import mysql from 'mysql2/promise';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { initialSiteContent, SiteContent } from '@/data/initialContent';
 
 const DB_FILE_PATH = path.join(process.cwd(), 'src', 'data', 'db_content.json');
 
-// Hostinger MySQL Connection Config
-const DB_HOST = process.env.DB_HOST || '127.0.0.1';
-const DB_PORT = Number(process.env.DB_PORT || 3306);
-const DB_USER = process.env.DB_USER || '';
-const DB_PASSWORD = process.env.DB_PASSWORD || '';
-const DB_NAME = process.env.DB_NAME || 'u661072455_trp_database';
+// Supabase Environment Variables
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
+const SUPABASE_KEY =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_KEY ||
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  '';
 
-let pool: mysql.Pool | null = null;
+let supabase: SupabaseClient | null = null;
 
-function getPool(): mysql.Pool | null {
-  if (!DB_USER && !process.env.DB_HOST) {
-    // MySQL not configured, fallback to file DB
+function getSupabase(): SupabaseClient | null {
+  if (!SUPABASE_URL || !SUPABASE_KEY) {
     return null;
   }
 
-  if (!pool) {
+  if (!supabase) {
     try {
-      pool = mysql.createPool({
-        host: DB_HOST,
-        port: DB_PORT,
-        user: DB_USER,
-        password: DB_PASSWORD,
-        database: DB_NAME,
-        waitForConnections: true,
-        connectionLimit: 10,
-        queueLimit: 0,
-      });
+      supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
     } catch (err) {
-      console.error('MySQL Connection Error:', err);
+      console.error('Error initializing Supabase client:', err);
       return null;
     }
   }
 
-  return pool;
-}
-
-// Auto-initialize MySQL Table if missing
-async function ensureMySQLTable(db: mysql.Pool): Promise<boolean> {
-  try {
-    await db.query(`
-      CREATE TABLE IF NOT EXISTS site_content (
-        id INT PRIMARY KEY,
-        content LONGTEXT NOT NULL,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-    `);
-    return true;
-  } catch (err) {
-    console.error('Error creating MySQL table:', err);
-    return false;
-  }
+  return supabase;
 }
 
 /**
- * Fetch CMS Content (Hostinger MySQL DB with File Fallback)
+ * Fetch CMS Content from Supabase Database (with local file fallback)
  */
 export async function getDbContent(): Promise<SiteContent> {
-  const db = getPool();
+  const client = getSupabase();
 
-  if (db) {
+  if (client) {
     try {
-      const tableReady = await ensureMySQLTable(db);
-      if (tableReady) {
-        const [rows] = await db.query<mysql.RowDataPacket[]>('SELECT content FROM site_content WHERE id = 1 LIMIT 1');
-        if (rows && rows.length > 0 && rows[0].content) {
-          const parsed = typeof rows[0].content === 'string' ? JSON.parse(rows[0].content) : rows[0].content;
-          return { ...initialSiteContent, ...parsed };
-        }
+      const { data, error } = await client.from('site_content').select('content').eq('id', 1).single();
+
+      if (data && data.content) {
+        const parsed = typeof data.content === 'string' ? JSON.parse(data.content) : data.content;
+        return { ...initialSiteContent, ...parsed };
+      }
+
+      if (error && error.code !== 'PGRST116') {
+        console.warn('Supabase fetch query warning:', error.message);
       }
     } catch (err) {
-      console.error('MySQL fetch error, falling back to local file storage:', err);
+      console.error('Supabase fetch error, falling back to local file storage:', err);
     }
   }
 
-  // Fallback to local persistent JSON file
+  // Fallback to local JSON storage
   try {
     const fileExists = await fs.stat(DB_FILE_PATH).then(() => true).catch(() => false);
     if (fileExists) {
@@ -95,44 +72,42 @@ export async function getDbContent(): Promise<SiteContent> {
 }
 
 /**
- * Save CMS Content (Hostinger MySQL DB with File Fallback)
+ * Save CMS Content to Supabase Database (with local file fallback)
  */
 export async function saveDbContent(newContent: SiteContent): Promise<boolean> {
-  const db = getPool();
-  const jsonString = JSON.stringify(newContent);
+  const client = getSupabase();
 
-  if (db) {
+  if (client) {
     try {
-      const tableReady = await ensureMySQLTable(db);
-      if (tableReady) {
-        await db.query(
-          `INSERT INTO site_content (id, content) VALUES (1, ?)
-           ON DUPLICATE KEY UPDATE content = VALUES(content);`,
-          [jsonString]
-        );
-        // Also sync local file
-        await saveToFile(jsonString);
+      const { error } = await client
+        .from('site_content')
+        .upsert({ id: 1, content: newContent, updated_at: new Date().toISOString() }, { onConflict: 'id' });
+
+      if (!error) {
+        await saveToFile(JSON.stringify(newContent, null, 2));
         return true;
+      } else {
+        console.error('Supabase save error:', error.message);
       }
     } catch (err) {
-      console.error('MySQL save error, falling back to file write:', err);
+      console.error('Supabase upsert exception, falling back to file write:', err);
     }
   }
 
-  return await saveToFile(jsonString);
+  return await saveToFile(JSON.stringify(newContent, null, 2));
 }
 
 /**
  * Reset CMS Content
  */
 export async function resetDbContent(): Promise<boolean> {
-  const db = getPool();
+  const client = getSupabase();
 
-  if (db) {
+  if (client) {
     try {
-      await db.query('DELETE FROM site_content WHERE id = 1');
+      await client.from('site_content').delete().eq('id', 1);
     } catch (err) {
-      console.error('MySQL reset error:', err);
+      console.error('Supabase reset error:', err);
     }
   }
 
