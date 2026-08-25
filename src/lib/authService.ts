@@ -69,9 +69,16 @@ export async function authenticateAdmin(username: string, password: string): Pro
   }
   */
 
-  // Default Standard Credentials (via env or fallback)
-  const expectedUser = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin';
-  const expectedPass = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'tpr2026admin';
+  // Standard Credentials via environment variables only (no hardcoded fallback)
+  const expectedUser = process.env.ADMIN_USERNAME || process.env.NEXT_PUBLIC_ADMIN_USERNAME;
+  const expectedPass = process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+
+  if (!expectedUser || !expectedPass) {
+    return {
+      success: false,
+      error: 'Admin authentication is not configured. ADMIN_USERNAME and ADMIN_PASSWORD must be set in environment variables.',
+    };
+  }
 
   const inputHash = await hashPassword(`${cleanUsername}:${password}`);
   const targetHash = await hashPassword(`${expectedUser}:${expectedPass}`);

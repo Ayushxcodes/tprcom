@@ -30,11 +30,7 @@ export default function AdminLoginPage() {
     }
   };
 
-  const handleFillDefaults = () => {
-    setUsername('admin');
-    setPassword('tpr2026admin');
-    setError('');
-  };
+
 
   return (
     <div
@@ -252,43 +248,7 @@ export default function AdminLoginPage() {
             </div>
           </div>
 
-          {/* DEMO CREDENTIALS AUTOFILL BOX */}
-          <div
-            style={{
-              fontSize: '12px',
-              color: '#CBD5E1',
-              background: '#111C2E',
-              padding: '12px 14px',
-              borderRadius: '10px',
-              border: '1px solid #1E293B',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <div>
-              <span style={{ color: '#94A3B8' }}>Default: </span>
-              <strong style={{ color: '#B8995E' }}>admin</strong> /{' '}
-              <strong style={{ color: '#B8995E' }}>tpr2026admin</strong>
-            </div>
-            <button
-              type="button"
-              onClick={handleFillDefaults}
-              style={{
-                background: '#B8995E',
-                color: '#040911',
-                border: 'none',
-                borderRadius: '6px',
-                fontSize: '11px',
-                padding: '5px 10px',
-                fontWeight: 800,
-                cursor: 'pointer',
-                letterSpacing: '0.05em',
-              }}
-            >
-              AUTO FILL
-            </button>
-          </div>
+
 
           {/* SUBMIT BUTTON */}
           <button
