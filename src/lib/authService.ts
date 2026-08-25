@@ -1,7 +1,4 @@
-/**
- * Standard Production-Grade Authentication Service for TPR CMS
- * Ready for Database Link (Prisma, Supabase, PostgreSQL, MongoDB, etc.)
- */
+import { getSupabase } from '@/lib/supabase';
 
 export interface AuthUser {
   id: string;
@@ -41,59 +38,71 @@ export async function hashPassword(input: string): Promise<string> {
 }
 
 /**
- * Standard Admin Authentication (DB-Link Ready)
- * 
- * To link your Database:
- * 1. Import your DB client (e.g. `import { db } from '@/lib/db'`)
- * 2. Query your users table in the DB block below.
+ * Database Admin Authentication (Supabase PostgreSQL Query)
  */
 export async function authenticateAdmin(username: string, password: string): Promise<AuthResult> {
   const cleanUsername = username.trim();
+  const inputHash = await hashPassword(password);
 
-  // ==========================================================
-  // 🔌 DATABASE LINK SECTION (UNCOMMENT WHEN DB IS CONNECTED)
-  // ==========================================================
-  /*
-  try {
-    // Example Prisma / Kysely / Supabase call:
-    // const user = await db.user.findUnique({ where: { username: cleanUsername } });
-    // if (user && await comparePassword(password, user.passwordHash)) {
-    //   return {
-    //     success: true,
-    //     user: { id: user.id, username: user.username, role: user.role || 'ADMIN' },
-    //     sessionToken: await hashPassword(`session_${user.id}_${Date.now()}`),
-    //   };
-    // }
-  } catch (err) {
-    console.error('Database connection error during auth:', err);
+  const client = getSupabase();
+
+  // 1. Direct Supabase Database Authentication
+  if (client) {
+    try {
+      const { data, error } = await client
+        .from('admin_users')
+        .select('*')
+        .eq('username', cleanUsername)
+        .single();
+
+      if (data && data.password_hash) {
+        if (data.password_hash === inputHash || data.password_hash === password) {
+          const sessionToken = await hashPassword(`session_${data.id}_${Date.now()}`);
+          return {
+            success: true,
+            user: {
+              id: String(data.id),
+              username: data.username,
+              role: data.role || 'SUPER_ADMIN',
+            },
+            sessionToken,
+          };
+        } else {
+          return {
+            success: false,
+            error: 'Invalid username or password',
+          };
+        }
+      }
+
+      if (error && error.code !== 'PGRST116') {
+        console.warn('Database auth query warning:', error.message);
+      }
+    } catch (err) {
+      console.error('Database authentication error:', err);
+    }
   }
-  */
 
-  // Standard Credentials via environment variables only (no hardcoded fallback)
+  // 2. Fallback to Environment Variables if DB user is not created yet
   const expectedUser = process.env.ADMIN_USERNAME || process.env.NEXT_PUBLIC_ADMIN_USERNAME;
   const expectedPass = process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 
-  if (!expectedUser || !expectedPass) {
-    return {
-      success: false,
-      error: 'Admin authentication is not configured. ADMIN_USERNAME and ADMIN_PASSWORD must be set in environment variables.',
-    };
-  }
+  if (expectedUser && expectedPass) {
+    const envInputHash = await hashPassword(`${cleanUsername}:${password}`);
+    const targetHash = await hashPassword(`${expectedUser}:${expectedPass}`);
 
-  const inputHash = await hashPassword(`${cleanUsername}:${password}`);
-  const targetHash = await hashPassword(`${expectedUser}:${expectedPass}`);
-
-  if (inputHash === targetHash) {
-    const sessionToken = await hashPassword(`session_${Date.now()}_${Math.random()}`);
-    return {
-      success: true,
-      user: {
-        id: 'admin_1',
-        username: cleanUsername,
-        role: 'SUPER_ADMIN',
-      },
-      sessionToken,
-    };
+    if (envInputHash === targetHash || (cleanUsername === expectedUser && password === expectedPass)) {
+      const sessionToken = await hashPassword(`session_${Date.now()}_${Math.random()}`);
+      return {
+        success: true,
+        user: {
+          id: 'admin_1',
+          username: cleanUsername,
+          role: 'SUPER_ADMIN',
+        },
+        sessionToken,
+      };
+    }
   }
 
   return {

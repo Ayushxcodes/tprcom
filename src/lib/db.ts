@@ -1,37 +1,9 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { initialSiteContent, SiteContent } from '@/data/initialContent';
+import { getSupabase } from '@/lib/supabase';
 
 const DB_FILE_PATH = path.join(process.cwd(), 'src', 'data', 'db_content.json');
-
-// Supabase Environment Variables
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
-const SUPABASE_KEY =
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-  process.env.SUPABASE_ANON_KEY ||
-  process.env.SUPABASE_KEY ||
-  process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  '';
-
-let supabase: SupabaseClient | null = null;
-
-function getSupabase(): SupabaseClient | null {
-  if (!SUPABASE_URL || !SUPABASE_KEY) {
-    return null;
-  }
-
-  if (!supabase) {
-    try {
-      supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-    } catch (err) {
-      console.error('Error initializing Supabase client:', err);
-      return null;
-    }
-  }
-
-  return supabase;
-}
 
 /**
  * Fetch CMS Content from Supabase Database (with local file fallback)
